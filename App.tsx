@@ -6,15 +6,23 @@ import {
 } from '@react-navigation/native';
 import { StatusBar } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import {
+  AppContainerProvider,
+  createAppContainer,
+} from './src/di/AppContainer';
 import { RootNavigator } from './src/navigation/RootNavigator';
 import { ThemeProvider, useTheme } from './src/theme';
+
+const container = createAppContainer();
 
 function App() {
   return (
     <SafeAreaProvider>
-      <ThemeProvider>
-        <ThemedNavigation />
-      </ThemeProvider>
+      <AppContainerProvider container={container}>
+        <ThemeProvider>
+          <ThemedNavigation />
+        </ThemeProvider>
+      </AppContainerProvider>
     </SafeAreaProvider>
   );
 }
