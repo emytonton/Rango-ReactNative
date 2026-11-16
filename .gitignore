@@ -1,0 +1,15 @@
+# Instruções locais do assistente (nunca vão para o repositório)
+CLAUDE.md
+CLAUDE.local.md
+.claude/
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# SonarQube
+.scannerwork/
+.sonar/
+
+# Saídas temporárias das métricas
+tools/metrics/out/
