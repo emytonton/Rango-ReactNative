@@ -68,6 +68,8 @@ Mede `:app:assembleDebug`, na pasta `android/`, com `--profile` em três cenári
 
 O tempo registrado é o de relógio de cada comando. Os relatórios HTML do `--profile` ficam em `android/build/reports/profile/`. Use sempre o mesmo arquivo no cenário 3 e feche outros programas pesados durante a medição.
 
+O `android/app/build.gradle` define `debuggableVariants = []`, então o build debug também gera o bundle do JavaScript, com as mesmas opções do release (Hermes e `--dev false`). Assim, alterar um arquivo `.ts` ou `.tsx` faz o Gradle refazer o bundle. Sem essa configuração, o debug buscaria o código no Metro e o cenário 3 não processaria o código do app.
+
 ## 6. Inicialização a frio
 
 `tools/metrics/inicializacao-frio.sh [pacote/atividade]`
