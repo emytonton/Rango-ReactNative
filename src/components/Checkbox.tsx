@@ -8,10 +8,9 @@ export function Checkbox({ checked }: { checked: boolean }) {
     <View
       style={[
         styles.box,
-        {
-          backgroundColor: checked ? colors.primary : 'transparent',
-          borderColor: checked ? colors.primary : colors.border,
-        },
+        checked
+          ? { backgroundColor: colors.primary, borderColor: colors.primary }
+          : { borderColor: colors.border },
       ]}
     >
       {checked && <Icon name="check" size={15} color={colors.onPrimary} />}

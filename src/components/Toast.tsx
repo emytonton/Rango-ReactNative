@@ -116,7 +116,7 @@ export function Toast({ text, kind }: { text: string; kind: ToastKind }) {
       accessibilityLiveRegion="polite"
       style={[
         styles.toast,
-        { backgroundColor: colors.isDark ? '#2C2E33' : '#26262A' },
+        colors.isDark ? styles.toastDark : styles.toastLight,
       ]}
     >
       <View style={[styles.accent, { backgroundColor: accents[kind] }]} />
@@ -139,6 +139,8 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     overflow: 'hidden',
   },
+  toastLight: { backgroundColor: '#26262A' },
+  toastDark: { backgroundColor: '#2C2E33' },
   accent: { width: 3 },
   content: {
     flex: 1,
