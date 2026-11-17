@@ -6,3 +6,4 @@ export * from './Icon';
 export * from './InfoBanner';
 export * from './TextAction';
 export * from './TextField';
+export * from './Toast';
