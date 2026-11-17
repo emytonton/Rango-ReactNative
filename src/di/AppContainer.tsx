@@ -2,6 +2,10 @@ import { createContext, useContext, type ReactNode } from 'react';
 import { createHttpClient } from '../core/network/httpClient';
 import { createAuthApi } from '../data/auth/authApi';
 import {
+  createAuthRepository,
+  type AuthRepository,
+} from '../data/auth/authRepository';
+import {
   createSessionRepository,
   type SessionRepository,
 } from '../data/auth/sessionRepository';
@@ -9,13 +13,17 @@ import { createKeychainStorage } from '../data/storage/secureStorage';
 
 export type AppContainer = {
   sessionRepository: SessionRepository;
+  authRepository: AuthRepository;
 };
 
 export function createAppContainer(): AppContainer {
   const http = createHttpClient();
   const storage = createKeychainStorage();
+  const authApi = createAuthApi(http);
+  const sessionRepository = createSessionRepository(authApi, storage);
   return {
-    sessionRepository: createSessionRepository(createAuthApi(http), storage),
+    sessionRepository,
+    authRepository: createAuthRepository(authApi, sessionRepository),
   };
 }
 
