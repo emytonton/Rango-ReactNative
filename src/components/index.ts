@@ -6,6 +6,7 @@ export * from './CheckboxLabel';
 export * from './Icon';
 export * from './InfoBanner';
 export * from './PasswordToggle';
+export * from './Skeleton';
 export * from './TextAction';
 export * from './TextField';
 export * from './Toast';
