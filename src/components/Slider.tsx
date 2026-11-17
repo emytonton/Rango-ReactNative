@@ -1,5 +1,14 @@
-import { useRef, useState } from 'react';
-import { PanResponder, StyleSheet, View } from 'react-native';
+import { useEffect, useRef, useState } from 'react';
+import {
+  PanResponder,
+  StyleSheet,
+  View,
+  type ViewInstance,
+} from 'react-native';
+import {
+  clearSystemGestureExclusion,
+  excludeSystemGestures,
+} from '../core/native/gestureExclusion';
 import { useTheme } from '../theme';
 
 const THUMB_SIZE = 20;
@@ -10,11 +19,30 @@ type SliderProps = {
   max: number;
   step: number;
   onChange: (value: number) => void;
+  exclusionKey?: number;
 };
 
-export function Slider({ value, min, max, step, onChange }: SliderProps) {
+export function Slider({
+  value,
+  min,
+  max,
+  step,
+  onChange,
+  exclusionKey,
+}: SliderProps) {
   const { colors } = useTheme();
   const [width, setWidth] = useState(0);
+  const container = useRef<ViewInstance>(null);
+
+  useEffect(() => {
+    if (exclusionKey === undefined) {
+      return;
+    }
+    container.current?.measureInWindow((x, y, w, h) =>
+      excludeSystemGestures(x, y, w, h),
+    );
+    return clearSystemGestureExclusion;
+  }, [exclusionKey]);
   const latest = useRef({ width, min, max, step, onChange });
   latest.current = { width, min, max, step, onChange };
 
@@ -44,6 +72,7 @@ export function Slider({ value, min, max, step, onChange }: SliderProps) {
 
   return (
     <View
+      ref={container}
       accessibilityRole="adjustable"
       accessibilityValue={{ min, max, now: value }}
       onLayout={event => setWidth(event.nativeEvent.layout.width)}
