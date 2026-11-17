@@ -13,6 +13,7 @@ export * from './PasswordToggle';
 export * from './ProductCards';
 export * from './ProductImage';
 export * from './SearchBarButton';
+export * from './SearchField';
 export * from './SectionHeader';
 export * from './Skeleton';
 export * from './TextAction';
