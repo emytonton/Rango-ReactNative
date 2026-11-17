@@ -18,6 +18,7 @@ export * from './SearchBarButton';
 export * from './SearchField';
 export * from './SectionHeader';
 export * from './Skeleton';
+export * from './Slider';
 export * from './TextAction';
 export * from './TextField';
 export * from './Toast';
