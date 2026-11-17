@@ -12,6 +12,7 @@ export function toProductCard(product: ProductSummary): ProductCardModel {
     id: product.id,
     name: product.name,
     restaurant: product.restaurant,
+    category: product.category.name,
     description: product.description,
     price: formatPrice(product.price),
     oldPrice: product.oldPrice ? formatPrice(product.oldPrice) : null,

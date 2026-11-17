@@ -7,6 +7,7 @@ export type ProductCardModel = {
   id: string;
   name: string;
   restaurant: string;
+  category: string;
   description: string;
   price: string;
   oldPrice: string | null;
@@ -19,6 +20,7 @@ export type ProductCardModel = {
 
 type ProductCardProps = {
   product: ProductCardModel;
+  subtitle?: string;
   onOpen: () => void;
   onToggleFavorite: () => void;
   onAdd: () => void;
@@ -103,6 +105,7 @@ export function ProductTile({
 
 export function ProductRow({
   product,
+  subtitle,
   onOpen,
   onToggleFavorite,
   onAdd,
@@ -138,7 +141,7 @@ export function ProductRow({
           numberOfLines={1}
           style={[styles.rowDescription, { color: colors.text2 }]}
         >
-          {product.description}
+          {subtitle ?? product.description}
         </Text>
         <View style={styles.meta}>
           <Rating value={product.rating} size={14} fontSize={11} />
