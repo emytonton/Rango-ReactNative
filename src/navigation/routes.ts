@@ -3,7 +3,7 @@ export type RootStackParamList = {
   Login: undefined;
   Signup: undefined;
   Home: undefined;
-  Search: undefined;
+  Search: { homeSection?: string } | undefined;
   Orders: undefined;
   Favorites: undefined;
   Profile: undefined;
