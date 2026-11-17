@@ -1,7 +1,7 @@
-import { useEffect, useRef, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import {
   Animated,
-  Modal,
+  BackHandler,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -46,162 +46,183 @@ export function FilterSheet({
   const insets = useSafeAreaInsets();
   const offset = useRef(new Animated.Value(600)).current;
 
+  const backdrop = useRef(new Animated.Value(0)).current;
+  const [exclusionKey, setExclusionKey] = useState<number>();
+  const remeasure = () => setExclusionKey(key => (key ?? 0) + 1);
+
   useEffect(() => {
-    if (visible) {
-      offset.setValue(600);
+    if (!visible) {
+      return;
+    }
+    offset.setValue(600);
+    backdrop.setValue(0);
+    Animated.parallel([
       Animated.spring(offset, {
         toValue: 0,
         damping: 22,
         stiffness: 220,
         useNativeDriver: true,
-      }).start();
-    }
-  }, [visible, offset]);
+      }),
+      Animated.timing(backdrop, {
+        toValue: 1,
+        duration: 220,
+        useNativeDriver: true,
+      }),
+    ]).start(remeasure);
+    const back = BackHandler.addEventListener('hardwareBackPress', () => {
+      onDismiss();
+      return true;
+    });
+    return () => back.remove();
+  }, [visible, offset, backdrop, onDismiss]);
+
+  if (!visible) {
+    return null;
+  }
 
   const set = (patch: Partial<SearchFilters>) =>
     onChange({ ...draft, ...patch });
 
   return (
-    <Modal
-      visible={visible}
-      transparent
-      animationType="fade"
-      statusBarTranslucent
-      navigationBarTranslucent
-      onRequestClose={onDismiss}
-    >
-      <View style={styles.overlay}>
+    <View style={[StyleSheet.absoluteFill, styles.overlay]}>
+      <Animated.View style={[StyleSheet.absoluteFill, { opacity: backdrop }]}>
         <Pressable
           accessibilityLabel="Fechar filtros"
           onPress={onDismiss}
           style={[StyleSheet.absoluteFill, styles.backdrop]}
         />
-        <Animated.View
-          style={[
-            styles.sheet,
-            {
-              backgroundColor: colors.surface,
-              paddingBottom: 18 + insets.bottom,
-              transform: [{ translateY: offset }],
-            },
-          ]}
+      </Animated.View>
+      <Animated.View
+        style={[
+          styles.sheet,
+          {
+            backgroundColor: colors.surface,
+            paddingBottom: 18 + insets.bottom,
+            transform: [{ translateY: offset }],
+          },
+        ]}
+      >
+        <View style={[styles.handle, { backgroundColor: colors.border }]} />
+        <View style={styles.header}>
+          <Text style={[styles.title, { color: colors.text }]}>Filtros</Text>
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel="Fechar"
+            onPress={onDismiss}
+            style={[styles.close, { borderColor: colors.border }]}
+          >
+            <Icon name="close" size={19} color={colors.text} />
+          </Pressable>
+        </View>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          onMomentumScrollEnd={remeasure}
+          onScrollEndDrag={remeasure}
+          contentContainerStyle={styles.sections}
         >
-          <View style={[styles.handle, { backgroundColor: colors.border }]} />
-          <View style={styles.header}>
-            <Text style={[styles.title, { color: colors.text }]}>Filtros</Text>
-            <Pressable
-              accessibilityRole="button"
-              accessibilityLabel="Fechar"
-              onPress={onDismiss}
-              style={[styles.close, { borderColor: colors.border }]}
-            >
-              <Icon name="close" size={19} color={colors.text} />
-            </Pressable>
-          </View>
-          <ScrollView contentContainerStyle={styles.sections}>
-            <Section title="Categoria">
-              <View style={styles.wrap}>
-                <OptionChip
-                  label="Todos"
-                  selected={draft.category === null}
-                  onPress={() => set({ category: null })}
-                />
-                {categories.map(category => (
-                  <OptionChip
-                    key={category.slug}
-                    label={category.name}
-                    selected={draft.category?.slug === category.slug}
-                    onPress={() => set({ category })}
-                  />
-                ))}
-              </View>
-            </Section>
-            <Section
-              title="Faixa de preço"
-              trailing={`até ${formatPrice(draft.maxPrice)}`}
-            >
-              <Slider
-                value={draft.maxPrice}
-                min={PRICE_MIN}
-                max={PRICE_MAX}
-                step={PRICE_STEP}
-                onChange={maxPrice => set({ maxPrice })}
+          <Section title="Categoria">
+            <View style={styles.wrap}>
+              <OptionChip
+                label="Todos"
+                selected={draft.category === null}
+                onPress={() => set({ category: null })}
               />
-              <View style={styles.range}>
-                <Text style={[styles.rangeText, { color: colors.text2 }]}>
-                  {formatPriceShort(PRICE_MIN)}
-                </Text>
-                <Text style={[styles.rangeText, { color: colors.text2 }]}>
-                  {formatPriceShort(PRICE_MAX)}
-                </Text>
-              </View>
-            </Section>
-            <Section title="Avaliação mínima">
-              <View style={styles.row}>
-                {ratingOptions.map(([value, label]) => (
-                  <OptionChip
-                    key={label}
-                    label={label}
-                    selected={draft.minRating === value}
-                    onPress={() => set({ minRating: value })}
-                  />
-                ))}
-              </View>
-            </Section>
-            <Section title="Tempo de entrega">
-              <View style={styles.row}>
-                {timeOptions.map(([value, label]) => (
-                  <OptionChip
-                    key={label}
-                    label={label}
-                    selected={draft.maxTime === value}
-                    onPress={() => set({ maxTime: value })}
-                  />
-                ))}
-              </View>
-            </Section>
-            <Section title="Ordenar por" gap={7}>
-              {sortOptions.map(option => (
-                <RadioOption
-                  key={option.value}
-                  label={option.option}
-                  selected={draft.sort === option.value}
-                  onPress={() => set({ sort: option.value })}
+              {categories.map(category => (
+                <OptionChip
+                  key={category.slug}
+                  label={category.name}
+                  selected={draft.category?.slug === category.slug}
+                  onPress={() => set({ category })}
                 />
               ))}
-            </Section>
-          </ScrollView>
-          <View style={styles.footer}>
-            <Pressable
-              accessibilityRole="button"
-              onPress={onClear}
-              style={[
-                styles.button,
-                styles.clearButton,
-                { borderColor: colors.border },
-              ]}
-            >
-              <Text style={[styles.buttonText, { color: colors.text }]}>
-                Limpar filtros
+            </View>
+          </Section>
+          <Section
+            title="Faixa de preço"
+            trailing={`até ${formatPrice(draft.maxPrice)}`}
+          >
+            <Slider
+              value={draft.maxPrice}
+              min={PRICE_MIN}
+              max={PRICE_MAX}
+              step={PRICE_STEP}
+              onChange={maxPrice => set({ maxPrice })}
+              exclusionKey={exclusionKey}
+            />
+            <View style={styles.range}>
+              <Text style={[styles.rangeText, { color: colors.text2 }]}>
+                {formatPriceShort(PRICE_MIN)}
               </Text>
-            </Pressable>
-            <Pressable
-              accessibilityRole="button"
-              onPress={onApply}
-              style={[
-                styles.button,
-                styles.applyButton,
-                { backgroundColor: colors.primary },
-              ]}
-            >
-              <Text style={[styles.buttonText, { color: colors.onPrimary }]}>
-                Aplicar filtros
+              <Text style={[styles.rangeText, { color: colors.text2 }]}>
+                {formatPriceShort(PRICE_MAX)}
               </Text>
-            </Pressable>
-          </View>
-        </Animated.View>
-      </View>
-    </Modal>
+            </View>
+          </Section>
+          <Section title="Avaliação mínima">
+            <View style={styles.row}>
+              {ratingOptions.map(([value, label]) => (
+                <OptionChip
+                  key={label}
+                  label={label}
+                  selected={draft.minRating === value}
+                  onPress={() => set({ minRating: value })}
+                />
+              ))}
+            </View>
+          </Section>
+          <Section title="Tempo de entrega">
+            <View style={styles.row}>
+              {timeOptions.map(([value, label]) => (
+                <OptionChip
+                  key={label}
+                  label={label}
+                  selected={draft.maxTime === value}
+                  onPress={() => set({ maxTime: value })}
+                />
+              ))}
+            </View>
+          </Section>
+          <Section title="Ordenar por" gap={7}>
+            {sortOptions.map(option => (
+              <RadioOption
+                key={option.value}
+                label={option.option}
+                selected={draft.sort === option.value}
+                onPress={() => set({ sort: option.value })}
+              />
+            ))}
+          </Section>
+        </ScrollView>
+        <View style={styles.footer}>
+          <Pressable
+            accessibilityRole="button"
+            onPress={onClear}
+            style={[
+              styles.button,
+              styles.clearButton,
+              { borderColor: colors.border },
+            ]}
+          >
+            <Text style={[styles.buttonText, { color: colors.text }]}>
+              Limpar filtros
+            </Text>
+          </Pressable>
+          <Pressable
+            accessibilityRole="button"
+            onPress={onApply}
+            style={[
+              styles.button,
+              styles.applyButton,
+              { backgroundColor: colors.primary },
+            ]}
+          >
+            <Text style={[styles.buttonText, { color: colors.onPrimary }]}>
+              Aplicar filtros
+            </Text>
+          </Pressable>
+        </View>
+      </Animated.View>
+    </View>
   );
 }
 
