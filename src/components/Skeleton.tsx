@@ -79,6 +79,7 @@ const styles = StyleSheet.create({
   band: {
     width: SHIMMER_WIDTH,
     height: '100%',
-    backgroundColor: 'rgba(255, 255, 255, 0.32)',
+    backgroundImage:
+      'linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.32), rgba(255, 255, 255, 0))',
   },
 });
