@@ -3,6 +3,14 @@ export type RootStackParamList = {
   Login: undefined;
   Signup: undefined;
   Home: undefined;
+  Search: undefined;
+  Orders: undefined;
+  Favorites: undefined;
+  Profile: undefined;
+  Cart: undefined;
+  Notifications: undefined;
+  Address: undefined;
+  Product: { productId: string };
 };
 
 export const routeTitles: Record<keyof RootStackParamList, string> = {
@@ -10,4 +18,12 @@ export const routeTitles: Record<keyof RootStackParamList, string> = {
   Login: 'Login',
   Signup: 'Cadastro',
   Home: 'Home',
+  Search: 'Busca',
+  Orders: 'Pedidos',
+  Favorites: 'Favoritos',
+  Profile: 'Perfil',
+  Cart: 'Carrinho',
+  Notifications: 'Notificações',
+  Address: 'Endereço',
+  Product: 'Produto',
 };

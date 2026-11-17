@@ -84,8 +84,9 @@ export function createSessionRepository(
       } catch (error) {
         if (error instanceof ApiError && error.status === 401) {
           await clear();
+          return null;
         }
-        return null;
+        throw error;
       }
     },
   };

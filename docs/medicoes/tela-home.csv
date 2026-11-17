@@ -1,0 +1,19 @@
+data,commit,issue,tela,metrica,valor,unidade,origem,observacao
+2026-11-17 16:37:07,9f47d1a,3,Home,build_debug_limpo,428.76,s,medido,tempo-build.sh
+2026-11-17 16:37:07,9f47d1a,3,Home,build_debug_incremental_sem_mudanca,11.03,s,medido,tempo-build.sh
+2026-11-17 16:37:07,9f47d1a,3,Home,build_debug_incremental_um_arquivo,30.94,s,medido,tempo-build.sh com src/features/home/HomeScreen.tsx alterado
+2026-11-17 16:44:49,9f47d1a,3,Home,build_release,450,s,medido,tempo de relógio do tamanho-apk.sh (:app:assembleRelease após o clean do tempo-build)
+2026-11-17 16:44:49,9f47d1a,3,Home,tamanho_apk_release,73947458,bytes,medido,tamanho-apk.sh; APK com as quatro ABIs do template
+2026-11-17 16:46:17,9f47d1a,3,Home,inicializacao_frio_release_mediana,639.5,ms,medido,inicializacao-frio.sh; 10 execuções no emulador Rango_Pixel_8_RN
+2026-11-17,9f47d1a,3,Home,install_debug,84.07,s,medido,gradlew installDebug após os commits da tela (build incremental e instalação no emulador)
+2026-11-17,9f47d1a,3,Home,install_debug_correcao,50.76,s,medido,gradlew installDebug após a correção da renovação de sessão em src/data/auth/sessionRepository.ts
+2026-11-17,9f47d1a,3,Home,inicializacao_debug_primeira_abertura,5602,ms,medido,am start -W; 1 execução logo após o installDebug
+2026-11-17,9f47d1a,3,Home,npm_test,27.64,s,medido,npm test com cache do Jest limpo; 8 suítes e 25 testes
+2026-11-17 16:47:17,9f47d1a,3,Home,loc_gerado,0,linhas,medido,loc-por-origem.sh --issue 3
+2026-11-17 16:47:17,9f47d1a,3,Home,loc_assistido,984,linhas,medido,loc-por-origem.sh --issue 3
+2026-11-17 16:47:17,9f47d1a,3,Home,loc_manual,94,linhas,medido,loc-por-origem.sh --issue 3
+2026-11-17,9f47d1a,3,Home,tempo_total,196,min,ajustado,intervalo informado 10:02-13:18
+2026-11-17,9f47d1a,3,Home,tempo_codigo,189,min,ajustado,segmentos da issue
+2026-11-17,9f47d1a,3,Home,tempo_configuracao_build,0,min,ajustado,segmentos da issue
+2026-11-17,9f47d1a,3,Home,tempo_depuracao,4,min,ajustado,segmentos da issue
+2026-11-17,9f47d1a,3,Home,tempo_espera_ferramenta,3,min,ajustado,segmentos da issue

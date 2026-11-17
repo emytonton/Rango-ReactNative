@@ -2,7 +2,9 @@ import {
   createNativeStackNavigator,
   type NativeStackScreenProps,
 } from '@react-navigation/native-stack';
+import type { BottomTab } from '../components';
 import { useAppContainer } from '../di/AppContainer';
+import { HomeScreen } from '../features/home/HomeScreen';
 import { LoginScreen } from '../features/login/LoginScreen';
 import { SignupScreen } from '../features/signup/SignupScreen';
 import { WelcomeScreen } from '../features/welcome/WelcomeScreen';
@@ -20,7 +22,15 @@ export function RootNavigator() {
       <Stack.Screen name="Welcome" component={WelcomeRoute} />
       <Stack.Screen name="Login" component={LoginRoute} />
       <Stack.Screen name="Signup" component={SignupRoute} />
-      <Stack.Screen name="Home" component={PendingScreen} />
+      <Stack.Screen name="Home" component={HomeRoute} />
+      <Stack.Screen name="Search" component={PendingScreen} />
+      <Stack.Screen name="Orders" component={PendingScreen} />
+      <Stack.Screen name="Favorites" component={PendingScreen} />
+      <Stack.Screen name="Profile" component={PendingScreen} />
+      <Stack.Screen name="Cart" component={PendingScreen} />
+      <Stack.Screen name="Notifications" component={PendingScreen} />
+      <Stack.Screen name="Address" component={PendingScreen} />
+      <Stack.Screen name="Product" component={PendingScreen} />
     </Stack.Navigator>
   );
 }
@@ -68,6 +78,43 @@ function SignupRoute({
       onLogin={() => navigation.replace('Login')}
       onRegistered={() =>
         navigation.reset({ index: 0, routes: [{ name: 'Home' }] })
+      }
+    />
+  );
+}
+
+const tabRoutes: Record<
+  Exclude<BottomTab, 'home'>,
+  'Search' | 'Orders' | 'Favorites' | 'Profile'
+> = {
+  search: 'Search',
+  orders: 'Orders',
+  favorites: 'Favorites',
+  profile: 'Profile',
+};
+
+function HomeRoute({
+  navigation,
+}: NativeStackScreenProps<RootStackParamList, 'Home'>) {
+  const { catalogRepository, cartRepository } = useAppContainer();
+  return (
+    <HomeScreen
+      catalogRepository={catalogRepository}
+      cartRepository={cartRepository}
+      onOpenProduct={productId => navigation.navigate('Product', { productId })}
+      onSeeAll={() => navigation.navigate('Search')}
+      onProfile={() => navigation.navigate('Profile')}
+      onAddress={() => navigation.navigate('Address')}
+      onNotifications={() => navigation.navigate('Notifications')}
+      onCart={() => navigation.navigate('Cart')}
+      onSearch={() => navigation.navigate('Search')}
+      onTab={tab => {
+        if (tab !== 'home') {
+          navigation.navigate(tabRoutes[tab]);
+        }
+      }}
+      onSessionExpired={() =>
+        navigation.reset({ index: 0, routes: [{ name: 'Welcome' }] })
       }
     />
   );
