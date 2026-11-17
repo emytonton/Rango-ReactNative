@@ -19,6 +19,10 @@ import {
   createCatalogRepository,
   type CatalogRepository,
 } from '../data/catalog/catalogRepository';
+import {
+  createSearchRepository,
+  type SearchRepository,
+} from '../data/search/searchRepository';
 import { createKeychainStorage } from '../data/storage/secureStorage';
 
 export type AppContainer = {
@@ -26,6 +30,7 @@ export type AppContainer = {
   authRepository: AuthRepository;
   catalogRepository: CatalogRepository;
   cartRepository: CartRepository;
+  searchRepository: SearchRepository;
 };
 
 export function createAppContainer(): AppContainer {
@@ -42,6 +47,7 @@ export function createAppContainer(): AppContainer {
       authorizedCall,
     ),
     cartRepository: createCartRepository(http, authorizedCall),
+    searchRepository: createSearchRepository(http, authorizedCall),
   };
 }
 
