@@ -8,6 +8,7 @@ export * from './CheckboxLabel';
 export * from './Icon';
 export * from './InfoBanner';
 export * from './PasswordToggle';
+export * from './ProductImage';
 export * from './SearchBarButton';
 export * from './SectionHeader';
 export * from './Skeleton';
