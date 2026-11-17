@@ -1,0 +1,19 @@
+data,commit,issue,tela,metrica,valor,unidade,origem,observacao
+2026-11-17 19:28:15,720f741,12,Busca,build_debug_limpo,404.04,s,medido,tempo-build.sh
+2026-11-17 19:28:15,720f741,12,Busca,build_debug_incremental_sem_mudanca,4.07,s,medido,tempo-build.sh
+2026-11-17 19:28:15,720f741,12,Busca,build_debug_incremental_um_arquivo,31.63,s,medido,tempo-build.sh com src/features/search/SearchScreen.tsx alterado
+2026-11-17 19:35:49,720f741,12,Busca,build_release,445,s,medido,tempo de relógio do tamanho-apk.sh (:app:assembleRelease após o clean do tempo-build)
+2026-11-17 19:35:49,720f741,12,Busca,tamanho_apk_release,73983278,bytes,medido,tamanho-apk.sh; APK com as quatro ABIs do template
+2026-11-17 19:37:19,720f741,12,Busca,inicializacao_frio_release_mediana,776,ms,medido,inicializacao-frio.sh; 10 execuções no emulador Rango_Pixel_8_RN
+2026-11-17,720f741,12,Busca,install_debug,93.55,s,medido,gradlew installDebug após ligar a busca à navegação (build incremental e instalação no emulador)
+2026-11-17,720f741,12,Busca,install_debug_correcao,59.93,s,medido,gradlew installDebug após o módulo nativo de exclusão de gestos (inclui compilação Kotlin)
+2026-11-17,720f741,12,Busca,inicializacao_debug_primeira_abertura,5652,ms,medido,am start -W; 1 execução logo após o installDebug
+2026-11-17,720f741,12,Busca,npm_test,27.20,s,medido,npm test com cache do Jest limpo; 9 suítes e 31 testes
+2026-11-17 19:38:58,720f741,12,Busca,loc_gerado,188,linhas,medido,loc-por-origem.sh --issue 12
+2026-11-17 19:38:58,720f741,12,Busca,loc_assistido,1305,linhas,medido,loc-por-origem.sh --issue 12
+2026-11-17 19:38:58,720f741,12,Busca,loc_manual,42,linhas,medido,loc-por-origem.sh --issue 12
+2026-11-17,720f741,12,Busca,tempo_total,161,min,ajustado,intervalo informado 15:03-17:44
+2026-11-17,720f741,12,Busca,tempo_codigo,148,min,ajustado,segmentos da issue
+2026-11-17,720f741,12,Busca,tempo_configuracao_build,0,min,ajustado,segmentos da issue
+2026-11-17,720f741,12,Busca,tempo_depuracao,10,min,ajustado,segmentos da issue
+2026-11-17,720f741,12,Busca,tempo_espera_ferramenta,3,min,ajustado,segmentos da issue

@@ -1,11 +1,13 @@
 import {
   createNativeStackNavigator,
+  type NativeStackNavigationProp,
   type NativeStackScreenProps,
 } from '@react-navigation/native-stack';
 import type { BottomTab } from '../components';
 import { useAppContainer } from '../di/AppContainer';
 import { HomeScreen } from '../features/home/HomeScreen';
 import { LoginScreen } from '../features/login/LoginScreen';
+import { SearchScreen } from '../features/search/SearchScreen';
 import { SignupScreen } from '../features/signup/SignupScreen';
 import { WelcomeScreen } from '../features/welcome/WelcomeScreen';
 import { PendingScreen } from './PendingScreen';
@@ -23,7 +25,7 @@ export function RootNavigator() {
       <Stack.Screen name="Login" component={LoginRoute} />
       <Stack.Screen name="Signup" component={SignupRoute} />
       <Stack.Screen name="Home" component={HomeRoute} />
-      <Stack.Screen name="Search" component={PendingScreen} />
+      <Stack.Screen name="Search" component={SearchRoute} />
       <Stack.Screen name="Orders" component={PendingScreen} />
       <Stack.Screen name="Favorites" component={PendingScreen} />
       <Stack.Screen name="Profile" component={PendingScreen} />
@@ -102,20 +104,49 @@ function HomeRoute({
       catalogRepository={catalogRepository}
       cartRepository={cartRepository}
       onOpenProduct={productId => navigation.navigate('Product', { productId })}
-      onSeeAll={() => navigation.navigate('Search')}
+      onSeeAll={homeSection => navigation.navigate('Search', { homeSection })}
       onProfile={() => navigation.navigate('Profile')}
       onAddress={() => navigation.navigate('Address')}
       onNotifications={() => navigation.navigate('Notifications')}
       onCart={() => navigation.navigate('Cart')}
       onSearch={() => navigation.navigate('Search')}
-      onTab={tab => {
-        if (tab !== 'home') {
-          navigation.navigate(tabRoutes[tab]);
-        }
-      }}
-      onSessionExpired={() =>
-        navigation.reset({ index: 0, routes: [{ name: 'Welcome' }] })
-      }
+      onTab={tab => navigateToTab(navigation, tab)}
+      onSessionExpired={() => navigateToWelcome(navigation)}
     />
   );
+}
+
+function SearchRoute({
+  navigation,
+  route,
+}: NativeStackScreenProps<RootStackParamList, 'Search'>) {
+  const { searchRepository, catalogRepository, cartRepository } =
+    useAppContainer();
+  return (
+    <SearchScreen
+      searchRepository={searchRepository}
+      catalogRepository={catalogRepository}
+      cartRepository={cartRepository}
+      homeSection={route.params?.homeSection}
+      onOpenProduct={productId => navigation.navigate('Product', { productId })}
+      onTab={tab => navigateToTab(navigation, tab)}
+      onSessionExpired={() => navigateToWelcome(navigation)}
+    />
+  );
+}
+
+type RootNavigation = Pick<
+  NativeStackNavigationProp<RootStackParamList>,
+  'navigate' | 'popTo' | 'reset'
+>;
+
+function navigateToTab(navigation: RootNavigation, tab: BottomTab) {
+  navigation.popTo('Home');
+  if (tab !== 'home') {
+    navigation.navigate(tabRoutes[tab]);
+  }
+}
+
+function navigateToWelcome(navigation: RootNavigation) {
+  navigation.reset({ index: 0, routes: [{ name: 'Welcome' }] });
 }

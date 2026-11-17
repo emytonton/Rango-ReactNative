@@ -1,20 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { ProductCardModel, ToastKind } from '../../components';
-import {
-  formatDeliveryTime,
-  formatPrice,
-  formatRating,
-} from '../../core/format/formatters';
 import { ApiError, NetworkError } from '../../core/network/apiError';
-import { apiBaseUrl } from '../../core/network/config';
 import { SessionExpiredError } from '../../data/auth/authorizedCaller';
 import type { CartRepository } from '../../data/cart/cartRepository';
-import type {
-  Category,
-  Home,
-  ProductSummary,
-} from '../../data/catalog/catalogApi';
+import type { Category, Home } from '../../data/catalog/catalogApi';
 import type { CatalogRepository } from '../../data/catalog/catalogRepository';
+import { toProductCard } from '../catalog/productCard';
 
 export type HomeSectionModel = {
   key: string;
@@ -128,7 +119,7 @@ export function useHomeViewModel(
         if (request === categoryRequest.current) {
           setState(current => ({
             ...current,
-            categoryProducts: products.map(toCard),
+            categoryProducts: products.map(toProductCard),
             categoryLoading: false,
           }));
         }
@@ -202,7 +193,7 @@ function withHome(state: HomeState, home: Home): HomeState {
     sections: home.sections.map(section => ({
       key: section.key,
       title: section.title,
-      products: section.products.map(toCard),
+      products: section.products.map(toProductCard),
     })),
   };
 }
@@ -214,25 +205,6 @@ function initialsOf(name: string): string {
     .slice(0, 2)
     .map(part => part[0].toUpperCase())
     .join('');
-}
-
-function toCard(product: ProductSummary): ProductCardModel {
-  return {
-    id: product.id,
-    name: product.name,
-    restaurant: product.restaurant,
-    description: product.description,
-    price: formatPrice(product.price),
-    oldPrice: product.oldPrice ? formatPrice(product.oldPrice) : null,
-    rating: formatRating(product.rating),
-    deliveryTime: formatDeliveryTime(
-      product.deliveryTime.min,
-      product.deliveryTime.max,
-    ),
-    imageUrl: product.imageUrl ? apiBaseUrl + product.imageUrl : null,
-    imageHue: product.imageHue,
-    isFavorite: product.isFavorite,
-  };
 }
 
 function findProduct(state: HomeState, productId: string) {
