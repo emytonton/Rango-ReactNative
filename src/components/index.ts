@@ -1,5 +1,6 @@
 export * from './BackButton';
 export * from './BadgeIconButton';
+export * from './BottomBar';
 export * from './BrandMark';
 export * from './Buttons';
 export * from './CategoryChip';
