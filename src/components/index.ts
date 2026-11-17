@@ -4,6 +4,7 @@ export * from './BrandMark';
 export * from './Buttons';
 export * from './CategoryChip';
 export * from './Checkbox';
+export * from './ErrorState';
 export * from './CheckboxLabel';
 export * from './Icon';
 export * from './InfoBanner';
