@@ -1,4 +1,5 @@
 export * from './BackButton';
+export * from './BadgeIconButton';
 export * from './BrandMark';
 export * from './Buttons';
 export * from './Checkbox';
@@ -6,6 +7,7 @@ export * from './CheckboxLabel';
 export * from './Icon';
 export * from './InfoBanner';
 export * from './PasswordToggle';
+export * from './SearchBarButton';
 export * from './Skeleton';
 export * from './TextAction';
 export * from './TextField';
