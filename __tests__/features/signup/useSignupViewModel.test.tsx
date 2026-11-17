@@ -16,7 +16,7 @@ const filled = {
 async function renderViewModel(register: AuthRepository['register']) {
   const onMessage = jest.fn();
   const onRegistered = jest.fn();
-  const authRepository: AuthRepository = { register };
+  const authRepository: AuthRepository = { login: jest.fn(), register };
   const current: { value?: ViewModel } = {};
   function Harness() {
     current.value = useSignupViewModel(authRepository, {

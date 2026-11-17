@@ -9,7 +9,14 @@ export type SignupData = {
   passwordConfirmation: string;
 };
 
+export type LoginData = {
+  email: string;
+  password: string;
+  keepSignedIn: boolean;
+};
+
 export type AuthRepository = {
+  login(data: LoginData): Promise<User>;
   register(data: SignupData): Promise<User>;
 };
 
@@ -18,6 +25,15 @@ export function createAuthRepository(
   sessionRepository: SessionRepository,
 ): AuthRepository {
   return {
+    async login(data) {
+      const session = await api.login({
+        email: data.email.trim(),
+        password: data.password,
+        keepSignedIn: data.keepSignedIn,
+      });
+      await sessionRepository.save(session);
+      return session.user;
+    },
     async register(data) {
       const session = await api.register({
         name: data.name.trim(),
