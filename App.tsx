@@ -6,6 +6,7 @@ import {
 } from '@react-navigation/native';
 import { StatusBar } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { ToastProvider } from './src/components';
 import {
   AppContainerProvider,
   createAppContainer,
@@ -20,7 +21,9 @@ function App() {
     <SafeAreaProvider>
       <AppContainerProvider container={container}>
         <ThemeProvider>
-          <ThemedNavigation />
+          <ToastProvider>
+            <ThemedNavigation />
+          </ToastProvider>
         </ThemeProvider>
       </AppContainerProvider>
     </SafeAreaProvider>

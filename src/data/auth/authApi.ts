@@ -18,13 +18,28 @@ export type AuthSession = {
   user: User;
 };
 
+export type RegisterRequest = {
+  name: string;
+  email: string;
+  phone: string;
+  password: string;
+  passwordConfirmation: string;
+  acceptTerms: true;
+};
+
 export type AuthApi = {
+  register(request: RegisterRequest): Promise<AuthSession>;
   refresh(refreshToken: string): Promise<AuthSession>;
   logout(refreshToken: string): Promise<void>;
 };
 
 export function createAuthApi(http: HttpClient): AuthApi {
   return {
+    register: request =>
+      http.request<AuthSession>('/auth/register', {
+        method: 'POST',
+        body: request,
+      }),
     refresh: refreshToken =>
       http.request<AuthSession>('/auth/refresh', {
         method: 'POST',

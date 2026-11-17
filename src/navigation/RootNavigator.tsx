@@ -3,6 +3,7 @@ import {
   type NativeStackScreenProps,
 } from '@react-navigation/native-stack';
 import { useAppContainer } from '../di/AppContainer';
+import { SignupScreen } from '../features/signup/SignupScreen';
 import { WelcomeScreen } from '../features/welcome/WelcomeScreen';
 import { PendingScreen } from './PendingScreen';
 import type { RootStackParamList } from './routes';
@@ -17,7 +18,7 @@ export function RootNavigator() {
     >
       <Stack.Screen name="Welcome" component={WelcomeRoute} />
       <Stack.Screen name="Login" component={PendingScreen} />
-      <Stack.Screen name="Signup" component={PendingScreen} />
+      <Stack.Screen name="Signup" component={SignupRoute} />
       <Stack.Screen name="Home" component={PendingScreen} />
     </Stack.Navigator>
   );
@@ -33,6 +34,22 @@ function WelcomeRoute({
       onLogin={() => navigation.navigate('Login')}
       onSignup={() => navigation.navigate('Signup')}
       onSessionRestored={() =>
+        navigation.reset({ index: 0, routes: [{ name: 'Home' }] })
+      }
+    />
+  );
+}
+
+function SignupRoute({
+  navigation,
+}: NativeStackScreenProps<RootStackParamList, 'Signup'>) {
+  const { authRepository } = useAppContainer();
+  return (
+    <SignupScreen
+      authRepository={authRepository}
+      onBack={navigation.goBack}
+      onLogin={() => navigation.replace('Login')}
+      onRegistered={() =>
         navigation.reset({ index: 0, routes: [{ name: 'Home' }] })
       }
     />

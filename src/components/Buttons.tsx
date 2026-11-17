@@ -1,4 +1,10 @@
-import { Pressable, StyleSheet, Text, type ViewStyle } from 'react-native';
+import {
+  ActivityIndicator,
+  Pressable,
+  StyleSheet,
+  Text,
+  type ViewStyle,
+} from 'react-native';
 import { radius, sizes, useTheme } from '../theme';
 
 type ButtonProps = {
@@ -8,25 +14,42 @@ type ButtonProps = {
   style?: ViewStyle;
 };
 
-export function PrimaryButton({ text, onPress, disabled, style }: ButtonProps) {
+type PrimaryButtonProps = ButtonProps & {
+  loading?: boolean;
+  loadingText?: string;
+  dimmed?: boolean;
+};
+
+export function PrimaryButton({
+  text,
+  onPress,
+  disabled,
+  style,
+  loading = false,
+  loadingText,
+  dimmed = false,
+}: PrimaryButtonProps) {
   const { colors, typography } = useTheme();
   return (
     <Pressable
       accessibilityRole="button"
-      onPress={onPress}
+      accessibilityState={{ busy: loading, disabled }}
+      onPress={loading ? undefined : onPress}
       disabled={disabled}
       style={({ pressed }) => [
         styles.base,
-        styles.primaryShadow,
+        styles.row,
+        !(dimmed || disabled) && styles.primaryShadow,
         {
           backgroundColor: colors.primary,
-          opacity: pressed || disabled ? 0.8 : 1,
+          opacity: dimmed || disabled ? 0.55 : pressed ? 0.8 : 1,
         },
         style,
       ]}
     >
+      {loading && <ActivityIndicator size={19} color={colors.onPrimary} />}
       <Text style={[typography.button, { color: colors.onPrimary }]}>
-        {text}
+        {loading && loadingText ? loadingText : text}
       </Text>
     </Pressable>
   );
@@ -67,6 +90,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     alignSelf: 'stretch',
+  },
+  row: {
+    flexDirection: 'row',
+    gap: 9,
   },
   primaryShadow: {
     boxShadow: '0px 10px 22px -10px rgba(255, 107, 0, 0.75)',
