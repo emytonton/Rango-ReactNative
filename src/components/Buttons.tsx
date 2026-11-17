@@ -6,6 +6,7 @@ import {
   type ViewStyle,
 } from 'react-native';
 import { radius, sizes, useTheme } from '../theme';
+import { Icon } from './Icon';
 
 type ButtonProps = {
   text: string;
@@ -18,6 +19,7 @@ type PrimaryButtonProps = ButtonProps & {
   loading?: boolean;
   loadingText?: string;
   dimmed?: boolean;
+  successText?: string;
 };
 
 export function PrimaryButton({
@@ -28,28 +30,40 @@ export function PrimaryButton({
   loading = false,
   loadingText,
   dimmed = false,
+  successText,
 }: PrimaryButtonProps) {
   const { colors, typography } = useTheme();
+  const success = successText !== undefined;
+  const label = success
+    ? successText
+    : loading && loadingText
+    ? loadingText
+    : text;
   return (
     <Pressable
       accessibilityRole="button"
       accessibilityState={{ busy: loading, disabled }}
-      onPress={loading ? undefined : onPress}
+      onPress={loading || success ? undefined : onPress}
       disabled={disabled}
       style={({ pressed }) => [
         styles.base,
         styles.row,
-        !(dimmed || disabled) && styles.primaryShadow,
+        !(dimmed || disabled || success) && styles.primaryShadow,
         {
-          backgroundColor: colors.primary,
+          backgroundColor: success ? colors.success : colors.primary,
           opacity: dimmed || disabled ? 0.55 : pressed ? 0.8 : 1,
         },
         style,
       ]}
     >
-      {loading && <ActivityIndicator size={19} color={colors.onPrimary} />}
+      {loading && !success && (
+        <ActivityIndicator size={19} color={colors.onPrimary} />
+      )}
+      {success && (
+        <Icon name="checkCircle" size={22} color={colors.onPrimary} />
+      )}
       <Text style={[typography.button, { color: colors.onPrimary }]}>
-        {loading && loadingText ? loadingText : text}
+        {label}
       </Text>
     </Pressable>
   );

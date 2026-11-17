@@ -1,0 +1,18 @@
+data,commit,issue,tela,metrica,valor,unidade,origem,observacao
+2026-11-17 13:35:58,364acd2,2,Login,build_debug_limpo,442.06,s,medido,tempo-build.sh
+2026-11-17 13:35:58,364acd2,2,Login,build_debug_incremental_sem_mudanca,13.90,s,medido,tempo-build.sh
+2026-11-17 13:35:58,364acd2,2,Login,build_debug_incremental_um_arquivo,33.21,s,medido,tempo-build.sh com src/features/login/LoginScreen.tsx alterado
+2026-11-17 13:42:39,364acd2,2,Login,build_release,395,s,medido,tempo de relógio do tamanho-apk.sh (:app:assembleRelease após o clean do tempo-build)
+2026-11-17 13:42:39,364acd2,2,Login,tamanho_apk_release,73905622,bytes,medido,tamanho-apk.sh; APK com as quatro ABIs do template
+2026-11-17 13:43:58,364acd2,2,Login,inicializacao_frio_release_mediana,554,ms,medido,inicializacao-frio.sh; 10 execuções no emulador Rango_Pixel_8_RN
+2026-11-17,364acd2,2,Login,install_debug,46.75,s,medido,gradlew installDebug com src/features/login/LoginScreen.tsx alterado (build incremental e instalação no emulador)
+2026-11-17,364acd2,2,Login,inicializacao_debug_primeira_abertura,2951,ms,medido,am start -W; 1 execução logo após o installDebug
+2026-11-17,364acd2,2,Login,npm_test,20.47,s,medido,npm test com cache do Jest limpo; 5 suítes e 13 testes
+2026-11-17 13:26:05,364acd2,2,Login,loc_gerado,0,linhas,medido,loc-por-origem.sh --issue 2
+2026-11-17 13:26:05,364acd2,2,Login,loc_assistido,414,linhas,medido,loc-por-origem.sh --issue 2
+2026-11-17 13:26:05,364acd2,2,Login,loc_manual,47,linhas,medido,loc-por-origem.sh --issue 2
+2026-11-17,364acd2,2,Login,tempo_total,38,min,ajustado,intervalo informado 08:31-09:09
+2026-11-17,364acd2,2,Login,tempo_codigo,33,min,ajustado,segmentos da issue
+2026-11-17,364acd2,2,Login,tempo_configuracao_build,0,min,ajustado,segmentos da issue
+2026-11-17,364acd2,2,Login,tempo_depuracao,2,min,ajustado,segmentos da issue
+2026-11-17,364acd2,2,Login,tempo_espera_ferramenta,3,min,ajustado,segmentos da issue

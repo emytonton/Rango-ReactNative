@@ -27,7 +27,14 @@ export type RegisterRequest = {
   acceptTerms: true;
 };
 
+export type LoginRequest = {
+  email: string;
+  password: string;
+  keepSignedIn: boolean;
+};
+
 export type AuthApi = {
+  login(request: LoginRequest): Promise<AuthSession>;
   register(request: RegisterRequest): Promise<AuthSession>;
   refresh(refreshToken: string): Promise<AuthSession>;
   logout(refreshToken: string): Promise<void>;
@@ -35,6 +42,11 @@ export type AuthApi = {
 
 export function createAuthApi(http: HttpClient): AuthApi {
   return {
+    login: request =>
+      http.request<AuthSession>('/auth/login', {
+        method: 'POST',
+        body: request,
+      }),
     register: request =>
       http.request<AuthSession>('/auth/register', {
         method: 'POST',

@@ -1,4 +1,4 @@
-import type { Ref } from 'react';
+import type { ReactNode, Ref } from 'react';
 import {
   StyleSheet,
   Text,
@@ -15,6 +15,7 @@ type TextFieldProps = Omit<TextInputProps, 'style'> & {
   icon: IconName;
   error?: string;
   valid?: boolean;
+  trailing?: ReactNode;
   ref?: Ref<TextInputInstance>;
 };
 
@@ -23,6 +24,7 @@ export function TextField({
   icon,
   error,
   valid = false,
+  trailing,
   ref,
   ...inputProps
 }: TextFieldProps) {
@@ -51,6 +53,7 @@ export function TextField({
           style={[styles.input, { color: colors.text }]}
           {...inputProps}
         />
+        {trailing}
         {valid && !error && (
           <Icon name="checkCircle" size={19} color={colors.success} />
         )}
