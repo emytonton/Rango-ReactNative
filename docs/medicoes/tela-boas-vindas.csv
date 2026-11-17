@@ -1,0 +1,17 @@
+data,commit,issue,tela,metrica,valor,unidade,origem,observacao
+2026-11-16 21:18:43,b3152b5,9,Boas-vindas,build_debug_limpo,416.03,s,medido,tempo-build.sh; inclui a compilação nativa de react-native-screens; react-native-svg e react-native-keychain
+2026-11-16 21:18:43,b3152b5,9,Boas-vindas,build_debug_incremental_sem_mudanca,10.80,s,medido,tempo-build.sh
+2026-11-16 21:18:43,b3152b5,9,Boas-vindas,build_debug_incremental_um_arquivo,32.97,s,medido,tempo-build.sh com src/features/welcome/WelcomeScreen.tsx alterado
+2026-11-16 21:28:23,b3152b5,9,Boas-vindas,build_release,554.14,s,medido,tempo de relógio do tamanho-apk.sh (:app:assembleRelease após o clean do tempo-build)
+2026-11-16 21:28:23,b3152b5,9,Boas-vindas,tamanho_apk_release,73877958,bytes,medido,tamanho-apk.sh; APK com as quatro ABIs do template
+2026-11-16 21:30:17,b3152b5,9,Boas-vindas,inicializacao_frio_release_mediana,851.5,ms,medido,inicializacao-frio.sh; 10 execuções no emulador Rango_Pixel_8_RN
+2026-11-16,b3152b5,9,Boas-vindas,inicializacao_debug_primeira_abertura,4562,ms,medido,am start -W; 1 execução; o debug espera 5 s pelo Metro antes de usar o bundle embutido
+2026-11-16,b3152b5,9,Boas-vindas,npm_test,14.49,s,medido,npm test com cache do Jest limpo; 2 suítes e 4 testes
+2026-11-16 21:30:23,b3152b5,9,Boas-vindas,loc_gerado,0,linhas,medido,loc-por-origem.sh --issue 9
+2026-11-16 21:30:23,b3152b5,9,Boas-vindas,loc_assistido,272,linhas,medido,loc-por-origem.sh --issue 9
+2026-11-16 21:30:23,b3152b5,9,Boas-vindas,loc_manual,34,linhas,medido,loc-por-origem.sh --issue 9
+2026-11-16,b3152b5,9,Boas-vindas,tempo_total,143,min,ajustado,intervalo informado 10:02-12:25
+2026-11-16,b3152b5,9,Boas-vindas,tempo_codigo,108,min,ajustado,segmentos da issue
+2026-11-16,b3152b5,9,Boas-vindas,tempo_configuracao_build,20,min,ajustado,segmentos da issue
+2026-11-16,b3152b5,9,Boas-vindas,tempo_depuracao,9,min,ajustado,segmentos da issue
+2026-11-16,b3152b5,9,Boas-vindas,tempo_espera_ferramenta,6,min,ajustado,segmentos da issue

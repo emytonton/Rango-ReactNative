@@ -76,6 +76,8 @@ O `android/app/build.gradle` define `debuggableVariants = []`, então o build de
 
 Dez execuções de `adb shell am start -W`, com `am force-stop` antes de cada uma, lendo o campo `TotalTime`. Registra a mediana e os dez valores. Usar build release instalado, aparelho ou emulador sempre o mesmo, tela desbloqueada.
 
+O React Native usa o emulador `Rango_Pixel_8_RN`, com a mesma configuração do `Rango_Pixel_8` do Kotlin (Pixel 8, Android 36, Google APIs x86_64, 2 GB de RAM, 4 núcleos). Os dois apps têm o pacote `com.rango.delivery` com assinaturas diferentes e não podem ficar instalados no mesmo emulador.
+
 ## 7. Memória e CPU
 
 `tools/metrics/memoria-cpu.sh [pacote/atividade]`
@@ -140,7 +142,11 @@ Todo bug encontrado vira issue com os labels `bug` e `framework:react-native`, c
 
 Exporta as issues fechadas (ou todas, com `--todas`) para `docs/medicoes/issues-AAAA-MM-DD.csv`, com número, título, estado, datas, milestone, labels, todos os campos do formulário (na ordem do template) e os segmentos encontrados nos comentários. Rodar a cada 3 ou 4 telas para consolidar o conjunto de dados. O arquivo é UTF-8 separado por vírgula.
 
-## 12. Métricas qualitativas
+## 12. Medições por tela
+
+Cada tela tem um `docs/medicoes/tela-<tela>.csv` com uma linha por métrica: `data,commit,issue,tela,metrica,valor,unidade,origem,observacao`. Reúne os valores dos scripts (build, APK, inicialização, LOC), o tempo do `npm test` e os tempos da issue. A coluna `origem` separa o que foi `medido` do que foi `ajustado` ao intervalo de trabalho informado (segmentos de tempo). Os CSVs por métrica continuam sendo a fonte da série histórica.
+
+## 13. Métricas qualitativas
 
 Dimensões: facilidade de uso, documentação, depuração, curva de aprendizado, acesso a APIs nativas e impacto da IA. Coleta em três momentos:
 

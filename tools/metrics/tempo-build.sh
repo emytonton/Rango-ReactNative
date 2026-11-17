@@ -20,7 +20,7 @@ fi
 medir() {
   local inicio fim
   inicio=$(date +%s%N)
-  (cd android && ./gradlew "$tarefa" --profile "$@" --quiet)
+  (cd android && ./gradlew "$tarefa" --profile "$@" --quiet) >&2
   fim=$(date +%s%N)
   awk -v a="$inicio" -v b="$fim" 'BEGIN{printf "%.2f", (b-a)/1e9}'
 }
