@@ -4,6 +4,7 @@ export * from './Buttons';
 export * from './Checkbox';
 export * from './Icon';
 export * from './InfoBanner';
+export * from './PasswordToggle';
 export * from './TextAction';
 export * from './TextField';
 export * from './Toast';
