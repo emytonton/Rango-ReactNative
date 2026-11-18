@@ -11,7 +11,12 @@ type AddCartItemRequest = {
 type Cart = { summary: { itemCount: number } };
 
 export type CartRepository = {
-  addItem(productId: string, quantity?: number): Promise<number>;
+  addItem(
+    productId: string,
+    quantity?: number,
+    addonIds?: string[],
+    notes?: string,
+  ): Promise<number>;
 };
 
 export function createCartRepository(
@@ -19,12 +24,12 @@ export function createCartRepository(
   call: AuthorizedCaller,
 ): CartRepository {
   return {
-    addItem: (productId, quantity = 1) => {
+    addItem: (productId, quantity = 1, addonIds = [], notes = '') => {
       const body: AddCartItemRequest = {
         productId,
         quantity,
-        addonIds: [],
-        notes: '',
+        addonIds,
+        notes,
       };
       return call(accessToken =>
         http.request<Cart>('/cart/items', {
