@@ -5,6 +5,7 @@ import {
 } from '@react-navigation/native-stack';
 import type { BottomTab } from '../components';
 import { useAppContainer } from '../di/AppContainer';
+import { AddressScreen } from '../features/address/AddressScreen';
 import { CartScreen } from '../features/cart/CartScreen';
 import { HomeScreen } from '../features/home/HomeScreen';
 import { LoginScreen } from '../features/login/LoginScreen';
@@ -33,7 +34,7 @@ export function RootNavigator() {
       <Stack.Screen name="Profile" component={PendingScreen} />
       <Stack.Screen name="Cart" component={CartRoute} />
       <Stack.Screen name="Notifications" component={PendingScreen} />
-      <Stack.Screen name="Address" component={PendingScreen} />
+      <Stack.Screen name="Address" component={AddressRoute} />
       <Stack.Screen name="Product" component={ProductRoute} />
       <Stack.Screen name="Checkout" component={PendingScreen} />
     </Stack.Navigator>
@@ -166,6 +167,19 @@ function CartRoute({
       onHome={() => navigateToTab(navigation, 'home')}
       onOpenProduct={productId => navigation.navigate('Product', { productId })}
       onCheckout={() => navigation.navigate('Checkout')}
+      onSessionExpired={() => navigateToWelcome(navigation)}
+    />
+  );
+}
+
+function AddressRoute({
+  navigation,
+}: NativeStackScreenProps<RootStackParamList, 'Address'>) {
+  const { addressRepository } = useAppContainer();
+  return (
+    <AddressScreen
+      addressRepository={addressRepository}
+      onBack={navigation.goBack}
       onSessionExpired={() => navigateToWelcome(navigation)}
     />
   );
