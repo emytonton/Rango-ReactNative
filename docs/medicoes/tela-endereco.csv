@@ -1,0 +1,18 @@
+data,commit,issue,tela,metrica,valor,unidade,origem,observacao
+2026-11-18 20:52:10,4631c4f,16,Endereço,build_debug_limpo,380.59,s,medido,tempo-build.sh
+2026-11-18 20:52:10,4631c4f,16,Endereço,build_debug_incremental_sem_mudanca,9.15,s,medido,tempo-build.sh
+2026-11-18 20:52:10,4631c4f,16,Endereço,build_debug_incremental_um_arquivo,30.68,s,medido,tempo-build.sh com src/features/address/AddressScreen.tsx alterado
+2026-11-18 20:59:22,4631c4f,16,Endereço,build_release,421,s,medido,tempo de relógio do tamanho-apk.sh (:app:assembleRelease após o clean do tempo-build)
+2026-11-18 20:59:22,4631c4f,16,Endereço,tamanho_apk_release,74038166,bytes,medido,tamanho-apk.sh; APK com as quatro ABIs do template
+2026-11-18 21:00:57,4631c4f,16,Endereço,inicializacao_frio_release_mediana,618.5,ms,medido,inicializacao-frio.sh; 10 execuções no emulador Rango_Pixel_8_RN
+2026-11-18,4631c4f,16,Endereço,install_debug,106.36,s,medido,gradlew installDebug após ligar o endereço à navegação (build incremental e instalação no emulador)
+2026-11-18,4631c4f,16,Endereço,inicializacao_debug_primeira_abertura,7855,ms,medido,am start -W; 1 execução logo após o installDebug
+2026-11-18,4631c4f,16,Endereço,npm_test,31.33,s,medido,npm test com cache do Jest limpo; 12 suítes e 49 testes
+2026-11-19 09:58:55,4631c4f,16,Endereço,loc_gerado,0,linhas,medido,loc-por-origem.sh --issue 16
+2026-11-19 09:58:55,4631c4f,16,Endereço,loc_assistido,617,linhas,medido,loc-por-origem.sh --issue 16
+2026-11-19 09:58:55,4631c4f,16,Endereço,loc_manual,98,linhas,medido,loc-por-origem.sh --issue 16
+2026-11-18,4631c4f,16,Endereço,tempo_total,105,min,ajustado,intervalo informado 11:32-13:17
+2026-11-18,4631c4f,16,Endereço,tempo_codigo,102,min,ajustado,segmentos da issue
+2026-11-18,4631c4f,16,Endereço,tempo_configuracao_build,0,min,ajustado,segmentos da issue
+2026-11-18,4631c4f,16,Endereço,tempo_depuracao,1,min,ajustado,segmentos da issue
+2026-11-18,4631c4f,16,Endereço,tempo_espera_ferramenta,2,min,ajustado,segmentos da issue
