@@ -14,6 +14,7 @@ export * from './DashedButton';
 export * from './Icon';
 export * from './OverlayIconButton';
 export * from './InfoBanner';
+export * from './MapPreview';
 export * from './PasswordToggle';
 export * from './ProductCards';
 export * from './ProductImage';
