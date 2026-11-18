@@ -7,6 +7,7 @@ import type { BottomTab } from '../components';
 import { useAppContainer } from '../di/AppContainer';
 import { HomeScreen } from '../features/home/HomeScreen';
 import { LoginScreen } from '../features/login/LoginScreen';
+import { ProductScreen } from '../features/product/ProductScreen';
 import { SearchScreen } from '../features/search/SearchScreen';
 import { SignupScreen } from '../features/signup/SignupScreen';
 import { WelcomeScreen } from '../features/welcome/WelcomeScreen';
@@ -32,7 +33,7 @@ export function RootNavigator() {
       <Stack.Screen name="Cart" component={PendingScreen} />
       <Stack.Screen name="Notifications" component={PendingScreen} />
       <Stack.Screen name="Address" component={PendingScreen} />
-      <Stack.Screen name="Product" component={PendingScreen} />
+      <Stack.Screen name="Product" component={ProductRoute} />
     </Stack.Navigator>
   );
 }
@@ -130,6 +131,23 @@ function SearchRoute({
       homeSection={route.params?.homeSection}
       onOpenProduct={productId => navigation.navigate('Product', { productId })}
       onTab={tab => navigateToTab(navigation, tab)}
+      onSessionExpired={() => navigateToWelcome(navigation)}
+    />
+  );
+}
+
+function ProductRoute({
+  navigation,
+  route,
+}: NativeStackScreenProps<RootStackParamList, 'Product'>) {
+  const { catalogRepository, cartRepository } = useAppContainer();
+  return (
+    <ProductScreen
+      productId={route.params.productId}
+      catalogRepository={catalogRepository}
+      cartRepository={cartRepository}
+      onBack={navigation.goBack}
+      onAdded={navigation.goBack}
       onSessionExpired={() => navigateToWelcome(navigation)}
     />
   );
