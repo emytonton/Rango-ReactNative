@@ -113,6 +113,7 @@ function ProductContent({ product, viewModel, onBack }: ProductContentProps) {
   return (
     <View style={styles.screen}>
       <ScrollView
+        showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="handled"
         scrollEventThrottle={16}
         onScroll={event =>
