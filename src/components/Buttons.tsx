@@ -5,7 +5,7 @@ import {
   Text,
   type ViewStyle,
 } from 'react-native';
-import { radius, sizes, useTheme } from '../theme';
+import { fonts, radius, sizes, useTheme } from '../theme';
 import { Icon, type IconName } from './Icon';
 
 type ButtonProps = {
@@ -21,6 +21,7 @@ type PrimaryButtonProps = ButtonProps & {
   dimmed?: boolean;
   successText?: string;
   icon?: IconName;
+  trailingText?: string;
 };
 
 export function PrimaryButton({
@@ -33,6 +34,7 @@ export function PrimaryButton({
   dimmed = false,
   successText,
   icon,
+  trailingText,
 }: PrimaryButtonProps) {
   const { colors, typography } = useTheme();
   const success = successText !== undefined;
@@ -50,6 +52,7 @@ export function PrimaryButton({
       style={({ pressed }) => [
         styles.base,
         styles.row,
+        trailingText !== undefined && styles.spread,
         !(dimmed || disabled || success) && styles.primaryShadow,
         {
           backgroundColor: success ? colors.success : colors.primary,
@@ -70,6 +73,11 @@ export function PrimaryButton({
       <Text style={[typography.button, { color: colors.onPrimary }]}>
         {label}
       </Text>
+      {trailingText !== undefined && (
+        <Text style={[typography.button, { color: colors.onPrimary }]}>
+          {trailingText}
+        </Text>
+      )}
     </Pressable>
   );
 }
@@ -102,6 +110,23 @@ export function SecondaryButton({
   );
 }
 
+export function GhostButton({ text, onPress, style }: ButtonProps) {
+  const { colors } = useTheme();
+  return (
+    <Pressable
+      accessibilityRole="button"
+      onPress={onPress}
+      style={({ pressed }) => [
+        styles.ghost,
+        { opacity: pressed ? 0.6 : 1 },
+        style,
+      ]}
+    >
+      <Text style={[styles.ghostText, { color: colors.text2 }]}>{text}</Text>
+    </Pressable>
+  );
+}
+
 const styles = StyleSheet.create({
   base: {
     height: sizes.buttonHeight,
@@ -120,4 +145,12 @@ const styles = StyleSheet.create({
   secondaryBorder: {
     borderWidth: 1.5,
   },
+  spread: { justifyContent: 'space-between', paddingHorizontal: 20 },
+  ghost: {
+    height: 46,
+    borderRadius: 15,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  ghostText: { fontFamily: fonts.bold, fontSize: 13.5 },
 });
