@@ -5,6 +5,7 @@ import {
 } from '@react-navigation/native-stack';
 import type { BottomTab } from '../components';
 import { useAppContainer } from '../di/AppContainer';
+import { CartScreen } from '../features/cart/CartScreen';
 import { HomeScreen } from '../features/home/HomeScreen';
 import { LoginScreen } from '../features/login/LoginScreen';
 import { ProductScreen } from '../features/product/ProductScreen';
@@ -30,10 +31,11 @@ export function RootNavigator() {
       <Stack.Screen name="Orders" component={PendingScreen} />
       <Stack.Screen name="Favorites" component={PendingScreen} />
       <Stack.Screen name="Profile" component={PendingScreen} />
-      <Stack.Screen name="Cart" component={PendingScreen} />
+      <Stack.Screen name="Cart" component={CartRoute} />
       <Stack.Screen name="Notifications" component={PendingScreen} />
       <Stack.Screen name="Address" component={PendingScreen} />
       <Stack.Screen name="Product" component={ProductRoute} />
+      <Stack.Screen name="Checkout" component={PendingScreen} />
     </Stack.Navigator>
   );
 }
@@ -148,6 +150,22 @@ function ProductRoute({
       cartRepository={cartRepository}
       onBack={navigation.goBack}
       onAdded={navigation.goBack}
+      onSessionExpired={() => navigateToWelcome(navigation)}
+    />
+  );
+}
+
+function CartRoute({
+  navigation,
+}: NativeStackScreenProps<RootStackParamList, 'Cart'>) {
+  const { cartRepository } = useAppContainer();
+  return (
+    <CartScreen
+      cartRepository={cartRepository}
+      onBack={navigation.goBack}
+      onHome={() => navigateToTab(navigation, 'home')}
+      onOpenProduct={productId => navigation.navigate('Product', { productId })}
+      onCheckout={() => navigation.navigate('Checkout')}
       onSessionExpired={() => navigateToWelcome(navigation)}
     />
   );

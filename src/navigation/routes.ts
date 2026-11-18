@@ -11,6 +11,7 @@ export type RootStackParamList = {
   Notifications: undefined;
   Address: undefined;
   Product: { productId: string };
+  Checkout: undefined;
 };
 
 export const routeTitles: Record<keyof RootStackParamList, string> = {
@@ -26,4 +27,5 @@ export const routeTitles: Record<keyof RootStackParamList, string> = {
   Notifications: 'Notificações',
   Address: 'Endereço',
   Product: 'Produto',
+  Checkout: 'Checkout',
 };
