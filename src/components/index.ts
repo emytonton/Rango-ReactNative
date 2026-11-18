@@ -24,5 +24,6 @@ export * from './Skeleton';
 export * from './Slider';
 export * from './StatCard';
 export * from './TextAction';
+export * from './TextArea';
 export * from './TextField';
 export * from './Toast';
