@@ -16,6 +16,7 @@ export * from './OverlayIconButton';
 export * from './InfoBanner';
 export * from './MapPreview';
 export * from './PasswordToggle';
+export * from './PlainField';
 export * from './ProductCards';
 export * from './ProductImage';
 export * from './QuantityStepper';
