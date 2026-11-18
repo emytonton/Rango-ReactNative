@@ -1,0 +1,18 @@
+data,commit,issue,tela,metrica,valor,unidade,origem,observacao
+2026-11-18 09:23:17,628d404,14,Carrinho,build_debug_limpo,339.16,s,medido,tempo-build.sh
+2026-11-18 09:23:17,628d404,14,Carrinho,build_debug_incremental_sem_mudanca,9.45,s,medido,tempo-build.sh
+2026-11-18 09:23:17,628d404,14,Carrinho,build_debug_incremental_um_arquivo,27.17,s,medido,tempo-build.sh com src/features/cart/CartScreen.tsx alterado
+2026-11-18 09:29:34,628d404,14,Carrinho,build_release,368,s,medido,tempo de relógio do tamanho-apk.sh (:app:assembleRelease após o clean do tempo-build)
+2026-11-18 09:29:34,628d404,14,Carrinho,tamanho_apk_release,74021826,bytes,medido,tamanho-apk.sh; APK com as quatro ABIs do template
+2026-11-18 09:30:46,628d404,14,Carrinho,inicializacao_frio_release_mediana,527,ms,medido,inicializacao-frio.sh; 10 execuções no emulador Rango_Pixel_8_RN
+2026-11-18,628d404,14,Carrinho,install_debug,37.19,s,medido,gradlew installDebug após ligar o carrinho à navegação (build incremental e instalação no emulador)
+2026-11-18,628d404,14,Carrinho,inicializacao_debug_primeira_abertura,2506,ms,medido,am start -W; 1 execução logo após o installDebug
+2026-11-18,628d404,14,Carrinho,npm_test,24.79,s,medido,npm test com cache do Jest limpo; 11 suítes e 43 testes
+2026-11-18 09:32:17,628d404,14,Carrinho,loc_gerado,0,linhas,medido,loc-por-origem.sh --issue 14
+2026-11-18 09:32:17,628d404,14,Carrinho,loc_assistido,907,linhas,medido,loc-por-origem.sh --issue 14
+2026-11-18 09:32:17,628d404,14,Carrinho,loc_manual,21,linhas,medido,loc-por-origem.sh --issue 14
+2026-11-18,628d404,14,Carrinho,tempo_total,190,min,ajustado,intervalo informado 08:03-11:13
+2026-11-18,628d404,14,Carrinho,tempo_codigo,187,min,ajustado,segmentos da issue
+2026-11-18,628d404,14,Carrinho,tempo_configuracao_build,0,min,ajustado,segmentos da issue
+2026-11-18,628d404,14,Carrinho,tempo_depuracao,2,min,ajustado,segmentos da issue
+2026-11-18,628d404,14,Carrinho,tempo_espera_ferramenta,1,min,ajustado,segmentos da issue

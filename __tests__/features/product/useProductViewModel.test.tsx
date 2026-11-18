@@ -43,6 +43,11 @@ async function renderViewModel(
   };
   const cartRepository: CartRepository = {
     addItem: jest.fn(() => Promise.resolve(2)),
+    cart: jest.fn(),
+    updateQuantity: jest.fn(),
+    removeItem: jest.fn(),
+    clear: jest.fn(),
+    applyCoupon: jest.fn(),
     ...cart,
   };
   const current: { value?: ViewModel } = {};
