@@ -1,3 +1,5 @@
+import { useCallback } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
@@ -65,7 +67,12 @@ export function HomeScreen({
     onMessage: toast.show,
     onSessionExpired: navigation.onSessionExpired,
   });
-  const { state } = viewModel;
+  const { state, refresh } = viewModel;
+  useFocusEffect(
+    useCallback(() => {
+      refresh();
+    }, [refresh]),
+  );
   const productActions: ProductActions = {
     onOpen: navigation.onOpenProduct,
     onToggleFavorite: viewModel.toggleFavorite,

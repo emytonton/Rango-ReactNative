@@ -6,7 +6,7 @@ import {
   type ViewStyle,
 } from 'react-native';
 import { radius, sizes, useTheme } from '../theme';
-import { Icon } from './Icon';
+import { Icon, type IconName } from './Icon';
 
 type ButtonProps = {
   text: string;
@@ -20,6 +20,7 @@ type PrimaryButtonProps = ButtonProps & {
   loadingText?: string;
   dimmed?: boolean;
   successText?: string;
+  icon?: IconName;
 };
 
 export function PrimaryButton({
@@ -31,6 +32,7 @@ export function PrimaryButton({
   loadingText,
   dimmed = false,
   successText,
+  icon,
 }: PrimaryButtonProps) {
   const { colors, typography } = useTheme();
   const success = successText !== undefined;
@@ -61,6 +63,9 @@ export function PrimaryButton({
       )}
       {success && (
         <Icon name="checkCircle" size={22} color={colors.onPrimary} />
+      )}
+      {icon && !loading && !success && (
+        <Icon name={icon} size={20} color={colors.onPrimary} />
       )}
       <Text style={[typography.button, { color: colors.onPrimary }]}>
         {label}

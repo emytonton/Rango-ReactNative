@@ -18,6 +18,13 @@ export type ProductSummary = {
   isFavorite: boolean;
 };
 
+export type ProductAddon = { id: string; name: string; price: number };
+
+export type ProductDetail = ProductSummary & {
+  ingredients: string;
+  addons: ProductAddon[];
+};
+
 export type HomeSection = {
   key: string;
   title: string;
@@ -48,6 +55,12 @@ export function createCatalogApi(http: HttpClient) {
           { accessToken },
         )
         .then(page => page.data),
+
+    product: (accessToken: string, productId: string) =>
+      http.request<ProductDetail>(
+        `/products/${encodeURIComponent(productId)}`,
+        { accessToken },
+      ),
 
     setFavorite: (accessToken: string, productId: string, favorite: boolean) =>
       http.request<{ productId: string; isFavorite: boolean }>(

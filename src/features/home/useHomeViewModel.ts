@@ -178,7 +178,21 @@ export function useHomeViewModel(
     [cartRepository, handleFailure],
   );
 
-  return { state, load, selectCategory, toggleFavorite, addToCart };
+  const refresh = useCallback(async () => {
+    if (stateRef.current.loading) {
+      return;
+    }
+    try {
+      const home = await catalogRepository.home();
+      setState(current => ({ ...withHome(current, home), errorMessage: null }));
+    } catch (error) {
+      if (error instanceof SessionExpiredError) {
+        callbacksRef.current.onSessionExpired();
+      }
+    }
+  }, [catalogRepository]);
+
+  return { state, load, refresh, selectCategory, toggleFavorite, addToCart };
 }
 
 function withHome(state: HomeState, home: Home): HomeState {

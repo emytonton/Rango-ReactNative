@@ -49,6 +49,7 @@ async function renderViewModel(
   const catalogRepository: CatalogRepository = {
     home: jest.fn(),
     productsByCategory: jest.fn(),
+    product: jest.fn(),
     setFavorite: jest.fn(() => Promise.resolve(true)),
     ...catalog,
   };
