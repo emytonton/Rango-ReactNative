@@ -24,6 +24,10 @@ import {
   type CatalogRepository,
 } from '../data/catalog/catalogRepository';
 import {
+  createOrderRepository,
+  type OrderRepository,
+} from '../data/order/orderRepository';
+import {
   createPaymentRepository,
   type PaymentRepository,
 } from '../data/payment/paymentRepository';
@@ -46,6 +50,7 @@ export type AppContainer = {
   addressRepository: AddressRepository;
   paymentRepository: PaymentRepository;
   paymentSelection: PaymentSelection;
+  orderRepository: OrderRepository;
 };
 
 export function createAppContainer(): AppContainer {
@@ -66,6 +71,7 @@ export function createAppContainer(): AppContainer {
     addressRepository: createAddressRepository(http, authorizedCall),
     paymentRepository: createPaymentRepository(http, authorizedCall),
     paymentSelection: createPaymentSelection(),
+    orderRepository: createOrderRepository(http, authorizedCall),
   };
 }
 
