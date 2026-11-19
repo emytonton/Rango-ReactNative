@@ -12,6 +12,7 @@ export type RootStackParamList = {
   Address: undefined;
   Product: { productId: string };
   Checkout: undefined;
+  Payment: undefined;
 };
 
 export const routeTitles: Record<keyof RootStackParamList, string> = {
@@ -28,4 +29,5 @@ export const routeTitles: Record<keyof RootStackParamList, string> = {
   Address: 'Endereço',
   Product: 'Produto',
   Checkout: 'Checkout',
+  Payment: 'Forma de pagamento',
 };
