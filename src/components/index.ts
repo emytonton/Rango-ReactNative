@@ -15,6 +15,7 @@ export * from './Icon';
 export * from './IconTile';
 export * from './OverlayIconButton';
 export * from './InfoBanner';
+export * from './OrderItemRow';
 export * from './MapPreview';
 export * from './PasswordToggle';
 export * from './PlainField';
