@@ -10,6 +10,7 @@ export * from './ErrorState';
 export * from './FilterChips';
 export * from './CheckboxLabel';
 export * from './CheckRow';
+export * from './CourierCard';
 export * from './DashedButton';
 export * from './Icon';
 export * from './IconTile';
