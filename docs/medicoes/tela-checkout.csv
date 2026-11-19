@@ -1,0 +1,20 @@
+data,commit,issue,tela,metrica,valor,unidade,origem,observacao
+2026-11-19 14:27:48,024eeed,15,Checkout,build_debug_limpo,452.85,s,medido,tempo-build.sh
+2026-11-19 14:27:48,024eeed,15,Checkout,build_debug_incremental_sem_mudanca,13.17,s,medido,tempo-build.sh
+2026-11-19 14:27:48,024eeed,15,Checkout,build_debug_incremental_um_arquivo,35.34,s,medido,tempo-build.sh com src/features/checkout/CheckoutScreen.tsx alterado
+2026-11-19 14:35:55,024eeed,15,Checkout,build_release,487,s,medido,tempo de relógio do tamanho-apk.sh (:app:assembleRelease após o clean do tempo-build)
+2026-11-19 14:35:55,024eeed,15,Checkout,tamanho_apk_release,74065446,bytes,medido,tamanho-apk.sh; APK com as quatro ABIs do template
+2026-11-19 14:37:21,024eeed,15,Checkout,inicializacao_frio_release_mediana,1634.5,ms,medido,inicializacao-frio.sh; 10 execuções no emulador Rango_Pixel_8_RN
+2026-11-19,384aabc,15,Checkout,install_debug,92.60,s,medido,gradlew installDebug após ligar o checkout à navegação (build incremental e instalação no emulador)
+2026-11-19,384aabc,15,Checkout,inicializacao_debug_primeira_abertura,9851,ms,medido,am start -W; 1 execução logo após o installDebug acima
+2026-11-19,024eeed,15,Checkout,install_debug_sem_mudanca,57.42,s,medido,gradlew installDebug após as medições de release (sem mudança de código)
+2026-11-19,024eeed,15,Checkout,inicializacao_debug_primeira_abertura,2742,ms,medido,am start -W; 1 execução logo após o installDebug sem mudança
+2026-11-19,024eeed,15,Checkout,npm_test,36.44,s,medido,npm test com cache do Jest limpo; 14 suítes e 63 testes
+2026-11-19 14:39:24,024eeed,15,Checkout,loc_gerado,14,linhas,medido,loc-por-origem.sh --issue 15
+2026-11-19 14:39:24,024eeed,15,Checkout,loc_assistido,722,linhas,medido,loc-por-origem.sh --issue 15
+2026-11-19 14:39:24,024eeed,15,Checkout,loc_manual,36,linhas,medido,loc-por-origem.sh --issue 15
+2026-11-19,024eeed,15,Checkout,tempo_total,114,min,ajustado,intervalo informado 09:33-11:27
+2026-11-19,024eeed,15,Checkout,tempo_codigo,110,min,ajustado,segmentos da issue
+2026-11-19,024eeed,15,Checkout,tempo_configuracao_build,0,min,ajustado,segmentos da issue
+2026-11-19,024eeed,15,Checkout,tempo_depuracao,2,min,ajustado,segmentos da issue
+2026-11-19,024eeed,15,Checkout,tempo_espera_ferramenta,2,min,ajustado,segmentos da issue
