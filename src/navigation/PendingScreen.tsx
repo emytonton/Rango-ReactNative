@@ -1,19 +1,11 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { PrimaryButton, SecondaryButton } from '../components';
+import { SecondaryButton } from '../components';
 import { spacing, useTheme } from '../theme';
 import { routeTitles, type RootStackParamList } from './routes';
 
-type PendingScreenProps = {
-  shortcutText?: string;
-  onShortcut?: () => void;
-};
-
-export function PendingScreen({
-  shortcutText,
-  onShortcut,
-}: PendingScreenProps) {
+export function PendingScreen() {
   const { colors, typography } = useTheme();
   const insets = useSafeAreaInsets();
   const navigation = useNavigation();
@@ -37,9 +29,6 @@ export function PendingScreen({
       >
         Esta tela ainda não foi implementada.
       </Text>
-      {shortcutText && onShortcut && (
-        <PrimaryButton text={shortcutText} onPress={onShortcut} />
-      )}
       {navigation.canGoBack() && (
         <SecondaryButton text="Voltar" onPress={navigation.goBack} />
       )}

@@ -13,6 +13,7 @@ export type RootStackParamList = {
   Product: { productId: string };
   Checkout: undefined;
   Payment: undefined;
+  Confirmed: { code: string };
 };
 
 export const routeTitles: Record<keyof RootStackParamList, string> = {
@@ -30,4 +31,5 @@ export const routeTitles: Record<keyof RootStackParamList, string> = {
   Product: 'Produto',
   Checkout: 'Checkout',
   Payment: 'Forma de pagamento',
+  Confirmed: 'Pedido confirmado',
 };
