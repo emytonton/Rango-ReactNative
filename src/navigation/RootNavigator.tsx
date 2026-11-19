@@ -9,6 +9,7 @@ import { AddressScreen } from '../features/address/AddressScreen';
 import { CartScreen } from '../features/cart/CartScreen';
 import { HomeScreen } from '../features/home/HomeScreen';
 import { LoginScreen } from '../features/login/LoginScreen';
+import { PaymentScreen } from '../features/payment/PaymentScreen';
 import { ProductScreen } from '../features/product/ProductScreen';
 import { SearchScreen } from '../features/search/SearchScreen';
 import { SignupScreen } from '../features/signup/SignupScreen';
@@ -36,7 +37,8 @@ export function RootNavigator() {
       <Stack.Screen name="Notifications" component={PendingScreen} />
       <Stack.Screen name="Address" component={AddressRoute} />
       <Stack.Screen name="Product" component={ProductRoute} />
-      <Stack.Screen name="Checkout" component={PendingScreen} />
+      <Stack.Screen name="Checkout" component={CheckoutRoute} />
+      <Stack.Screen name="Payment" component={PaymentRoute} />
     </Stack.Navigator>
   );
 }
@@ -180,6 +182,32 @@ function AddressRoute({
     <AddressScreen
       addressRepository={addressRepository}
       onBack={navigation.goBack}
+      onSessionExpired={() => navigateToWelcome(navigation)}
+    />
+  );
+}
+
+function CheckoutRoute({
+  navigation,
+}: NativeStackScreenProps<RootStackParamList, 'Checkout'>) {
+  return (
+    <PendingScreen
+      shortcutText="Forma de pagamento"
+      onShortcut={() => navigation.navigate('Payment')}
+    />
+  );
+}
+
+function PaymentRoute({
+  navigation,
+}: NativeStackScreenProps<RootStackParamList, 'Payment'>) {
+  const { paymentRepository, paymentSelection } = useAppContainer();
+  return (
+    <PaymentScreen
+      paymentRepository={paymentRepository}
+      paymentSelection={paymentSelection}
+      onBack={navigation.goBack}
+      onDone={navigation.goBack}
       onSessionExpired={() => navigateToWelcome(navigation)}
     />
   );

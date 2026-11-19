@@ -6,6 +6,7 @@ type RadioCardProps = {
   selected: boolean;
   onPress: () => void;
   accessibilityLabel?: string;
+  indicatorAtEnd?: boolean;
   children: ReactNode;
 };
 
@@ -13,9 +14,22 @@ export function RadioCard({
   selected,
   onPress,
   accessibilityLabel,
+  indicatorAtEnd = false,
   children,
 }: RadioCardProps) {
   const { colors } = useTheme();
+  const radio = (
+    <View
+      style={[
+        styles.radio,
+        { borderColor: selected ? colors.primary : colors.border },
+      ]}
+    >
+      {selected && (
+        <View style={[styles.dot, { backgroundColor: colors.primary }]} />
+      )}
+    </View>
+  );
   return (
     <Pressable
       accessibilityRole="radio"
@@ -31,17 +45,9 @@ export function RadioCard({
         },
       ]}
     >
-      <View
-        style={[
-          styles.radio,
-          { borderColor: selected ? colors.primary : colors.border },
-        ]}
-      >
-        {selected && (
-          <View style={[styles.dot, { backgroundColor: colors.primary }]} />
-        )}
-      </View>
+      {!indicatorAtEnd && radio}
       {children}
+      {indicatorAtEnd && radio}
     </Pressable>
   );
 }

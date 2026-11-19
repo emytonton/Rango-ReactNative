@@ -6,13 +6,15 @@ import {
   type TextInputProps,
 } from 'react-native';
 import { fonts, useTheme } from '../theme';
+import { Icon, type IconName } from './Icon';
 
 type PlainFieldProps = Omit<TextInputProps, 'style'> & {
   placeholder: string;
   error?: string;
+  icon?: IconName;
 };
 
-export function PlainField({ error, ...inputProps }: PlainFieldProps) {
+export function PlainField({ error, icon, ...inputProps }: PlainFieldProps) {
   const { colors } = useTheme();
   return (
     <View style={styles.container}>
@@ -25,6 +27,7 @@ export function PlainField({ error, ...inputProps }: PlainFieldProps) {
           },
         ]}
       >
+        {icon && <Icon name={icon} size={18} color={colors.text2} />}
         <TextInput
           accessibilityLabel={inputProps.placeholder}
           placeholderTextColor={colors.text2}
@@ -45,12 +48,15 @@ const styles = StyleSheet.create({
   container: { gap: 5 },
   box: {
     height: 48,
-    justifyContent: 'center',
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
     paddingHorizontal: 14,
     borderRadius: 14,
     borderWidth: 1,
   },
   input: {
+    flex: 1,
     padding: 0,
     fontFamily: fonts.semiBold,
     fontSize: 13.5,

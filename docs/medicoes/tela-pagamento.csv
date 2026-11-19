@@ -1,0 +1,19 @@
+data,commit,issue,tela,metrica,valor,unidade,origem,observacao
+2026-11-19 13:06:59,e534ec2,17,Pagamento,build_debug_limpo,547.16,s,medido,tempo-build.sh; logo após religar o computador
+2026-11-19 13:06:59,e534ec2,17,Pagamento,build_debug_incremental_sem_mudanca,13.06,s,medido,tempo-build.sh
+2026-11-19 13:06:59,e534ec2,17,Pagamento,build_debug_incremental_um_arquivo,33.35,s,medido,tempo-build.sh com src/features/payment/PaymentScreen.tsx alterado
+2026-11-19 13:15:06,e534ec2,17,Pagamento,build_release,474,s,medido,tempo de relógio do tamanho-apk.sh (:app:assembleRelease após o clean do tempo-build)
+2026-11-19 13:15:06,e534ec2,17,Pagamento,tamanho_apk_release,74053174,bytes,medido,tamanho-apk.sh; APK com as quatro ABIs do template
+2026-11-19 13:16:34,e534ec2,17,Pagamento,inicializacao_frio_release_mediana,2899.5,ms,medido,inicializacao-frio.sh; 10 execuções no emulador Rango_Pixel_8_RN recém-ligado
+2026-11-19,281f9db,17,Pagamento,inicializacao_debug_primeira_abertura,10755,ms,medido,am start -W; 1 execução logo após o installDebug que ligou o pagamento à navegação (o tempo desse installDebug não foi gravado)
+2026-11-19,e534ec2,17,Pagamento,install_debug,55.07,s,medido,gradlew installDebug após as medições de release (sem mudança de código)
+2026-11-19,e534ec2,17,Pagamento,inicializacao_debug_primeira_abertura,3333,ms,medido,am start -W; 1 execução logo após o installDebug acima
+2026-11-19,e534ec2,17,Pagamento,npm_test,36.58,s,medido,npm test com cache do Jest limpo; 13 suítes e 56 testes
+2026-11-19 13:58:46,e534ec2,17,Pagamento,loc_gerado,1,linhas,medido,loc-por-origem.sh --issue 17
+2026-11-19 13:58:46,e534ec2,17,Pagamento,loc_assistido,737,linhas,medido,loc-por-origem.sh --issue 17
+2026-11-19 13:58:46,e534ec2,17,Pagamento,loc_manual,126,linhas,medido,loc-por-origem.sh --issue 17
+2026-11-19,e534ec2,17,Pagamento,tempo_total,122,min,ajustado,intervalo informado 07:03-09:05
+2026-11-19,e534ec2,17,Pagamento,tempo_codigo,117,min,ajustado,segmentos da issue
+2026-11-19,e534ec2,17,Pagamento,tempo_configuracao_build,0,min,ajustado,segmentos da issue
+2026-11-19,e534ec2,17,Pagamento,tempo_depuracao,2,min,ajustado,segmentos da issue
+2026-11-19,e534ec2,17,Pagamento,tempo_espera_ferramenta,3,min,ajustado,segmentos da issue
