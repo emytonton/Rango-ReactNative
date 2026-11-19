@@ -22,6 +22,7 @@ export * from './ProductCards';
 export * from './ProductImage';
 export * from './QuantityStepper';
 export * from './RadioCard';
+export * from './SectionCard';
 export * from './SearchBarButton';
 export * from './SearchField';
 export * from './SectionHeader';
