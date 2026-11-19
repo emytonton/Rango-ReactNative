@@ -1,0 +1,21 @@
+data,commit,issue,tela,metrica,valor,unidade,origem,observacao
+2026-11-19 19:35:36,8de8152,19,Rastreio,build_debug_limpo,428.07,s,medido,tempo-build.sh
+2026-11-19 19:35:36,8de8152,19,Rastreio,build_debug_incremental_sem_mudanca,12.78,s,medido,tempo-build.sh
+2026-11-19 19:35:36,8de8152,19,Rastreio,build_debug_incremental_um_arquivo,33.32,s,medido,tempo-build.sh com src/features/tracking/TrackingScreen.tsx alterado
+2026-11-19 19:43:45,8de8152,19,Rastreio,build_release,489,s,medido,tempo de relógio do tamanho-apk.sh (:app:assembleRelease após o clean do tempo-build)
+2026-11-19 19:43:45,8de8152,19,Rastreio,tamanho_apk_release,74087574,bytes,medido,tamanho-apk.sh; APK com as quatro ABIs do template
+2026-11-19 19:45:09,8de8152,19,Rastreio,inicializacao_frio_release_mediana,1740,ms,medido,inicializacao-frio.sh; 10 execuções no emulador Rango_Pixel_8_RN
+2026-11-19,2588b0d,19,Rastreio,install_debug,54.25,s,medido,gradlew installDebug após ligar o rastreio à navegação (build incremental e instalação no emulador)
+2026-11-19,2588b0d,19,Rastreio,inicializacao_debug_primeira_abertura,3025,ms,medido,am start -W; 1 execução logo após o installDebug acima
+2026-11-19,1c2649e,19,Rastreio,install_debug_fix,48.42,s,medido,gradlew installDebug após corrigir o ícone de preparo
+2026-11-19,8de8152,19,Rastreio,install_debug_sem_mudanca,49.82,s,medido,gradlew installDebug após as medições de release (sem mudança de código)
+2026-11-19,8de8152,19,Rastreio,inicializacao_debug_primeira_abertura,3210,ms,medido,am start -W; 1 execução logo após o installDebug sem mudança
+2026-11-19,8de8152,19,Rastreio,npm_test,33.08,s,medido,jest com cache limpo; 16 suítes e 72 testes
+2026-11-19 19:26:59,8de8152,19,Rastreio,loc_gerado,0,linhas,medido,loc-por-origem.sh --issue 19
+2026-11-19 19:26:59,8de8152,19,Rastreio,loc_assistido,558,linhas,medido,loc-por-origem.sh --issue 19
+2026-11-19 19:26:59,8de8152,19,Rastreio,loc_manual,23,linhas,medido,loc-por-origem.sh --issue 19
+2026-11-19,8de8152,19,Rastreio,tempo_total,168,min,ajustado,intervalo informado 15:01-17:49
+2026-11-19,8de8152,19,Rastreio,tempo_codigo,163,min,ajustado,segmentos da issue
+2026-11-19,8de8152,19,Rastreio,tempo_configuracao_build,0,min,ajustado,segmentos da issue
+2026-11-19,8de8152,19,Rastreio,tempo_depuracao,3,min,ajustado,segmentos da issue
+2026-11-19,8de8152,19,Rastreio,tempo_espera_ferramenta,2,min,ajustado,segmentos da issue
