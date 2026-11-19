@@ -33,6 +33,7 @@ export * from './Skeleton';
 export * from './SuccessBadge';
 export * from './Slider';
 export * from './StatCard';
+export * from './StatusCard';
 export * from './SummaryCard';
 export * from './TextAction';
 export * from './TextArea';
