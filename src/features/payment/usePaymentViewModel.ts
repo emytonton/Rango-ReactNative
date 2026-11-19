@@ -110,7 +110,7 @@ export function usePaymentViewModel(
   }, [load]);
 
   const select = useCallback((id: number) => {
-    setState(current => ({ ...current, selectedId: id }));
+    setState(current => ({ ...current, selectedId: id, cardErrors: {} }));
   }, []);
 
   const changeCard = useCallback((field: CardField, value: string) => {
