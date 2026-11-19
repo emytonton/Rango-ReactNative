@@ -194,17 +194,20 @@ function CheckoutContent({
         title="Resumo do pedido"
         lines={state.summary}
         total={state.total}
-        header={state.items.map(item => (
-          <OrderItemRow
-            key={item.id}
-            quantity={item.quantity}
-            name={item.name}
-            total={item.total}
-            imageUrl={item.imageUrl}
-            imageHue={item.imageHue}
-            addons={item.addons}
-          />
-        ))}
+        header={
+          state.items.length > 0 &&
+          state.items.map(item => (
+            <OrderItemRow
+              key={item.id}
+              quantity={item.quantity}
+              name={item.name}
+              total={item.total}
+              imageUrl={item.imageUrl}
+              imageHue={item.imageHue}
+              addons={item.addons}
+            />
+          ))
+        }
       />
     </ScrollView>
   );
