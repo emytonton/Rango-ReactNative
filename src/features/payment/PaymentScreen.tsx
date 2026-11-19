@@ -9,28 +9,18 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
   ErrorState,
   IconTile,
-  type IconName,
   PrimaryButton,
   RadioCard,
   Skeleton,
   TopBar,
   useToast,
 } from '../../components';
-import type {
-  PaymentRepository,
-  PaymentType,
-} from '../../data/payment/paymentRepository';
+import type { PaymentRepository } from '../../data/payment/paymentRepository';
 import type { PaymentSelection } from '../../data/payment/paymentSelection';
 import { fonts, useTheme } from '../../theme';
 import { CardFormCard } from './components/CardFormCard';
+import { paymentTypeIcons } from './paymentTypeIcon';
 import { usePaymentViewModel } from './usePaymentViewModel';
-
-const paymentIcons: Record<PaymentType, IconName> = {
-  pix: 'qrCode2',
-  credit: 'creditCard',
-  debit: 'creditScore',
-  cash: 'payments',
-};
 
 type PaymentScreenProps = {
   paymentRepository: PaymentRepository;
@@ -89,7 +79,7 @@ export function PaymentScreen({
                   accessibilityLabel={`${option.label}, ${option.hint}`}
                   indicatorAtEnd
                 >
-                  <IconTile icon={paymentIcons[option.type]} />
+                  <IconTile icon={paymentTypeIcons[option.type]} />
                   <View style={styles.texts}>
                     <Text style={[styles.label, { color: colors.text }]}>
                       {option.label}
