@@ -13,12 +13,28 @@ export type CreatedOrder = {
   status: string;
 };
 
+export type TimelineStepState = 'done' | 'current' | 'upcoming';
+
+export type TimelineStep = {
+  step: number;
+  label: string;
+  state: TimelineStepState;
+  reachedAt: string | null;
+};
+
+export type Courier = {
+  name: string;
+  vehicle: string;
+  photoUrl: string | null;
+};
+
 export type OrderDetail = {
   id: number;
   code: string;
   status: string;
   statusLabel: string;
   step: number;
+  hint: string;
   itemCount: number;
   total: number;
   estimatedDelivery: { minMinutes: number; maxMinutes: number };
@@ -35,6 +51,9 @@ export type OrderDetail = {
     total: number;
     couponCode: string | null;
   };
+  timeline: TimelineStep[];
+  courier: Courier | null;
+  mapImageUrl: string | null;
 };
 
 export type OrderRepository = {

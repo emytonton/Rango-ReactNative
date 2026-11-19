@@ -16,6 +16,7 @@ function order(status = 'live', itemCount = 3): OrderDetail {
     status,
     statusLabel: 'Pedido confirmado',
     step: 1,
+    hint: 'O restaurante aceitou seu pedido',
     itemCount,
     total: 86.9,
     estimatedDelivery: { minMinutes: 25, maxMinutes: 35 },
@@ -32,6 +33,9 @@ function order(status = 'live', itemCount = 3): OrderDetail {
       total: 86.9,
       couponCode: null,
     },
+    timeline: [],
+    courier: null,
+    mapImageUrl: null,
   };
 }
 
