@@ -12,6 +12,7 @@ export * from './CheckboxLabel';
 export * from './CheckRow';
 export * from './DashedButton';
 export * from './Icon';
+export * from './IconTile';
 export * from './OverlayIconButton';
 export * from './InfoBanner';
 export * from './MapPreview';
