@@ -38,4 +38,5 @@ export * from './TextAction';
 export * from './TextArea';
 export * from './TextField';
 export * from './Toast';
+export * from './TrackingMap';
 export * from './TopBar';
