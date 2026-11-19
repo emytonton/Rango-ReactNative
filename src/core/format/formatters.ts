@@ -9,3 +9,9 @@ export function formatRating(value: number): string {
 export function formatDeliveryTime(min: number, max: number): string {
   return `${min}-${max} min`;
 }
+
+export function formatClock(iso: string): string {
+  const date = new Date(iso);
+  const pad = (value: number) => String(value).padStart(2, '0');
+  return `${pad(date.getHours())}:${pad(date.getMinutes())}`;
+}
