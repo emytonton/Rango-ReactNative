@@ -1,6 +1,10 @@
 import { createContext, useContext, type ReactNode } from 'react';
 import { createHttpClient } from '../core/network/httpClient';
 import { createAuthApi } from '../data/auth/authApi';
+import {
+  createAddressRepository,
+  type AddressRepository,
+} from '../data/address/addressRepository';
 import { createAuthorizedCaller } from '../data/auth/authorizedCaller';
 import {
   createAuthRepository,
@@ -31,6 +35,7 @@ export type AppContainer = {
   catalogRepository: CatalogRepository;
   cartRepository: CartRepository;
   searchRepository: SearchRepository;
+  addressRepository: AddressRepository;
 };
 
 export function createAppContainer(): AppContainer {
@@ -48,6 +53,7 @@ export function createAppContainer(): AppContainer {
     ),
     cartRepository: createCartRepository(http, authorizedCall),
     searchRepository: createSearchRepository(http, authorizedCall),
+    addressRepository: createAddressRepository(http, authorizedCall),
   };
 }
 
