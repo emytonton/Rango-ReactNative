@@ -59,6 +59,7 @@ async function renderViewModel(
     create: jest.fn(() =>
       Promise.resolve({ id: 10483, code: 'RG-10483', status: 'live' }),
     ),
+    detail: jest.fn(),
     ...overrides.order,
   };
   const dependencies = {
