@@ -38,6 +38,7 @@ export * from './SummaryCard';
 export * from './TextAction';
 export * from './TextArea';
 export * from './TextField';
+export * from './Timeline';
 export * from './Toast';
 export * from './TrackingMap';
 export * from './TopBar';
