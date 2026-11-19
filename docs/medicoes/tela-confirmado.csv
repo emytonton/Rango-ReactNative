@@ -1,0 +1,20 @@
+data,commit,issue,tela,metrica,valor,unidade,origem,observacao
+2026-11-19 18:02:03,1c1272e,18,Confirmado,build_debug_limpo,439.56,s,medido,tempo-build.sh
+2026-11-19 18:02:03,1c1272e,18,Confirmado,build_debug_incremental_sem_mudanca,13.02,s,medido,tempo-build.sh
+2026-11-19 18:02:03,1c1272e,18,Confirmado,build_debug_incremental_um_arquivo,33.77,s,medido,tempo-build.sh com src/features/confirmed/ConfirmedScreen.tsx alterado
+2026-11-19 18:10:02,1c1272e,18,Confirmado,build_release,479,s,medido,tempo de relógio do tamanho-apk.sh (:app:assembleRelease após o clean do tempo-build)
+2026-11-19 18:10:02,1c1272e,18,Confirmado,tamanho_apk_release,74072958,bytes,medido,tamanho-apk.sh; APK com as quatro ABIs do template
+2026-11-19 18:11:24,1c1272e,18,Confirmado,inicializacao_frio_release_mediana,1685,ms,medido,inicializacao-frio.sh; 10 execuções no emulador Rango_Pixel_8_RN
+2026-11-19,750f999,18,Confirmado,install_debug,101.03,s,medido,gradlew installDebug após ligar a confirmação à navegação (build incremental e instalação no emulador)
+2026-11-19,750f999,18,Confirmado,inicializacao_debug_primeira_abertura,4050,ms,medido,am start -W; 1 execução logo após o installDebug acima
+2026-11-19,1c1272e,18,Confirmado,install_debug_sem_mudanca,51.36,s,medido,gradlew installDebug após as medições de release (sem mudança de código)
+2026-11-19,1c1272e,18,Confirmado,inicializacao_debug_primeira_abertura,3105,ms,medido,am start -W; 1 execução logo após o installDebug sem mudança
+2026-11-19,1c1272e,18,Confirmado,npm_test,31.75,s,medido,jest com cache limpo; 15 suítes e 67 testes
+2026-11-19 17:53:28,1c1272e,18,Confirmado,loc_gerado,0,linhas,medido,loc-por-origem.sh --issue 18
+2026-11-19 17:53:28,1c1272e,18,Confirmado,loc_assistido,377,linhas,medido,loc-por-origem.sh --issue 18
+2026-11-19 17:53:28,1c1272e,18,Confirmado,loc_manual,22,linhas,medido,loc-por-origem.sh --issue 18
+2026-11-19,1c1272e,18,Confirmado,tempo_total,53,min,ajustado,intervalo informado 13:04-13:57
+2026-11-19,1c1272e,18,Confirmado,tempo_codigo,51,min,ajustado,segmentos da issue
+2026-11-19,1c1272e,18,Confirmado,tempo_configuracao_build,0,min,ajustado,segmentos da issue
+2026-11-19,1c1272e,18,Confirmado,tempo_depuracao,0,min,ajustado,segmentos da issue
+2026-11-19,1c1272e,18,Confirmado,tempo_espera_ferramenta,2,min,ajustado,segmentos da issue

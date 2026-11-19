@@ -8,6 +8,7 @@ import { useAppContainer } from '../di/AppContainer';
 import { AddressScreen } from '../features/address/AddressScreen';
 import { CartScreen } from '../features/cart/CartScreen';
 import { CheckoutScreen } from '../features/checkout/CheckoutScreen';
+import { ConfirmedScreen } from '../features/confirmed/ConfirmedScreen';
 import { HomeScreen } from '../features/home/HomeScreen';
 import { LoginScreen } from '../features/login/LoginScreen';
 import { PaymentScreen } from '../features/payment/PaymentScreen';
@@ -40,7 +41,8 @@ export function RootNavigator() {
       <Stack.Screen name="Product" component={ProductRoute} />
       <Stack.Screen name="Checkout" component={CheckoutRoute} />
       <Stack.Screen name="Payment" component={PaymentRoute} />
-      <Stack.Screen name="Confirmed" component={PendingScreen} />
+      <Stack.Screen name="Confirmed" component={ConfirmedRoute} />
+      <Stack.Screen name="Tracking" component={PendingScreen} />
     </Stack.Navigator>
   );
 }
@@ -210,6 +212,23 @@ function CheckoutRoute({
           routes: [{ name: 'Home' }, { name: 'Confirmed', params: { code } }],
         })
       }
+      onSessionExpired={() => navigateToWelcome(navigation)}
+    />
+  );
+}
+
+function ConfirmedRoute({
+  navigation,
+  route,
+}: NativeStackScreenProps<RootStackParamList, 'Confirmed'>) {
+  const { orderRepository } = useAppContainer();
+  const { code } = route.params;
+  return (
+    <ConfirmedScreen
+      orderCode={code}
+      orderRepository={orderRepository}
+      onTrack={() => navigation.navigate('Tracking', { code })}
+      onHome={() => navigation.popTo('Home')}
       onSessionExpired={() => navigateToWelcome(navigation)}
     />
   );
