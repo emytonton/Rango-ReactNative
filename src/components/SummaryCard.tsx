@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { fonts, useTheme } from '../theme';
 
@@ -10,9 +11,11 @@ export type SummaryLine = {
 type SummaryCardProps = {
   lines: SummaryLine[];
   total: string;
+  title?: string;
+  header?: ReactNode;
 };
 
-export function SummaryCard({ lines, total }: SummaryCardProps) {
+export function SummaryCard({ lines, total, title, header }: SummaryCardProps) {
   const { colors } = useTheme();
   return (
     <View
@@ -21,6 +24,13 @@ export function SummaryCard({ lines, total }: SummaryCardProps) {
         { backgroundColor: colors.surface, borderColor: colors.border },
       ]}
     >
+      {title && (
+        <Text style={[styles.title, { color: colors.text }]}>{title}</Text>
+      )}
+      {header}
+      {header && (
+        <View style={[styles.divider, { backgroundColor: colors.border }]} />
+      )}
       {lines.map(line => (
         <View key={line.label} style={styles.row}>
           <Text style={[styles.label, { color: colors.text2 }]}>
@@ -53,6 +63,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     gap: 10,
   },
+  title: { fontFamily: fonts.extraBold, fontSize: 13.5 },
   label: { fontFamily: fonts.semiBold, fontSize: 13 },
   value: { fontFamily: fonts.bold, fontSize: 13 },
   divider: { height: 1 },
