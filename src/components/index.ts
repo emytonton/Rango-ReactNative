@@ -22,6 +22,7 @@ export * from './PasswordToggle';
 export * from './PlainField';
 export * from './ProductCards';
 export * from './ProductImage';
+export * from './PulseCircle';
 export * from './QuantityStepper';
 export * from './RadioCard';
 export * from './SectionCard';
