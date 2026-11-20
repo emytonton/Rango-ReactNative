@@ -57,6 +57,7 @@ const styles = StyleSheet.create({
     paddingBottom: 12,
     fontFamily: fonts.semiBold,
     fontSize: 13.5,
+    lineHeight: 18,
   },
   activeLabel: { fontFamily: fonts.extraBold },
   bar: { height: 3, borderRadius: 2 },
