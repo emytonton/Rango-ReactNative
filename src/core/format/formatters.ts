@@ -15,3 +15,18 @@ export function formatClock(iso: string): string {
   const pad = (value: number) => String(value).padStart(2, '0');
   return `${pad(date.getHours())}:${pad(date.getMinutes())}`;
 }
+
+const MONTHS = 'jan fev mar abr mai jun jul ago set out nov dez'.split(' ');
+
+export function formatOrderDate(iso: string, now: Date = new Date()): string {
+  const date = new Date(iso);
+  const yesterday = new Date(now);
+  yesterday.setDate(now.getDate() - 1);
+  const day =
+    date.toDateString() === now.toDateString()
+      ? 'Hoje'
+      : date.toDateString() === yesterday.toDateString()
+      ? 'Ontem'
+      : `${String(date.getDate()).padStart(2, '0')} ${MONTHS[date.getMonth()]}`;
+  return `${day} · ${formatClock(iso)}`;
+}
