@@ -15,6 +15,7 @@ import { PaymentScreen } from '../features/payment/PaymentScreen';
 import { ProductScreen } from '../features/product/ProductScreen';
 import { SearchScreen } from '../features/search/SearchScreen';
 import { SignupScreen } from '../features/signup/SignupScreen';
+import { TrackingScreen } from '../features/tracking/TrackingScreen';
 import { WelcomeScreen } from '../features/welcome/WelcomeScreen';
 import { PendingScreen } from './PendingScreen';
 import type { RootStackParamList } from './routes';
@@ -42,7 +43,7 @@ export function RootNavigator() {
       <Stack.Screen name="Checkout" component={CheckoutRoute} />
       <Stack.Screen name="Payment" component={PaymentRoute} />
       <Stack.Screen name="Confirmed" component={ConfirmedRoute} />
-      <Stack.Screen name="Tracking" component={PendingScreen} />
+      <Stack.Screen name="Tracking" component={TrackingRoute} />
     </Stack.Navigator>
   );
 }
@@ -229,6 +230,21 @@ function ConfirmedRoute({
       orderRepository={orderRepository}
       onTrack={() => navigation.navigate('Tracking', { code })}
       onHome={() => navigation.popTo('Home')}
+      onSessionExpired={() => navigateToWelcome(navigation)}
+    />
+  );
+}
+
+function TrackingRoute({
+  navigation,
+  route,
+}: NativeStackScreenProps<RootStackParamList, 'Tracking'>) {
+  const { orderRepository } = useAppContainer();
+  return (
+    <TrackingScreen
+      orderCode={route.params.code}
+      orderRepository={orderRepository}
+      onBack={navigation.goBack}
       onSessionExpired={() => navigateToWelcome(navigation)}
     />
   );

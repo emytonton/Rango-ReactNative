@@ -1,11 +1,14 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { fonts, useTheme } from '../theme';
 import { BackButton } from './BackButton';
 
+const monospace = Platform.select({ ios: 'Menlo', default: 'monospace' });
+
 type TopBarProps = {
   title: string;
   subtitle?: string;
+  monospaceSubtitle?: boolean;
   onBack: () => void;
   actionText?: string;
   actionColor?: string;
@@ -15,6 +18,7 @@ type TopBarProps = {
 export function TopBar({
   title,
   subtitle,
+  monospaceSubtitle = false,
   onBack,
   actionText,
   actionColor,
@@ -42,7 +46,13 @@ export function TopBar({
           {title}
         </Text>
         {subtitle && (
-          <Text style={[styles.subtitle, { color: colors.text2 }]}>
+          <Text
+            style={[
+              styles.subtitle,
+              monospaceSubtitle && styles.mono,
+              { color: colors.text2 },
+            ]}
+          >
             {subtitle}
           </Text>
         )}
@@ -72,5 +82,6 @@ const styles = StyleSheet.create({
   texts: { flex: 1 },
   title: { fontFamily: fonts.extraBold, fontSize: 16 },
   subtitle: { fontFamily: fonts.semiBold, fontSize: 11.5 },
+  mono: { fontFamily: monospace, fontSize: 11, fontWeight: '600' },
   action: { fontFamily: fonts.bold, fontSize: 12.5 },
 });
