@@ -9,6 +9,8 @@ type OrderItemRowProps = {
   imageUrl: string | null;
   imageHue: number;
   addons?: string | null;
+  restaurant?: string | null;
+  large?: boolean;
 };
 
 export function OrderItemRow({
@@ -18,11 +20,17 @@ export function OrderItemRow({
   imageUrl,
   imageHue,
   addons,
+  restaurant,
+  large = false,
 }: OrderItemRowProps) {
   const { colors } = useTheme();
   return (
     <View style={styles.row}>
-      <ProductImage imageUrl={imageUrl} hue={imageHue} style={styles.image} />
+      <ProductImage
+        imageUrl={imageUrl}
+        hue={imageHue}
+        style={large ? styles.largeImage : styles.image}
+      />
       <View style={styles.texts}>
         <Text numberOfLines={1} style={[styles.name, { color: colors.text }]}>
           {quantity}× {name}
@@ -30,6 +38,11 @@ export function OrderItemRow({
         {addons ? (
           <Text style={[styles.addons, { color: colors.text2 }]}>
             + {addons}
+          </Text>
+        ) : null}
+        {restaurant ? (
+          <Text style={[styles.secondary, { color: colors.text2 }]}>
+            {restaurant}
           </Text>
         ) : null}
       </View>
@@ -41,8 +54,10 @@ export function OrderItemRow({
 const styles = StyleSheet.create({
   row: { flexDirection: 'row', alignItems: 'center', gap: 11 },
   image: { width: 36, height: 36, borderRadius: 11 },
-  texts: { flex: 1, minWidth: 0 },
+  largeImage: { width: 38, height: 38, borderRadius: 12 },
+  texts: { flex: 1, minWidth: 0, gap: 1 },
   name: { fontFamily: fonts.bold, fontSize: 13 },
   addons: { fontFamily: fonts.medium, fontSize: 11 },
+  secondary: { fontFamily: fonts.medium, fontSize: 11 },
   total: { fontFamily: fonts.bold, fontSize: 13 },
 });
