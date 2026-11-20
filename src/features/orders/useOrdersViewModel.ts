@@ -70,11 +70,13 @@ export function useOrdersViewModel(
   const [state, setState] = useState<OrdersState>(initialState);
   const stateRef = useRef(state);
   const callbacksRef = useRef(callbacks);
+  const nowRef = useRef(now);
   const requests = useRef<Record<OrdersTab, number>>({ live: 0, past: 0 });
 
   useEffect(() => {
     stateRef.current = state;
     callbacksRef.current = callbacks;
+    nowRef.current = now;
   });
 
   const updateTab = useCallback(
@@ -95,7 +97,7 @@ export function useOrdersViewModel(
         errorMessage: null,
       }));
       try {
-        const reference = now();
+        const reference = nowRef.current();
         const orders = (await orderRepository.list(tab)).map(order =>
           toItem(order, reference),
         );
@@ -127,7 +129,7 @@ export function useOrdersViewModel(
         );
       }
     },
-    [orderRepository, updateTab, now],
+    [orderRepository, updateTab],
   );
 
   useEffect(() => {
