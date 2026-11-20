@@ -43,4 +43,5 @@ export * from './TextField';
 export * from './Timeline';
 export * from './Toast';
 export * from './TrackingMap';
+export * from './UnderlineTabs';
 export * from './TopBar';
