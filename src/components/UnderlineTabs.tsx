@@ -41,7 +41,7 @@ export function UnderlineTabs<T extends string>({
             <View
               style={[
                 styles.bar,
-                { backgroundColor: active ? colors.primary : 'transparent' },
+                active && { backgroundColor: colors.primary },
               ]}
             />
           </Pressable>
