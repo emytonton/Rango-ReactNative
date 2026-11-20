@@ -72,6 +72,8 @@ async function renderViewModel(detail: OrderRepository['detail']) {
   const orderRepository: OrderRepository = {
     create: jest.fn(),
     detail: jest.fn(detail),
+    list: jest.fn(),
+    reorder: jest.fn(),
   };
   const onSessionExpired = jest.fn();
   const current: { value?: ViewModel } = {};
