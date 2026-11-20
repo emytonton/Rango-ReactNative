@@ -1,0 +1,20 @@
+data,commit,issue,tela,metrica,valor,unidade,origem,observacao
+2026-11-20 18:02:23,d32b167,21,Detalhe do pedido,build_debug_limpo,361.45,s,medido,tempo-build.sh
+2026-11-20 18:02:23,d32b167,21,Detalhe do pedido,build_debug_incremental_sem_mudanca,9.40,s,medido,tempo-build.sh
+2026-11-20 18:02:23,d32b167,21,Detalhe do pedido,build_debug_incremental_um_arquivo,28.49,s,medido,tempo-build.sh com src/features/orderdetail/OrderDetailScreen.tsx alterado
+2026-11-20 18:08:42,d32b167,21,Detalhe do pedido,build_release,380,s,medido,tempo de relógio do tamanho-apk.sh (:app:assembleRelease após o clean do tempo-build)
+2026-11-20 18:08:42,d32b167,21,Detalhe do pedido,tamanho_apk_release,74109098,bytes,medido,tamanho-apk.sh; APK com as quatro ABIs do template
+2026-11-20 18:09:53,d32b167,21,Detalhe do pedido,inicializacao_frio_release_mediana,1440,ms,medido,inicializacao-frio.sh; 10 execuções no emulador Rango_Pixel_8_RN
+2026-11-20,c2d7fbc,21,Detalhe do pedido,install_debug,136.31,s,medido,gradlew installDebug após ligar o detalhe do pedido à navegação (build incremental e instalação no emulador)
+2026-11-20,c2d7fbc,21,Detalhe do pedido,inicializacao_debug_primeira_abertura,3017,ms,medido,am start -W; 1 execução logo após o installDebug acima
+2026-11-20,d32b167,21,Detalhe do pedido,install_debug_sem_mudanca,35.40,s,medido,gradlew installDebug após as medições de release (sem mudança de código)
+2026-11-20,d32b167,21,Detalhe do pedido,inicializacao_debug_primeira_abertura,2846,ms,medido,am start -W; 1 execução logo após o installDebug sem mudança
+2026-11-20,d32b167,21,Detalhe do pedido,npm_test,25.71,s,medido,jest com cache limpo (tempo de relógio); 18 suítes e 82 testes
+2026-11-20 17:55:15,d32b167,21,Detalhe do pedido,loc_gerado,0,linhas,medido,loc-por-origem.sh --issue 21
+2026-11-20 17:55:15,d32b167,21,Detalhe do pedido,loc_assistido,569,linhas,medido,loc-por-origem.sh --issue 21
+2026-11-20 17:55:15,d32b167,21,Detalhe do pedido,loc_manual,44,linhas,medido,loc-por-origem.sh --issue 21
+2026-11-20,d32b167,21,Detalhe do pedido,tempo_total,146,min,ajustado,intervalo informado 09:30-11:56
+2026-11-20,d32b167,21,Detalhe do pedido,tempo_codigo,143,min,ajustado,segmentos da issue
+2026-11-20,d32b167,21,Detalhe do pedido,tempo_configuracao_build,0,min,ajustado,segmentos da issue
+2026-11-20,d32b167,21,Detalhe do pedido,tempo_depuracao,0,min,ajustado,segmentos da issue
+2026-11-20,d32b167,21,Detalhe do pedido,tempo_espera_ferramenta,3,min,ajustado,segmentos da issue
