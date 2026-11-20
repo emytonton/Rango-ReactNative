@@ -1,0 +1,22 @@
+data,commit,issue,tela,metrica,valor,unidade,origem,observacao
+2026-11-20 17:05:29,06aa9c9,20,Pedidos,build_debug_limpo,1060.53,s,medido,tempo-build.sh; emulador e backend ligados durante a medição
+2026-11-20 17:05:29,06aa9c9,20,Pedidos,build_debug_incremental_sem_mudanca,23.02,s,medido,tempo-build.sh
+2026-11-20 17:05:29,06aa9c9,20,Pedidos,build_debug_incremental_um_arquivo,84.63,s,medido,tempo-build.sh com src/features/orders/OrdersScreen.tsx alterado
+2026-11-20 17:20:43,06aa9c9,20,Pedidos,build_release,902,s,medido,tempo de relógio do tamanho-apk.sh (:app:assembleRelease após o clean do tempo-build)
+2026-11-20 17:20:43,06aa9c9,20,Pedidos,tamanho_apk_release,74101310,bytes,medido,tamanho-apk.sh; APK com as quatro ABIs do template
+2026-11-20 17:22:23,06aa9c9,20,Pedidos,inicializacao_frio_release_mediana,2870.5,ms,medido,inicializacao-frio.sh; 10 execuções no emulador Rango_Pixel_8_RN
+2026-11-20,023927a,20,Pedidos,install_debug,275.33,s,medido,gradlew installDebug após ligar a tela de pedidos à navegação (primeiro build do dia com o emulador recém-iniciado)
+2026-11-20,023927a,20,Pedidos,inicializacao_debug_primeira_abertura,12761,ms,medido,am start -W; 1 execução logo após o installDebug acima
+2026-11-20,9d9201c,20,Pedidos,install_debug_fix,106.93,s,medido,gradlew installDebug após corrigir a altura do texto das abas
+2026-11-20,9d9201c,20,Pedidos,inicializacao_debug_primeira_abertura,7127,ms,medido,am start -W; 1 execução logo após o installDebug do fix
+2026-11-20,06aa9c9,20,Pedidos,install_debug_sem_mudanca,50.92,s,medido,gradlew installDebug após as medições de release (sem mudança de código)
+2026-11-20,06aa9c9,20,Pedidos,inicializacao_debug_primeira_abertura,5585,ms,medido,am start -W; 1 execução logo após o installDebug sem mudança
+2026-11-20,06aa9c9,20,Pedidos,npm_test,60.65,s,medido,jest com cache limpo (tempo de relógio); 17 suítes e 78 testes
+2026-11-20 16:44:31,06aa9c9,20,Pedidos,loc_gerado,4,linhas,medido,loc-por-origem.sh --issue 20
+2026-11-20 16:44:31,06aa9c9,20,Pedidos,loc_assistido,715,linhas,medido,loc-por-origem.sh --issue 20
+2026-11-20 16:44:31,06aa9c9,20,Pedidos,loc_manual,97,linhas,medido,loc-por-origem.sh --issue 20
+2026-11-20,06aa9c9,20,Pedidos,tempo_total,132,min,ajustado,intervalo informado 07:01-09:13
+2026-11-20,06aa9c9,20,Pedidos,tempo_codigo,119,min,ajustado,segmentos da issue
+2026-11-20,06aa9c9,20,Pedidos,tempo_configuracao_build,0,min,ajustado,segmentos da issue
+2026-11-20,06aa9c9,20,Pedidos,tempo_depuracao,8,min,ajustado,segmentos da issue
+2026-11-20,06aa9c9,20,Pedidos,tempo_espera_ferramenta,5,min,ajustado,segmentos da issue

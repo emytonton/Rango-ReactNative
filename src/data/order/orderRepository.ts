@@ -1,5 +1,6 @@
 import type { HttpClient } from '../../core/network/httpClient';
 import type { AuthorizedCaller } from '../auth/authorizedCaller';
+import type { Cart } from '../cart/cartRepository';
 import type { PaymentType } from '../payment/paymentRepository';
 
 export type NewOrder = {
@@ -56,9 +57,37 @@ export type OrderDetail = {
   mapImageUrl: string | null;
 };
 
+export type OrderGroup = 'live' | 'past';
+
+export const ORDER_PAGE_SIZE = 50;
+
+export type OrderSummary = {
+  id: number;
+  code: string;
+  status: string;
+  statusLabel: string;
+  step: number;
+  createdAt: string;
+  total: number;
+  itemCount: number;
+  itemsSummary: string;
+  thumbnail: {
+    productId: string | null;
+    imageHue: number;
+    imageUrl: string | null;
+  };
+};
+
+export type ReorderResult = {
+  cart: Cart;
+  skippedProductIds: string[];
+};
+
 export type OrderRepository = {
   create(order: NewOrder): Promise<CreatedOrder>;
   detail(code: string): Promise<OrderDetail>;
+  list(group: OrderGroup): Promise<OrderSummary[]>;
+  reorder(code: string): Promise<ReorderResult>;
 };
 
 export function createOrderRepository(
@@ -79,6 +108,20 @@ export function createOrderRepository(
         http.request<OrderDetail>(`/orders/${encodeURIComponent(code)}`, {
           accessToken,
         }),
+      ),
+    list: group =>
+      call(accessToken =>
+        http.request<{ data: OrderSummary[] }>(
+          `/orders?group=${group}&pageSize=${ORDER_PAGE_SIZE}`,
+          { accessToken },
+        ),
+      ).then(page => page.data),
+    reorder: code =>
+      call(accessToken =>
+        http.request<ReorderResult>(
+          `/orders/${encodeURIComponent(code)}/reorder`,
+          { method: 'POST', accessToken },
+        ),
       ),
   };
 }

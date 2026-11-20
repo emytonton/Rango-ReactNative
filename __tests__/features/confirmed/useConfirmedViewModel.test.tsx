@@ -44,6 +44,8 @@ async function renderViewModel(detail: OrderRepository['detail']) {
   const orderRepository: OrderRepository = {
     create: jest.fn(),
     detail: jest.fn(detail),
+    list: jest.fn(),
+    reorder: jest.fn(),
   };
   const current: { value?: ViewModel } = {};
   function Harness() {

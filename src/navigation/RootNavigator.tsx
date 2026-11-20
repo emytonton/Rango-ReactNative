@@ -11,6 +11,7 @@ import { CheckoutScreen } from '../features/checkout/CheckoutScreen';
 import { ConfirmedScreen } from '../features/confirmed/ConfirmedScreen';
 import { HomeScreen } from '../features/home/HomeScreen';
 import { LoginScreen } from '../features/login/LoginScreen';
+import { OrdersScreen } from '../features/orders/OrdersScreen';
 import { PaymentScreen } from '../features/payment/PaymentScreen';
 import { ProductScreen } from '../features/product/ProductScreen';
 import { SearchScreen } from '../features/search/SearchScreen';
@@ -33,7 +34,7 @@ export function RootNavigator() {
       <Stack.Screen name="Signup" component={SignupRoute} />
       <Stack.Screen name="Home" component={HomeRoute} />
       <Stack.Screen name="Search" component={SearchRoute} />
-      <Stack.Screen name="Orders" component={PendingScreen} />
+      <Stack.Screen name="Orders" component={OrdersRoute} />
       <Stack.Screen name="Favorites" component={PendingScreen} />
       <Stack.Screen name="Profile" component={PendingScreen} />
       <Stack.Screen name="Cart" component={CartRoute} />
@@ -44,6 +45,7 @@ export function RootNavigator() {
       <Stack.Screen name="Payment" component={PaymentRoute} />
       <Stack.Screen name="Confirmed" component={ConfirmedRoute} />
       <Stack.Screen name="Tracking" component={TrackingRoute} />
+      <Stack.Screen name="OrderDetail" component={PendingScreen} />
     </Stack.Navigator>
   );
 }
@@ -140,6 +142,23 @@ function SearchRoute({
       cartRepository={cartRepository}
       homeSection={route.params?.homeSection}
       onOpenProduct={productId => navigation.navigate('Product', { productId })}
+      onTab={tab => navigateToTab(navigation, tab)}
+      onSessionExpired={() => navigateToWelcome(navigation)}
+    />
+  );
+}
+
+function OrdersRoute({
+  navigation,
+}: NativeStackScreenProps<RootStackParamList, 'Orders'>) {
+  const { orderRepository } = useAppContainer();
+  return (
+    <OrdersScreen
+      orderRepository={orderRepository}
+      onOpenOrder={code => navigation.navigate('OrderDetail', { code })}
+      onTrack={code => navigation.navigate('Tracking', { code })}
+      onCart={() => navigation.navigate('Cart')}
+      onHome={() => navigation.popTo('Home')}
       onTab={tab => navigateToTab(navigation, tab)}
       onSessionExpired={() => navigateToWelcome(navigation)}
     />

@@ -15,6 +15,7 @@ export type RootStackParamList = {
   Payment: undefined;
   Confirmed: { code: string };
   Tracking: { code: string };
+  OrderDetail: { code: string };
 };
 
 export const routeTitles: Record<keyof RootStackParamList, string> = {
@@ -34,4 +35,5 @@ export const routeTitles: Record<keyof RootStackParamList, string> = {
   Payment: 'Forma de pagamento',
   Confirmed: 'Pedido confirmado',
   Tracking: 'Acompanhar pedido',
+  OrderDetail: 'Detalhes do pedido',
 };
