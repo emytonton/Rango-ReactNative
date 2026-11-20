@@ -5,7 +5,7 @@ import { Icon, type IconName } from './Icon';
 
 type SectionCardProps = {
   title: string;
-  icon: IconName;
+  icon?: IconName;
   actionText?: string;
   onAction?: () => void;
   children: ReactNode;
@@ -28,7 +28,7 @@ export function SectionCard({
     >
       <View style={styles.header}>
         <View style={styles.titleRow}>
-          <Icon name={icon} size={19} color={colors.primary} />
+          {icon && <Icon name={icon} size={19} color={colors.primary} />}
           <Text style={[styles.title, { color: colors.text }]}>{title}</Text>
         </View>
         {actionText && onAction && (

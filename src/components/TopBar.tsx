@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import { Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { fonts, useTheme } from '../theme';
@@ -13,6 +14,7 @@ type TopBarProps = {
   actionText?: string;
   actionColor?: string;
   onAction?: () => void;
+  trailing?: ReactNode;
 };
 
 export function TopBar({
@@ -23,6 +25,7 @@ export function TopBar({
   actionText,
   actionColor,
   onAction,
+  trailing,
 }: TopBarProps) {
   const { colors } = useTheme();
   const insets = useSafeAreaInsets();
@@ -66,6 +69,7 @@ export function TopBar({
           </Text>
         </Pressable>
       )}
+      {trailing}
     </View>
   );
 }

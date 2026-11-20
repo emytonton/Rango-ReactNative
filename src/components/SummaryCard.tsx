@@ -13,9 +13,18 @@ type SummaryCardProps = {
   total: string;
   title?: string;
   header?: ReactNode;
+  totalLabel?: string;
+  totalSize?: number;
 };
 
-export function SummaryCard({ lines, total, title, header }: SummaryCardProps) {
+export function SummaryCard({
+  lines,
+  total,
+  title,
+  header,
+  totalLabel = 'Total',
+  totalSize = 22,
+}: SummaryCardProps) {
   const { colors } = useTheme();
   return (
     <View
@@ -48,8 +57,14 @@ export function SummaryCard({ lines, total, title, header }: SummaryCardProps) {
       ))}
       <View style={[styles.divider, { backgroundColor: colors.border }]} />
       <View style={styles.totalRow}>
-        <Text style={[styles.totalLabel, { color: colors.text }]}>Total</Text>
-        <Text style={[styles.total, { color: colors.primary }]}>{total}</Text>
+        <Text style={[styles.totalLabel, { color: colors.text }]}>
+          {totalLabel}
+        </Text>
+        <Text
+          style={[styles.total, { color: colors.primary, fontSize: totalSize }]}
+        >
+          {total}
+        </Text>
       </View>
     </View>
   );

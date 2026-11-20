@@ -11,6 +11,7 @@ import { CheckoutScreen } from '../features/checkout/CheckoutScreen';
 import { ConfirmedScreen } from '../features/confirmed/ConfirmedScreen';
 import { HomeScreen } from '../features/home/HomeScreen';
 import { LoginScreen } from '../features/login/LoginScreen';
+import { OrderDetailScreen } from '../features/orderdetail/OrderDetailScreen';
 import { OrdersScreen } from '../features/orders/OrdersScreen';
 import { PaymentScreen } from '../features/payment/PaymentScreen';
 import { ProductScreen } from '../features/product/ProductScreen';
@@ -45,7 +46,7 @@ export function RootNavigator() {
       <Stack.Screen name="Payment" component={PaymentRoute} />
       <Stack.Screen name="Confirmed" component={ConfirmedRoute} />
       <Stack.Screen name="Tracking" component={TrackingRoute} />
-      <Stack.Screen name="OrderDetail" component={PendingScreen} />
+      <Stack.Screen name="OrderDetail" component={OrderDetailRoute} />
     </Stack.Navigator>
   );
 }
@@ -160,6 +161,22 @@ function OrdersRoute({
       onCart={() => navigation.navigate('Cart')}
       onHome={() => navigation.popTo('Home')}
       onTab={tab => navigateToTab(navigation, tab)}
+      onSessionExpired={() => navigateToWelcome(navigation)}
+    />
+  );
+}
+
+function OrderDetailRoute({
+  navigation,
+  route,
+}: NativeStackScreenProps<RootStackParamList, 'OrderDetail'>) {
+  const { orderRepository } = useAppContainer();
+  return (
+    <OrderDetailScreen
+      orderCode={route.params.code}
+      orderRepository={orderRepository}
+      onBack={navigation.goBack}
+      onCart={() => navigation.navigate('Cart')}
       onSessionExpired={() => navigateToWelcome(navigation)}
     />
   );

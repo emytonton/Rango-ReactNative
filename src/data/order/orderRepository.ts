@@ -29,15 +29,35 @@ export type Courier = {
   photoUrl: string | null;
 };
 
+export type OrderItem = {
+  productId: string | null;
+  name: string;
+  restaurant: string | null;
+  imageHue: number;
+  imageUrl: string | null;
+  quantity: number;
+  unitPrice: number;
+  total: number;
+};
+
+export type OrderAddress = {
+  label: string;
+  line: string;
+  cityLine: string;
+};
+
 export type OrderDetail = {
   id: number;
   code: string;
   status: string;
   statusLabel: string;
   step: number;
+  createdAt: string;
   hint: string;
   itemCount: number;
   total: number;
+  items: OrderItem[];
+  address: OrderAddress | null;
   estimatedDelivery: { minMinutes: number; maxMinutes: number };
   payment: {
     type: PaymentType;
