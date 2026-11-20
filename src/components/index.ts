@@ -35,6 +35,7 @@ export * from './SuccessBadge';
 export * from './Slider';
 export * from './StatCard';
 export * from './StatusCard';
+export * from './StatusPill';
 export * from './SummaryCard';
 export * from './TextAction';
 export * from './TextArea';
