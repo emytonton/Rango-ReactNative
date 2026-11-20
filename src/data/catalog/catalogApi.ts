@@ -61,11 +61,5 @@ export function createCatalogApi(http: HttpClient) {
         `/products/${encodeURIComponent(productId)}`,
         { accessToken },
       ),
-
-    setFavorite: (accessToken: string, productId: string, favorite: boolean) =>
-      http.request<{ productId: string; isFavorite: boolean }>(
-        `/favorites/${encodeURIComponent(productId)}`,
-        { method: favorite ? 'PUT' : 'DELETE', accessToken },
-      ),
   };
 }

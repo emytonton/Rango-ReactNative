@@ -24,6 +24,10 @@ import {
   type CatalogRepository,
 } from '../data/catalog/catalogRepository';
 import {
+  createFavoriteRepository,
+  type FavoriteRepository,
+} from '../data/favorite/favoriteRepository';
+import {
   createOrderRepository,
   type OrderRepository,
 } from '../data/order/orderRepository';
@@ -45,6 +49,7 @@ export type AppContainer = {
   sessionRepository: SessionRepository;
   authRepository: AuthRepository;
   catalogRepository: CatalogRepository;
+  favoriteRepository: FavoriteRepository;
   cartRepository: CartRepository;
   searchRepository: SearchRepository;
   addressRepository: AddressRepository;
@@ -59,13 +64,16 @@ export function createAppContainer(): AppContainer {
   const authApi = createAuthApi(http);
   const sessionRepository = createSessionRepository(authApi, storage);
   const authorizedCall = createAuthorizedCaller(sessionRepository);
+  const favoriteRepository = createFavoriteRepository(http, authorizedCall);
   return {
     sessionRepository,
     authRepository: createAuthRepository(authApi, sessionRepository),
     catalogRepository: createCatalogRepository(
       createCatalogApi(http),
       authorizedCall,
+      favoriteRepository,
     ),
+    favoriteRepository,
     cartRepository: createCartRepository(http, authorizedCall),
     searchRepository: createSearchRepository(http, authorizedCall),
     addressRepository: createAddressRepository(http, authorizedCall),
