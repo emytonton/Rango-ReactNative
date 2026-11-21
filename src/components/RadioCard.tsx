@@ -18,18 +18,7 @@ export function RadioCard({
   children,
 }: RadioCardProps) {
   const { colors } = useTheme();
-  const radio = (
-    <View
-      style={[
-        styles.radio,
-        { borderColor: selected ? colors.primary : colors.border },
-      ]}
-    >
-      {selected && (
-        <View style={[styles.dot, { backgroundColor: colors.primary }]} />
-      )}
-    </View>
-  );
+  const radio = <RadioIndicator selected={selected} />;
   return (
     <Pressable
       accessibilityRole="radio"
@@ -49,6 +38,22 @@ export function RadioCard({
       {children}
       {indicatorAtEnd && radio}
     </Pressable>
+  );
+}
+
+export function RadioIndicator({ selected }: { selected: boolean }) {
+  const { colors } = useTheme();
+  return (
+    <View
+      style={[
+        styles.radio,
+        { borderColor: selected ? colors.primary : colors.border },
+      ]}
+    >
+      {selected && (
+        <View style={[styles.dot, { backgroundColor: colors.primary }]} />
+      )}
+    </View>
   );
 }
 
