@@ -11,3 +11,12 @@ jest.mock('react-native-keychain', () => ({
   setGenericPassword: jest.fn(() => Promise.resolve(true)),
   resetGenericPassword: jest.fn(() => Promise.resolve(true)),
 }));
+
+jest.mock('@react-native-community/image-editor', () => ({
+  cropImage: jest.fn(() => Promise.resolve({ uri: 'file:///avatar.jpg' })),
+}));
+
+jest.mock('react-native-image-picker', () => ({
+  launchCamera: jest.fn(() => Promise.resolve({ didCancel: true })),
+  launchImageLibrary: jest.fn(() => Promise.resolve({ didCancel: true })),
+}));
