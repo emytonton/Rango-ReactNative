@@ -35,6 +35,7 @@ export * from './SectionCard';
 export * from './SearchBarButton';
 export * from './SearchField';
 export * from './SectionHeader';
+export * from './SettingsGroup';
 export * from './Skeleton';
 export * from './SuccessBadge';
 export * from './Slider';
