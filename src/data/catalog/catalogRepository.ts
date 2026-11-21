@@ -1,4 +1,5 @@
 import type { AuthorizedCaller } from '../auth/authorizedCaller';
+import type { FavoriteRepository } from '../favorite/favoriteRepository';
 import type {
   CatalogApi,
   Home,
@@ -16,6 +17,7 @@ export type CatalogRepository = {
 export function createCatalogRepository(
   api: CatalogApi,
   call: AuthorizedCaller,
+  favorites: FavoriteRepository,
 ): CatalogRepository {
   return {
     home: () => call(token => api.home(token)),
@@ -23,8 +25,6 @@ export function createCatalogRepository(
       call(token => api.productsByCategory(token, slug)),
     product: productId => call(token => api.product(token, productId)),
     setFavorite: (productId, favorite) =>
-      call(token => api.setFavorite(token, productId, favorite)).then(
-        result => result.isFavorite,
-      ),
+      favorites.setFavorite(productId, favorite),
   };
 }

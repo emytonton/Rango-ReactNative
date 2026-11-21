@@ -1,14 +1,16 @@
+import { useEffect, useSyncExternalStore } from 'react';
 import {
   createNativeStackNavigator,
   type NativeStackNavigationProp,
   type NativeStackScreenProps,
 } from '@react-navigation/native-stack';
-import type { BottomTab } from '../components';
+import { TabBadgesContext, type BottomTab } from '../components';
 import { useAppContainer } from '../di/AppContainer';
 import { AddressScreen } from '../features/address/AddressScreen';
 import { CartScreen } from '../features/cart/CartScreen';
 import { CheckoutScreen } from '../features/checkout/CheckoutScreen';
 import { ConfirmedScreen } from '../features/confirmed/ConfirmedScreen';
+import { FavoritesScreen } from '../features/favorites/FavoritesScreen';
 import { HomeScreen } from '../features/home/HomeScreen';
 import { LoginScreen } from '../features/login/LoginScreen';
 import { OrderDetailScreen } from '../features/orderdetail/OrderDetailScreen';
@@ -25,29 +27,36 @@ import type { RootStackParamList } from './routes';
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export function RootNavigator() {
+  const { favoriteRepository } = useAppContainer();
+  const favoriteIds = useSyncExternalStore(
+    favoriteRepository.subscribe,
+    favoriteRepository.favoriteIds,
+  );
   return (
-    <Stack.Navigator
-      initialRouteName="Welcome"
-      screenOptions={{ headerShown: false }}
-    >
-      <Stack.Screen name="Welcome" component={WelcomeRoute} />
-      <Stack.Screen name="Login" component={LoginRoute} />
-      <Stack.Screen name="Signup" component={SignupRoute} />
-      <Stack.Screen name="Home" component={HomeRoute} />
-      <Stack.Screen name="Search" component={SearchRoute} />
-      <Stack.Screen name="Orders" component={OrdersRoute} />
-      <Stack.Screen name="Favorites" component={PendingScreen} />
-      <Stack.Screen name="Profile" component={PendingScreen} />
-      <Stack.Screen name="Cart" component={CartRoute} />
-      <Stack.Screen name="Notifications" component={PendingScreen} />
-      <Stack.Screen name="Address" component={AddressRoute} />
-      <Stack.Screen name="Product" component={ProductRoute} />
-      <Stack.Screen name="Checkout" component={CheckoutRoute} />
-      <Stack.Screen name="Payment" component={PaymentRoute} />
-      <Stack.Screen name="Confirmed" component={ConfirmedRoute} />
-      <Stack.Screen name="Tracking" component={TrackingRoute} />
-      <Stack.Screen name="OrderDetail" component={OrderDetailRoute} />
-    </Stack.Navigator>
+    <TabBadgesContext.Provider value={{ favorites: favoriteIds.size }}>
+      <Stack.Navigator
+        initialRouteName="Welcome"
+        screenOptions={{ headerShown: false }}
+      >
+        <Stack.Screen name="Welcome" component={WelcomeRoute} />
+        <Stack.Screen name="Login" component={LoginRoute} />
+        <Stack.Screen name="Signup" component={SignupRoute} />
+        <Stack.Screen name="Home" component={HomeRoute} />
+        <Stack.Screen name="Search" component={SearchRoute} />
+        <Stack.Screen name="Orders" component={OrdersRoute} />
+        <Stack.Screen name="Favorites" component={FavoritesRoute} />
+        <Stack.Screen name="Profile" component={PendingScreen} />
+        <Stack.Screen name="Cart" component={CartRoute} />
+        <Stack.Screen name="Notifications" component={PendingScreen} />
+        <Stack.Screen name="Address" component={AddressRoute} />
+        <Stack.Screen name="Product" component={ProductRoute} />
+        <Stack.Screen name="Checkout" component={CheckoutRoute} />
+        <Stack.Screen name="Payment" component={PaymentRoute} />
+        <Stack.Screen name="Confirmed" component={ConfirmedRoute} />
+        <Stack.Screen name="Tracking" component={TrackingRoute} />
+        <Stack.Screen name="OrderDetail" component={OrderDetailRoute} />
+      </Stack.Navigator>
+    </TabBadgesContext.Provider>
   );
 }
 
@@ -112,7 +121,11 @@ const tabRoutes: Record<
 function HomeRoute({
   navigation,
 }: NativeStackScreenProps<RootStackParamList, 'Home'>) {
-  const { catalogRepository, cartRepository } = useAppContainer();
+  const { catalogRepository, cartRepository, favoriteRepository } =
+    useAppContainer();
+  useEffect(() => {
+    favoriteRepository.list().catch(() => undefined);
+  }, [favoriteRepository]);
   return (
     <HomeScreen
       catalogRepository={catalogRepository}
@@ -177,6 +190,22 @@ function OrderDetailRoute({
       orderRepository={orderRepository}
       onBack={navigation.goBack}
       onCart={() => navigation.navigate('Cart')}
+      onSessionExpired={() => navigateToWelcome(navigation)}
+    />
+  );
+}
+
+function FavoritesRoute({
+  navigation,
+}: NativeStackScreenProps<RootStackParamList, 'Favorites'>) {
+  const { favoriteRepository, cartRepository } = useAppContainer();
+  return (
+    <FavoritesScreen
+      favoriteRepository={favoriteRepository}
+      cartRepository={cartRepository}
+      onOpenProduct={productId => navigation.navigate('Product', { productId })}
+      onExplore={() => navigation.popTo('Home')}
+      onTab={tab => navigateToTab(navigation, tab)}
       onSessionExpired={() => navigateToWelcome(navigation)}
     />
   );
