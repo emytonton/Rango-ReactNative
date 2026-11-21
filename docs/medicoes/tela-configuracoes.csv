@@ -1,0 +1,20 @@
+data,commit,issue,tela,metrica,valor,unidade,origem,observacao
+2026-11-21 22:05:36,a4e2b1e,22,Configurações,build_debug_limpo,427.19,s,medido,tempo-build.sh
+2026-11-21 22:05:36,a4e2b1e,22,Configurações,build_debug_incremental_sem_mudanca,9.49,s,medido,tempo-build.sh
+2026-11-21 22:05:36,a4e2b1e,22,Configurações,build_debug_incremental_um_arquivo,31.26,s,medido,tempo-build.sh com src/features/settings/SettingsScreen.tsx alterado
+2026-11-21 22:13:24,a4e2b1e,22,Configurações,build_release,467,s,medido,tempo de relógio do tamanho-apk.sh (:app:assembleRelease após o clean do tempo-build)
+2026-11-21 22:13:24,a4e2b1e,22,Configurações,tamanho_apk_release,74299309,bytes,medido,tamanho-apk.sh; APK com as quatro ABIs do template
+2026-11-21 22:14:52,a4e2b1e,22,Configurações,inicializacao_frio_release_mediana,805,ms,medido,inicializacao-frio.sh; 10 execuções no emulador Rango_Pixel_8_RN
+2026-11-21,a4e2b1e,22,Configurações,install_debug,65.94,s,medido,gradlew installDebug após ligar as configurações à navegação (build incremental e instalação no emulador)
+2026-11-21,a4e2b1e,22,Configurações,inicializacao_debug_primeira_abertura,8819,ms,medido,am start -W; 1 execução logo após o installDebug acima
+2026-11-21,a4e2b1e,22,Configurações,install_debug_sem_mudanca,47.00,s,medido,gradlew installDebug após as medições de release (sem mudança de código)
+2026-11-21,a4e2b1e,22,Configurações,inicializacao_debug_primeira_abertura,6988,ms,medido,am start -W; 1 execução logo após o installDebug sem mudança
+2026-11-21,a4e2b1e,22,Configurações,npm_test,31.88,s,medido,jest com cache limpo (tempo de relógio); 26 suítes e 101 testes
+2026-11-21 22:16:47,a4e2b1e,22,Configurações,loc_gerado,0,linhas,medido,loc-por-origem.sh --issue 22
+2026-11-21 22:16:47,a4e2b1e,22,Configurações,loc_assistido,602,linhas,medido,loc-por-origem.sh --issue 22
+2026-11-21 22:16:47,a4e2b1e,22,Configurações,loc_manual,102,linhas,medido,loc-por-origem.sh --issue 22
+2026-11-21,a4e2b1e,22,Configurações,tempo_total,71,min,ajustado,intervalo informado 13:00-14:13
+2026-11-21,a4e2b1e,22,Configurações,tempo_codigo,60,min,ajustado,segmentos da issue
+2026-11-21,a4e2b1e,22,Configurações,tempo_configuracao_build,0,min,ajustado,segmentos da issue
+2026-11-21,a4e2b1e,22,Configurações,tempo_depuracao,5,min,ajustado,segmentos da issue
+2026-11-21,a4e2b1e,22,Configurações,tempo_espera_ferramenta,6,min,ajustado,segmentos da issue
