@@ -1,0 +1,20 @@
+data,commit,issue,tela,metrica,valor,unidade,origem,observacao
+2026-11-21 20:30:35,c17dbad,27,Editar perfil,build_debug_limpo,524.98,s,medido,tempo-build.sh
+2026-11-21 20:30:35,c17dbad,27,Editar perfil,build_debug_incremental_sem_mudanca,15.08,s,medido,tempo-build.sh
+2026-11-21 20:30:35,c17dbad,27,Editar perfil,build_debug_incremental_um_arquivo,36.64,s,medido,tempo-build.sh com src/features/editprofile/EditProfileScreen.tsx alterado
+2026-11-21 20:40:33,c17dbad,27,Editar perfil,build_release,586,s,medido,tempo de relógio do tamanho-apk.sh (:app:assembleRelease após o clean do tempo-build)
+2026-11-21 20:40:33,c17dbad,27,Editar perfil,tamanho_apk_release,74281653,bytes,medido,tamanho-apk.sh; APK com as quatro ABIs do template; inclui image-picker e image-editor
+2026-11-21 20:42:10,c17dbad,27,Editar perfil,inicializacao_frio_release_mediana,859,ms,medido,inicializacao-frio.sh; 10 execuções no emulador Rango_Pixel_8_RN
+2026-11-21,c17dbad,27,Editar perfil,install_debug,351.23,s,medido,gradlew installDebug após adicionar as bibliotecas nativas de câmera e recorte (recompila o nativo)
+2026-11-21,c17dbad,27,Editar perfil,inicializacao_debug_primeira_abertura,7345,ms,medido,am start -W; 1 execução logo após o installDebug acima
+2026-11-21,c17dbad,27,Editar perfil,install_debug_sem_mudanca,59.73,s,medido,gradlew installDebug após as medições de release (sem mudança de código)
+2026-11-21,c17dbad,27,Editar perfil,inicializacao_debug_primeira_abertura,4664,ms,medido,am start -W; 1 execução logo após o installDebug sem mudança
+2026-11-21,c17dbad,27,Editar perfil,npm_test,40.00,s,medido,jest com cache limpo (tempo de relógio); 24 suítes e 96 testes
+2026-11-21 20:44:35,c17dbad,27,Editar perfil,loc_gerado,2,linhas,medido,loc-por-origem.sh --issue 27
+2026-11-21 20:44:35,c17dbad,27,Editar perfil,loc_assistido,1163,linhas,medido,loc-por-origem.sh --issue 27
+2026-11-21 20:44:35,c17dbad,27,Editar perfil,loc_manual,74,linhas,medido,loc-por-origem.sh --issue 27
+2026-11-21,c17dbad,27,Editar perfil,tempo_total,137,min,ajustado,intervalo informado 08:40-11:00
+2026-11-21,c17dbad,27,Editar perfil,tempo_codigo,110,min,ajustado,segmentos da issue
+2026-11-21,c17dbad,27,Editar perfil,tempo_configuracao_build,10,min,ajustado,segmentos da issue
+2026-11-21,c17dbad,27,Editar perfil,tempo_depuracao,8,min,ajustado,segmentos da issue
+2026-11-21,c17dbad,27,Editar perfil,tempo_espera_ferramenta,9,min,ajustado,segmentos da issue
