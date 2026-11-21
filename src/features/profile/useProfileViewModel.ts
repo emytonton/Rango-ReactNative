@@ -81,6 +81,7 @@ export function useProfileViewModel(
   const stateRef = useRef(state);
   const callbacksRef = useRef(callbacks);
   const request = useRef(0);
+  const loggingOut = useRef(false);
 
   useEffect(() => {
     stateRef.current = state;
@@ -151,9 +152,10 @@ export function useProfileViewModel(
   }, []);
 
   const logout = useCallback(async () => {
-    if (stateRef.current.loggingOut) {
+    if (loggingOut.current) {
       return;
     }
+    loggingOut.current = true;
     request.current++;
     setState(current => ({ ...current, loggingOut: true }));
     await session.logout();
