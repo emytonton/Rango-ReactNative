@@ -11,6 +11,10 @@ export function zoomFor(step: number): number {
   return 1 + ((step - MIN_ZOOM_STEP) / (MAX_ZOOM_STEP - MIN_ZOOM_STEP)) * 2;
 }
 
+export function stepFor(zoom: number): number {
+  return MIN_ZOOM_STEP + ((zoom - 1) / 2) * (MAX_ZOOM_STEP - MIN_ZOOM_STEP);
+}
+
 export function createSquareCrop(
   imageWidth: number,
   imageHeight: number,
