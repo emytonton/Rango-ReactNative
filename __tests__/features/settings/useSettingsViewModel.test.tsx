@@ -5,6 +5,7 @@ import type { ConnectionRepository } from '../../../src/data/connection/connecti
 import type { FavoriteRepository } from '../../../src/data/favorite/favoriteRepository';
 import type { PaymentSelection } from '../../../src/data/payment/paymentSelection';
 import type { ProfileRepository } from '../../../src/data/profile/profileRepository';
+import type { ThemeRepository } from '../../../src/data/theme/themeRepository';
 import type { DataSync } from '../../../src/data/sync/dataSync';
 import {
   connectionHint,
@@ -27,6 +28,17 @@ const settings = {
   theme: 'dark' as const,
   notifications: { orders: true, promos: true, news: false },
 };
+
+function themeRepository(): ThemeRepository {
+  let mode: 'light' | 'dark' | 'system' = 'system';
+  return {
+    current: () => mode,
+    onRemote: jest.fn(async (remote: typeof mode) => {
+      mode = remote;
+    }),
+    pushPending: jest.fn(() => Promise.resolve(true)),
+  } as unknown as ThemeRepository;
+}
 
 async function renderViewModel(options: {
   online?: () => Promise<boolean>;
@@ -63,6 +75,7 @@ async function renderViewModel(options: {
     } as unknown as SessionRepository,
     favorites: { clearLocal: jest.fn() } as unknown as FavoriteRepository,
     paymentSelection: { clear: jest.fn() } as unknown as PaymentSelection,
+    theme: themeRepository(),
   };
   const callbacks = {
     onMessage: jest.fn(),

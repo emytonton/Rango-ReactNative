@@ -229,6 +229,7 @@ function ProfileRoute({
       addressRepository={container.addressRepository}
       paymentRepository={container.paymentRepository}
       sessionRepository={container.sessionRepository}
+      themeRepository={container.themeRepository}
       navigation={{
         onNotifications: () => navigation.navigate('Notifications'),
         onEditProfile: () => navigation.navigate('EditProfile'),
@@ -270,6 +271,7 @@ function SettingsRoute({
       sessionRepository={container.sessionRepository}
       favoriteRepository={container.favoriteRepository}
       paymentSelection={container.paymentSelection}
+      themeRepository={container.themeRepository}
       navigation={{
         onBack: navigation.goBack,
         onTheme: () => navigation.navigate('Theme'),

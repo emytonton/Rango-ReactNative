@@ -9,6 +9,7 @@ import type { FavoriteRepository } from '../../data/favorite/favoriteRepository'
 import type { PaymentSelection } from '../../data/payment/paymentSelection';
 import type { ProfileRepository } from '../../data/profile/profileRepository';
 import type { DataSync } from '../../data/sync/dataSync';
+import type { ThemeRepository } from '../../data/theme/themeRepository';
 import { useTheme } from '../../theme';
 import {
   connectionHint,
@@ -36,6 +37,7 @@ type SettingsScreenProps = {
   sessionRepository: SessionRepository;
   favoriteRepository: FavoriteRepository;
   paymentSelection: PaymentSelection;
+  themeRepository: ThemeRepository;
   navigation: SettingsNavigation;
 };
 
@@ -46,6 +48,7 @@ export function SettingsScreen({
   sessionRepository,
   favoriteRepository,
   paymentSelection,
+  themeRepository,
   navigation,
 }: SettingsScreenProps) {
   const { colors } = useTheme();
@@ -59,6 +62,7 @@ export function SettingsScreen({
       session: sessionRepository,
       favorites: favoriteRepository,
       paymentSelection,
+      theme: themeRepository,
     },
     {
       onMessage: toast.show,

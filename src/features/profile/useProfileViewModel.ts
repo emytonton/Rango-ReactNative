@@ -7,6 +7,7 @@ import { SessionExpiredError } from '../../data/auth/authorizedCaller';
 import type { SessionRepository } from '../../data/auth/sessionRepository';
 import type { PaymentRepository } from '../../data/payment/paymentRepository';
 import type { ProfileRepository } from '../../data/profile/profileRepository';
+import type { ThemeRepository } from '../../data/theme/themeRepository';
 import type { ThemeMode } from '../../theme';
 
 export type ProfileState = {
@@ -29,6 +30,7 @@ type ProfileRepositories = {
   addresses: AddressRepository;
   payments: PaymentRepository;
   session: SessionRepository;
+  theme: ThemeRepository;
 };
 
 type ProfileCallbacks = {
@@ -76,7 +78,7 @@ export function useProfileViewModel(
   repositories: ProfileRepositories,
   callbacks: ProfileCallbacks,
 ) {
-  const { profile, addresses, payments, session } = repositories;
+  const { profile, addresses, payments, session, theme } = repositories;
   const [state, setState] = useState<ProfileState>(initialState);
   const stateRef = useRef(state);
   const callbacksRef = useRef(callbacks);
@@ -103,6 +105,7 @@ export function useProfileViewModel(
       if (request.current !== id) {
         return;
       }
+      await theme.onRemote(settings.theme);
       setState(current => ({
         ...current,
         loading: false,
@@ -115,7 +118,7 @@ export function useProfileViewModel(
         addressCount: addressList.length,
         paymentCount: paymentList.length,
         unreadCount,
-        theme: settings.theme,
+        theme: theme.current(),
       }));
     } catch (error) {
       if (request.current !== id) {
@@ -135,7 +138,7 @@ export function useProfileViewModel(
           : { ...current, loading: false, errorMessage: message },
       );
     }
-  }, [profile, addresses, payments]);
+  }, [profile, addresses, payments, theme]);
 
   useEffect(() => {
     load();
