@@ -15,6 +15,7 @@ function fakeRepository(result: SessionRestore): SessionRepository {
     renewAccessToken: () => Promise.resolve(null),
     save: () => Promise.resolve(),
     clear: () => Promise.resolve(),
+    logout: () => Promise.resolve(),
   };
 }
 

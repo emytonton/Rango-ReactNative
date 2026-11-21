@@ -9,6 +9,7 @@ type BadgeIconButtonProps = {
   filled?: boolean;
   showDot?: boolean;
   count?: number;
+  compact?: boolean;
 };
 
 export function BadgeIconButton({
@@ -18,6 +19,7 @@ export function BadgeIconButton({
   filled = false,
   showDot = false,
   count = 0,
+  compact = false,
 }: BadgeIconButtonProps) {
   const { colors } = useTheme();
   return (
@@ -27,6 +29,7 @@ export function BadgeIconButton({
       onPress={onPress}
       style={({ pressed }) => [
         styles.button,
+        compact && styles.compact,
         filled
           ? { backgroundColor: colors.primary, borderColor: colors.primary }
           : { backgroundColor: colors.surface, borderColor: colors.border },
@@ -35,13 +38,14 @@ export function BadgeIconButton({
     >
       <Icon
         name={icon}
-        size={21}
+        size={compact ? 20 : 21}
         color={filled ? colors.onPrimary : colors.text}
       />
       {showDot && (
         <View
           style={[
             styles.dot,
+            compact && styles.compactDot,
             { backgroundColor: colors.error, borderColor: colors.surface },
           ]}
         />
@@ -71,6 +75,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  compact: { width: 40, height: 40, borderRadius: 13 },
   pressed: { opacity: 0.85 },
   dot: {
     position: 'absolute',
@@ -81,6 +86,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     borderWidth: 1.5,
   },
+  compactDot: { top: 7, right: 8 },
   count: {
     position: 'absolute',
     top: -5,

@@ -40,6 +40,10 @@ import {
   type PaymentSelection,
 } from '../data/payment/paymentSelection';
 import {
+  createProfileRepository,
+  type ProfileRepository,
+} from '../data/profile/profileRepository';
+import {
   createSearchRepository,
   type SearchRepository,
 } from '../data/search/searchRepository';
@@ -56,6 +60,7 @@ export type AppContainer = {
   paymentRepository: PaymentRepository;
   paymentSelection: PaymentSelection;
   orderRepository: OrderRepository;
+  profileRepository: ProfileRepository;
 };
 
 export function createAppContainer(): AppContainer {
@@ -80,6 +85,7 @@ export function createAppContainer(): AppContainer {
     paymentRepository: createPaymentRepository(http, authorizedCall),
     paymentSelection: createPaymentSelection(),
     orderRepository: createOrderRepository(http, authorizedCall),
+    profileRepository: createProfileRepository(http, authorizedCall),
   };
 }
 

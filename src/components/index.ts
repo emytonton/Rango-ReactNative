@@ -1,4 +1,5 @@
 export * from './BackButton';
+export * from './Avatar';
 export * from './BadgeIconButton';
 export * from './BottomBar';
 export * from './BrandMark';
@@ -20,6 +21,7 @@ export * from './OverlayIconButton';
 export * from './InfoBanner';
 export * from './OrderItemRow';
 export * from './MapPreview';
+export * from './MenuRow';
 export * from './PasswordToggle';
 export * from './PlainField';
 export * from './ProductCards';

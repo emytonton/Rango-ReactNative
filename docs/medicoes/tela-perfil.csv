@@ -1,0 +1,20 @@
+data,commit,issue,tela,metrica,valor,unidade,origem,observacao
+2026-11-21 16:39:34,c91906e,11,Perfil,build_debug_limpo,384.07,s,medido,tempo-build.sh
+2026-11-21 16:39:34,c91906e,11,Perfil,build_debug_incremental_sem_mudanca,10.22,s,medido,tempo-build.sh
+2026-11-21 16:39:34,c91906e,11,Perfil,build_debug_incremental_um_arquivo,29.92,s,medido,tempo-build.sh com src/features/profile/ProfileScreen.tsx alterado
+2026-11-21 16:46:02,c91906e,11,Perfil,build_release,389,s,medido,tempo de relógio do tamanho-apk.sh (:app:assembleRelease após o clean do tempo-build)
+2026-11-21 16:46:02,c91906e,11,Perfil,tamanho_apk_release,74135506,bytes,medido,tamanho-apk.sh; APK com as quatro ABIs do template
+2026-11-21 16:47:18,c91906e,11,Perfil,inicializacao_frio_release_mediana,1812.5,ms,medido,inicializacao-frio.sh; 10 execuções no emulador Rango_Pixel_8_RN
+2026-11-21,d0c7b98,11,Perfil,install_debug,118.98,s,medido,gradlew installDebug após ligar o perfil à navegação (build incremental e instalação no emulador)
+2026-11-21,d0c7b98,11,Perfil,inicializacao_debug_primeira_abertura,7733,ms,medido,am start -W; 1 execução logo após o installDebug acima
+2026-11-21,c91906e,11,Perfil,install_debug_sem_mudanca,41.01,s,medido,gradlew installDebug após as medições de release (sem mudança de código)
+2026-11-21,c91906e,11,Perfil,inicializacao_debug_primeira_abertura,4571,ms,medido,am start -W; 1 execução logo após o installDebug sem mudança
+2026-11-21,c91906e,11,Perfil,npm_test,30.28,s,medido,jest com cache limpo (tempo de relógio); 22 suítes e 91 testes
+2026-11-21 16:31:58,c91906e,11,Perfil,loc_gerado,3,linhas,medido,loc-por-origem.sh --issue 11
+2026-11-21 16:31:58,c91906e,11,Perfil,loc_assistido,563,linhas,medido,loc-por-origem.sh --issue 11
+2026-11-21 16:31:58,c91906e,11,Perfil,loc_manual,86,linhas,medido,loc-por-origem.sh --issue 11
+2026-11-21,c91906e,11,Perfil,tempo_total,79,min,ajustado,intervalo informado 07:01-08:20
+2026-11-21,c91906e,11,Perfil,tempo_codigo,70,min,ajustado,segmentos da issue
+2026-11-21,c91906e,11,Perfil,tempo_configuracao_build,0,min,ajustado,segmentos da issue
+2026-11-21,c91906e,11,Perfil,tempo_depuracao,5,min,ajustado,segmentos da issue
+2026-11-21,c91906e,11,Perfil,tempo_espera_ferramenta,4,min,ajustado,segmentos da issue

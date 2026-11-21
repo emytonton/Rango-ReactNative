@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { ProductCardModel, ToastKind } from '../../components';
+import { initialsOf } from '../../core/format/formatters';
 import { ApiError, NetworkError } from '../../core/network/apiError';
 import { SessionExpiredError } from '../../data/auth/authorizedCaller';
 import type { CartRepository } from '../../data/cart/cartRepository';
@@ -210,15 +211,6 @@ function withHome(state: HomeState, home: Home): HomeState {
       products: section.products.map(toProductCard),
     })),
   };
-}
-
-function initialsOf(name: string): string {
-  return name
-    .split(' ')
-    .filter(Boolean)
-    .slice(0, 2)
-    .map(part => part[0].toUpperCase())
-    .join('');
 }
 
 function findProduct(state: HomeState, productId: string) {

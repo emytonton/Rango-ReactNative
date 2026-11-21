@@ -17,6 +17,7 @@ import { OrderDetailScreen } from '../features/orderdetail/OrderDetailScreen';
 import { OrdersScreen } from '../features/orders/OrdersScreen';
 import { PaymentScreen } from '../features/payment/PaymentScreen';
 import { ProductScreen } from '../features/product/ProductScreen';
+import { ProfileScreen } from '../features/profile/ProfileScreen';
 import { SearchScreen } from '../features/search/SearchScreen';
 import { SignupScreen } from '../features/signup/SignupScreen';
 import { TrackingScreen } from '../features/tracking/TrackingScreen';
@@ -45,7 +46,7 @@ export function RootNavigator() {
         <Stack.Screen name="Search" component={SearchRoute} />
         <Stack.Screen name="Orders" component={OrdersRoute} />
         <Stack.Screen name="Favorites" component={FavoritesRoute} />
-        <Stack.Screen name="Profile" component={PendingScreen} />
+        <Stack.Screen name="Profile" component={ProfileRoute} />
         <Stack.Screen name="Cart" component={CartRoute} />
         <Stack.Screen name="Notifications" component={PendingScreen} />
         <Stack.Screen name="Address" component={AddressRoute} />
@@ -55,6 +56,9 @@ export function RootNavigator() {
         <Stack.Screen name="Confirmed" component={ConfirmedRoute} />
         <Stack.Screen name="Tracking" component={TrackingRoute} />
         <Stack.Screen name="OrderDetail" component={OrderDetailRoute} />
+        <Stack.Screen name="EditProfile" component={PendingScreen} />
+        <Stack.Screen name="Settings" component={PendingScreen} />
+        <Stack.Screen name="Theme" component={PendingScreen} />
       </Stack.Navigator>
     </TabBadgesContext.Provider>
   );
@@ -207,6 +211,31 @@ function FavoritesRoute({
       onExplore={() => navigation.popTo('Home')}
       onTab={tab => navigateToTab(navigation, tab)}
       onSessionExpired={() => navigateToWelcome(navigation)}
+    />
+  );
+}
+
+function ProfileRoute({
+  navigation,
+}: NativeStackScreenProps<RootStackParamList, 'Profile'>) {
+  const container = useAppContainer();
+  return (
+    <ProfileScreen
+      profileRepository={container.profileRepository}
+      addressRepository={container.addressRepository}
+      paymentRepository={container.paymentRepository}
+      sessionRepository={container.sessionRepository}
+      navigation={{
+        onNotifications: () => navigation.navigate('Notifications'),
+        onEditProfile: () => navigation.navigate('EditProfile'),
+        onAddresses: () => navigation.navigate('Address'),
+        onPayments: () => navigation.navigate('Payment'),
+        onSettings: () => navigation.navigate('Settings'),
+        onTheme: () => navigation.navigate('Theme'),
+        onTab: tab => navigateToTab(navigation, tab),
+        onLoggedOut: () => navigateToWelcome(navigation),
+        onSessionExpired: () => navigateToWelcome(navigation),
+      }}
     />
   );
 }

@@ -13,6 +13,7 @@ export type SessionRepository = {
   renewAccessToken(): Promise<string | null>;
   save(session: AuthSession): Promise<void>;
   clear(): Promise<void>;
+  logout(): Promise<void>;
 };
 
 const KEY_REFRESH = 'refresh_token';
@@ -75,6 +76,14 @@ export function createSessionRepository(
         }
         return { type: 'unreachable', userName };
       }
+    },
+
+    async logout() {
+      const refreshToken = await storage.get(KEY_REFRESH);
+      if (refreshToken) {
+        await api.logout(refreshToken).catch(() => undefined);
+      }
+      await clear();
     },
 
     async renewAccessToken() {

@@ -30,3 +30,12 @@ export function formatOrderDate(iso: string, now: Date = new Date()): string {
       : `${String(date.getDate()).padStart(2, '0')} ${MONTHS[date.getMonth()]}`;
   return `${day} · ${formatClock(iso)}`;
 }
+
+export function initialsOf(name: string): string {
+  return name
+    .split(' ')
+    .filter(Boolean)
+    .slice(0, 2)
+    .map(part => part[0].toUpperCase())
+    .join('');
+}

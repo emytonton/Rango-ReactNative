@@ -110,6 +110,24 @@ export function SecondaryButton({
   );
 }
 
+export function OutlineButton({ text, onPress, style }: ButtonProps) {
+  const { colors } = useTheme();
+  return (
+    <Pressable
+      accessibilityRole="button"
+      onPress={onPress}
+      style={({ pressed }) => [
+        styles.ghost,
+        styles.secondaryBorder,
+        { borderColor: colors.primary, opacity: pressed ? 0.7 : 1 },
+        style,
+      ]}
+    >
+      <Text style={[styles.ghostText, { color: colors.primary }]}>{text}</Text>
+    </Pressable>
+  );
+}
+
 export function GhostButton({ text, onPress, style }: ButtonProps) {
   const { colors } = useTheme();
   return (

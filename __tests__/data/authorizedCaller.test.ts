@@ -15,6 +15,7 @@ function fakeSession(
     restore: jest.fn(),
     save: jest.fn(),
     clear: jest.fn(),
+    logout: jest.fn(),
   };
 }
 
