@@ -47,6 +47,7 @@ export * from './Switch';
 export * from './TextAction';
 export * from './TextArea';
 export * from './TextField';
+export * from './ThemePreview';
 export * from './Timeline';
 export * from './Toast';
 export * from './TrackingMap';
