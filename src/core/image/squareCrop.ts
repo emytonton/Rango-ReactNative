@@ -37,7 +37,7 @@ export function createSquareCrop(
     const current = scale(zoom);
     const clamped = clamp(offset, zoom);
     const size = Math.min(
-      viewport / current,
+      Math.round(viewport / current),
       Math.min(imageWidth, imageHeight),
     );
     const left = imageWidth / 2 - clamped.x / current - size / 2;
@@ -45,7 +45,7 @@ export function createSquareCrop(
     return {
       left: Math.round(Math.min(Math.max(left, 0), imageWidth - size)),
       top: Math.round(Math.min(Math.max(top, 0), imageHeight - size)),
-      size: Math.floor(size),
+      size,
     };
   };
 
