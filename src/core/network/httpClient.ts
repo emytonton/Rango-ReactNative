@@ -21,7 +21,8 @@ export function createHttpClient(baseUrl: string = apiBaseUrl): HttpClient {
       const controller = new AbortController();
       const timeout = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
       const headers: Record<string, string> = { Accept: 'application/json' };
-      if (options.body !== undefined) {
+      const isForm = options.body instanceof FormData;
+      if (options.body !== undefined && !isForm) {
         headers['Content-Type'] = 'application/json';
       }
       if (options.accessToken) {
@@ -35,6 +36,8 @@ export function createHttpClient(baseUrl: string = apiBaseUrl): HttpClient {
           body:
             options.body === undefined
               ? undefined
+              : isForm
+              ? (options.body as FormData)
               : JSON.stringify(options.body),
           signal: controller.signal,
         });
