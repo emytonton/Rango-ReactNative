@@ -10,6 +10,7 @@ import { AddressScreen } from '../features/address/AddressScreen';
 import { CartScreen } from '../features/cart/CartScreen';
 import { CheckoutScreen } from '../features/checkout/CheckoutScreen';
 import { ConfirmedScreen } from '../features/confirmed/ConfirmedScreen';
+import { EditProfileScreen } from '../features/editprofile/EditProfileScreen';
 import { FavoritesScreen } from '../features/favorites/FavoritesScreen';
 import { HomeScreen } from '../features/home/HomeScreen';
 import { LoginScreen } from '../features/login/LoginScreen';
@@ -56,7 +57,7 @@ export function RootNavigator() {
         <Stack.Screen name="Confirmed" component={ConfirmedRoute} />
         <Stack.Screen name="Tracking" component={TrackingRoute} />
         <Stack.Screen name="OrderDetail" component={OrderDetailRoute} />
-        <Stack.Screen name="EditProfile" component={PendingScreen} />
+        <Stack.Screen name="EditProfile" component={EditProfileRoute} />
         <Stack.Screen name="Settings" component={PendingScreen} />
         <Stack.Screen name="Theme" component={PendingScreen} />
       </Stack.Navigator>
@@ -236,6 +237,20 @@ function ProfileRoute({
         onLoggedOut: () => navigateToWelcome(navigation),
         onSessionExpired: () => navigateToWelcome(navigation),
       }}
+    />
+  );
+}
+
+function EditProfileRoute({
+  navigation,
+}: NativeStackScreenProps<RootStackParamList, 'EditProfile'>) {
+  const { profileRepository, photoPicker } = useAppContainer();
+  return (
+    <EditProfileScreen
+      profileRepository={profileRepository}
+      photoPicker={photoPicker}
+      onBack={navigation.goBack}
+      onSessionExpired={() => navigateToWelcome(navigation)}
     />
   );
 }
