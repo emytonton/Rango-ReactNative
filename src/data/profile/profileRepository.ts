@@ -26,6 +26,7 @@ export type ProfileRepository = {
   uploadAvatar(uri: string): Promise<User>;
   removeAvatar(): Promise<User>;
   settings(): Promise<UserSettings>;
+  updateTheme(theme: ThemeMode): Promise<UserSettings>;
   unreadNotifications(): Promise<number>;
 };
 
@@ -60,6 +61,14 @@ export function createProfileRepository(
     settings: () =>
       call(accessToken =>
         http.request<UserSettings>('/me/settings', { accessToken }),
+      ),
+    updateTheme: theme =>
+      call(accessToken =>
+        http.request<UserSettings>('/me/settings', {
+          method: 'PATCH',
+          body: { theme },
+          accessToken,
+        }),
       ),
     unreadNotifications: () =>
       call(accessToken =>
