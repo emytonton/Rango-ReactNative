@@ -54,6 +54,10 @@ import {
 } from '../data/search/searchRepository';
 import { createKeychainStorage } from '../data/storage/secureStorage';
 import { createDataSync, type DataSync } from '../data/sync/dataSync';
+import {
+  createThemeRepository,
+  type ThemeRepository,
+} from '../data/theme/themeRepository';
 
 export type AppContainer = {
   sessionRepository: SessionRepository;
@@ -70,6 +74,7 @@ export type AppContainer = {
   photoPicker: PhotoPicker;
   connectionRepository: ConnectionRepository;
   dataSync: DataSync;
+  themeRepository: ThemeRepository;
 };
 
 export function createAppContainer(): AppContainer {
@@ -104,6 +109,7 @@ export function createAppContainer(): AppContainer {
       favoriteRepository,
       cartRepository,
     ),
+    themeRepository: createThemeRepository(storage, profileRepository),
   };
 }
 
