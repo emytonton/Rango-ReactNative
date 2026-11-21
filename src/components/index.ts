@@ -1,4 +1,5 @@
 export * from './BackButton';
+export * from './Avatar';
 export * from './BadgeIconButton';
 export * from './BottomBar';
 export * from './BrandMark';
