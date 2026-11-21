@@ -42,6 +42,7 @@ export * from './StatCard';
 export * from './StatusCard';
 export * from './StatusPill';
 export * from './SummaryCard';
+export * from './Switch';
 export * from './TextAction';
 export * from './TextArea';
 export * from './TextField';
