@@ -3,6 +3,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
+  Avatar,
   BadgeIconButton,
   BottomBar,
   CategoryChip,
@@ -150,14 +151,14 @@ function HomeHeader({ state, navigation, onSelectCategory }: HomeHeaderProps) {
             accessibilityRole="button"
             accessibilityLabel="Perfil"
             onPress={navigation.onProfile}
-            style={[
-              styles.avatar,
-              { backgroundColor: colors.soft, borderColor: colors.border },
-            ]}
           >
-            <Text style={[styles.initials, { color: colors.primary }]}>
-              {state.initials}
-            </Text>
+            <Avatar
+              initials={state.initials}
+              imageUrl={state.avatarUrl}
+              size={42}
+              radius={15}
+              fontSize={13}
+            />
           </Pressable>
           <View style={styles.greeting}>
             <Text
@@ -296,15 +297,6 @@ const styles = StyleSheet.create({
   header: { borderBottomWidth: 1 },
   headerTop: { gap: 13, paddingHorizontal: 20 },
   headerRow: { flexDirection: 'row', alignItems: 'center', gap: 11 },
-  avatar: {
-    width: 42,
-    height: 42,
-    borderRadius: 15,
-    borderWidth: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  initials: { fontFamily: fonts.extraBold, fontSize: 13 },
   greeting: { flex: 1, minWidth: 0, gap: 1 },
   hello: { fontSize: 11.5 },
   address: { flexDirection: 'row', alignItems: 'center', gap: 4 },
