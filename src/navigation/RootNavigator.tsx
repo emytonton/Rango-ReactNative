@@ -20,6 +20,7 @@ import { PaymentScreen } from '../features/payment/PaymentScreen';
 import { ProductScreen } from '../features/product/ProductScreen';
 import { ProfileScreen } from '../features/profile/ProfileScreen';
 import { SearchScreen } from '../features/search/SearchScreen';
+import { SettingsScreen } from '../features/settings/SettingsScreen';
 import { SignupScreen } from '../features/signup/SignupScreen';
 import { TrackingScreen } from '../features/tracking/TrackingScreen';
 import { WelcomeScreen } from '../features/welcome/WelcomeScreen';
@@ -58,8 +59,9 @@ export function RootNavigator() {
         <Stack.Screen name="Tracking" component={TrackingRoute} />
         <Stack.Screen name="OrderDetail" component={OrderDetailRoute} />
         <Stack.Screen name="EditProfile" component={EditProfileRoute} />
-        <Stack.Screen name="Settings" component={PendingScreen} />
+        <Stack.Screen name="Settings" component={SettingsRoute} />
         <Stack.Screen name="Theme" component={PendingScreen} />
+        <Stack.Screen name="NotificationSettings" component={PendingScreen} />
       </Stack.Navigator>
     </TabBadgesContext.Provider>
   );
@@ -251,6 +253,32 @@ function EditProfileRoute({
       photoPicker={photoPicker}
       onBack={navigation.goBack}
       onSessionExpired={() => navigateToWelcome(navigation)}
+    />
+  );
+}
+
+function SettingsRoute({
+  navigation,
+}: NativeStackScreenProps<RootStackParamList, 'Settings'>) {
+  const container = useAppContainer();
+  return (
+    <SettingsScreen
+      profileRepository={container.profileRepository}
+      connectionRepository={container.connectionRepository}
+      dataSync={container.dataSync}
+      sessionRepository={container.sessionRepository}
+      favoriteRepository={container.favoriteRepository}
+      paymentSelection={container.paymentSelection}
+      navigation={{
+        onBack: navigation.goBack,
+        onTheme: () => navigation.navigate('Theme'),
+        onNotifications: () => navigation.navigate('NotificationSettings'),
+        onPersonalData: () => navigation.navigate('EditProfile'),
+        onAddresses: () => navigation.navigate('Address'),
+        onPayments: () => navigation.navigate('Payment'),
+        onLocalDataCleared: () => navigateToWelcome(navigation),
+        onSessionExpired: () => navigateToWelcome(navigation),
+      }}
     />
   );
 }

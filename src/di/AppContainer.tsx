@@ -16,6 +16,10 @@ import {
   type SessionRepository,
 } from '../data/auth/sessionRepository';
 import {
+  createConnectionRepository,
+  type ConnectionRepository,
+} from '../data/connection/connectionRepository';
+import {
   createCartRepository,
   type CartRepository,
 } from '../data/cart/cartRepository';
@@ -49,6 +53,7 @@ import {
   type SearchRepository,
 } from '../data/search/searchRepository';
 import { createKeychainStorage } from '../data/storage/secureStorage';
+import { createDataSync, type DataSync } from '../data/sync/dataSync';
 
 export type AppContainer = {
   sessionRepository: SessionRepository;
@@ -63,6 +68,8 @@ export type AppContainer = {
   orderRepository: OrderRepository;
   profileRepository: ProfileRepository;
   photoPicker: PhotoPicker;
+  connectionRepository: ConnectionRepository;
+  dataSync: DataSync;
 };
 
 export function createAppContainer(): AppContainer {
@@ -72,6 +79,8 @@ export function createAppContainer(): AppContainer {
   const sessionRepository = createSessionRepository(authApi, storage);
   const authorizedCall = createAuthorizedCaller(sessionRepository);
   const favoriteRepository = createFavoriteRepository(http, authorizedCall);
+  const cartRepository = createCartRepository(http, authorizedCall);
+  const profileRepository = createProfileRepository(http, authorizedCall);
   return {
     sessionRepository,
     authRepository: createAuthRepository(authApi, sessionRepository),
@@ -81,14 +90,20 @@ export function createAppContainer(): AppContainer {
       favoriteRepository,
     ),
     favoriteRepository,
-    cartRepository: createCartRepository(http, authorizedCall),
+    cartRepository,
     searchRepository: createSearchRepository(http, authorizedCall),
     addressRepository: createAddressRepository(http, authorizedCall),
     paymentRepository: createPaymentRepository(http, authorizedCall),
     paymentSelection: createPaymentSelection(),
     orderRepository: createOrderRepository(http, authorizedCall),
-    profileRepository: createProfileRepository(http, authorizedCall),
+    profileRepository,
     photoPicker,
+    connectionRepository: createConnectionRepository(http),
+    dataSync: createDataSync(
+      profileRepository,
+      favoriteRepository,
+      cartRepository,
+    ),
   };
 }
 
