@@ -13,6 +13,7 @@ export * from './CheckboxLabel';
 export * from './CheckRow';
 export * from './CourierCard';
 export * from './DashedButton';
+export * from './EditableAvatar';
 export * from './Icon';
 export * from './IconInfoRow';
 export * from './IconTile';
