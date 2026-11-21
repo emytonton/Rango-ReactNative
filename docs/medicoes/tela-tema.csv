@@ -1,0 +1,22 @@
+data,commit,issue,tela,metrica,valor,unidade,origem,observacao
+2026-11-21 23:01:27,ed23fef,23,Tema,build_debug_limpo,424.34,s,medido,tempo-build.sh
+2026-11-21 23:01:27,ed23fef,23,Tema,build_debug_incremental_sem_mudanca,9.44,s,medido,tempo-build.sh
+2026-11-21 23:01:27,ed23fef,23,Tema,build_debug_incremental_um_arquivo,30.00,s,medido,tempo-build.sh com src/features/theme/ThemeScreen.tsx alterado
+2026-11-21 23:09:13,ed23fef,23,Tema,build_release,466,s,medido,tempo de relógio do tamanho-apk.sh (:app:assembleRelease após o clean do tempo-build)
+2026-11-21 23:09:13,ed23fef,23,Tema,tamanho_apk_release,74310337,bytes,medido,tamanho-apk.sh; APK com as quatro ABIs do template
+2026-11-21 23:10:42,ed23fef,23,Tema,inicializacao_frio_release_mediana,1062,ms,medido,inicializacao-frio.sh; 10 execuções no emulador Rango_Pixel_8_RN
+2026-11-21,b647b33,23,Tema,install_debug,72.58,s,medido,gradlew installDebug após ligar a tela de tema à navegação (build incremental e instalação no emulador)
+2026-11-21,b647b33,23,Tema,inicializacao_debug_primeira_abertura,7675,ms,medido,am start -W; 1 execução logo após o installDebug acima
+2026-11-21,ed23fef,23,Tema,install_debug,47.95,s,medido,gradlew installDebug após a correção do tema no perfil e nas configurações
+2026-11-21,ed23fef,23,Tema,inicializacao_debug_primeira_abertura,10493,ms,medido,am start -W; 1 execução logo após o installDebug acima
+2026-11-21,ed23fef,23,Tema,install_debug_sem_mudanca,46.92,s,medido,gradlew installDebug após as medições de release (sem mudança de código)
+2026-11-21,ed23fef,23,Tema,inicializacao_debug_primeira_abertura,7629,ms,medido,am start -W; 1 execução logo após o installDebug sem mudança
+2026-11-21,ed23fef,23,Tema,npm_test,30.69,s,medido,jest com cache limpo (tempo de relógio); 27 suítes e 104 testes
+2026-11-21 23:12:34,ed23fef,23,Tema,loc_gerado,51,linhas,medido,loc-por-origem.sh --issue 23
+2026-11-21 23:12:34,ed23fef,23,Tema,loc_assistido,357,linhas,medido,loc-por-origem.sh --issue 23
+2026-11-21 23:12:34,ed23fef,23,Tema,loc_manual,24,linhas,medido,loc-por-origem.sh --issue 23
+2026-11-21,ed23fef,23,Tema,tempo_total,51,min,ajustado,intervalo informado 15:00-15:53
+2026-11-21,ed23fef,23,Tema,tempo_codigo,43,min,ajustado,segmentos da issue
+2026-11-21,ed23fef,23,Tema,tempo_configuracao_build,0,min,ajustado,segmentos da issue
+2026-11-21,ed23fef,23,Tema,tempo_depuracao,4,min,ajustado,segmentos da issue
+2026-11-21,ed23fef,23,Tema,tempo_espera_ferramenta,4,min,ajustado,segmentos da issue
