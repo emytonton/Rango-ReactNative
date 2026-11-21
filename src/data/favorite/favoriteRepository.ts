@@ -9,6 +9,7 @@ export type FavoriteRepository = {
   setFavorite(productId: string, favorite: boolean): Promise<boolean>;
   favoriteIds(): ReadonlySet<string>;
   subscribe(listener: () => void): () => void;
+  clearLocal(): void;
 };
 
 export function createFavoriteRepository(
@@ -60,5 +61,7 @@ export function createFavoriteRepository(
         listeners.delete(listener);
       };
     },
+
+    clearLocal: () => update(new Set()),
   };
 }

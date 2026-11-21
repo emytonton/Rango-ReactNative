@@ -12,6 +12,7 @@ export type PaymentSelection = {
   current(): SelectedPayment | null;
   select(payment: SelectedPayment): void;
   subscribe(listener: () => void): () => void;
+  clear(): void;
 };
 
 export function createPaymentSelection(): PaymentSelection {
@@ -21,6 +22,10 @@ export function createPaymentSelection(): PaymentSelection {
     current: () => selected,
     select: payment => {
       selected = payment;
+      listeners.forEach(listener => listener());
+    },
+    clear: () => {
+      selected = null;
       listeners.forEach(listener => listener());
     },
     subscribe: listener => {
