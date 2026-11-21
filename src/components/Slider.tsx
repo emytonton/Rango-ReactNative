@@ -20,6 +20,8 @@ type SliderProps = {
   step: number;
   onChange: (value: number) => void;
   exclusionKey?: number;
+  trackColor?: string;
+  thumbBorderColor?: string;
 };
 
 export function Slider({
@@ -29,6 +31,8 @@ export function Slider({
   step,
   onChange,
   exclusionKey,
+  trackColor,
+  thumbBorderColor,
 }: SliderProps) {
   const { colors } = useTheme();
   const [width, setWidth] = useState(0);
@@ -81,7 +85,7 @@ export function Slider({
     >
       <View
         pointerEvents="none"
-        style={[styles.track, { backgroundColor: colors.border }]}
+        style={[styles.track, { backgroundColor: trackColor ?? colors.border }]}
       >
         <View
           style={[
@@ -97,7 +101,7 @@ export function Slider({
           {
             left: offset,
             backgroundColor: colors.primary,
-            borderColor: colors.surface,
+            borderColor: thumbBorderColor ?? colors.surface,
           },
         ]}
       />
