@@ -1,5 +1,6 @@
 import type { HttpClient } from '../../src/core/network/httpClient';
 import type { AuthorizedCaller } from '../../src/data/auth/authorizedCaller';
+import type { LocalCache } from '../../src/data/cache/localCache';
 import { createFavoriteRepository } from '../../src/data/favorite/favoriteRepository';
 
 test('guarda os ids salvos e avisa quem está ouvindo', async () => {
@@ -14,6 +15,11 @@ test('guarda os ids salvos e avisa quem está ouvindo', async () => {
   const repository = createFavoriteRepository(
     { request } as unknown as HttpClient,
     call,
+    {
+      get: () => Promise.resolve(null),
+      put: () => Promise.resolve(),
+      remove: () => Promise.resolve(),
+    } as unknown as LocalCache,
   );
   const listener = jest.fn();
   repository.subscribe(listener);
