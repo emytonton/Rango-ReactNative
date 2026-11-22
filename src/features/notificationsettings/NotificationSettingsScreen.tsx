@@ -115,6 +115,7 @@ export function NotificationSettingsScreen({
                 switchChecked={prefs[option.key]}
                 showChevron={false}
                 divider={index > 0}
+                largeHint
                 onPress={() => toggle(option.key)}
               />
             ))}
