@@ -5,6 +5,7 @@ import {
   type NativeStackScreenProps,
 } from '@react-navigation/native-stack';
 import { TabBadgesContext, type BottomTab } from '../components';
+import { localNotifier } from '../core/native/localNotifier';
 import { useAppContainer } from '../di/AppContainer';
 import { AddressScreen } from '../features/address/AddressScreen';
 import { CartScreen } from '../features/cart/CartScreen';
@@ -15,6 +16,7 @@ import { FavoritesScreen } from '../features/favorites/FavoritesScreen';
 import { HomeScreen } from '../features/home/HomeScreen';
 import { LoginScreen } from '../features/login/LoginScreen';
 import { NotificationsScreen } from '../features/notifications/NotificationsScreen';
+import { NotificationSettingsScreen } from '../features/notificationsettings/NotificationSettingsScreen';
 import { OrderDetailScreen } from '../features/orderdetail/OrderDetailScreen';
 import { OrdersScreen } from '../features/orders/OrdersScreen';
 import { PaymentScreen } from '../features/payment/PaymentScreen';
@@ -26,7 +28,6 @@ import { ThemeScreen } from '../features/theme/ThemeScreen';
 import { SignupScreen } from '../features/signup/SignupScreen';
 import { TrackingScreen } from '../features/tracking/TrackingScreen';
 import { WelcomeScreen } from '../features/welcome/WelcomeScreen';
-import { PendingScreen } from './PendingScreen';
 import type { RootStackParamList } from './routes';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -63,7 +64,10 @@ export function RootNavigator() {
         <Stack.Screen name="EditProfile" component={EditProfileRoute} />
         <Stack.Screen name="Settings" component={SettingsRoute} />
         <Stack.Screen name="Theme" component={ThemeRoute} />
-        <Stack.Screen name="NotificationSettings" component={PendingScreen} />
+        <Stack.Screen
+          name="NotificationSettings"
+          component={NotificationSettingsRoute}
+        />
       </Stack.Navigator>
     </TabBadgesContext.Provider>
   );
@@ -295,6 +299,21 @@ function ThemeRoute({
   return (
     <ThemeScreen
       themeRepository={themeRepository}
+      onBack={navigation.goBack}
+      onSessionExpired={() => navigateToWelcome(navigation)}
+    />
+  );
+}
+
+function NotificationSettingsRoute({
+  navigation,
+}: NativeStackScreenProps<RootStackParamList, 'NotificationSettings'>) {
+  const { profileRepository, pushWatcher } = useAppContainer();
+  return (
+    <NotificationSettingsScreen
+      profileRepository={profileRepository}
+      notifier={localNotifier}
+      pushWatcher={pushWatcher}
       onBack={navigation.goBack}
       onSessionExpired={() => navigateToWelcome(navigation)}
     />
