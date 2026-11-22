@@ -1,5 +1,6 @@
 import { createContext, useContext, type ReactNode } from 'react';
 import { photoPicker, type PhotoPicker } from '../core/image/photoPicker';
+import { localNotifier } from '../core/native/localNotifier';
 import { createHttpClient } from '../core/network/httpClient';
 import { createAuthApi } from '../data/auth/authApi';
 import {
@@ -33,6 +34,10 @@ import {
   type FavoriteRepository,
 } from '../data/favorite/favoriteRepository';
 import {
+  createNotificationRepository,
+  type NotificationRepository,
+} from '../data/notification/notificationRepository';
+import {
   createOrderRepository,
   type OrderRepository,
 } from '../data/order/orderRepository';
@@ -52,6 +57,7 @@ import {
   createSearchRepository,
   type SearchRepository,
 } from '../data/search/searchRepository';
+import { createPushWatcher, type PushWatcher } from '../data/push/pushWatcher';
 import { createKeychainStorage } from '../data/storage/secureStorage';
 import { createDataSync, type DataSync } from '../data/sync/dataSync';
 import {
@@ -75,6 +81,8 @@ export type AppContainer = {
   connectionRepository: ConnectionRepository;
   dataSync: DataSync;
   themeRepository: ThemeRepository;
+  notificationRepository: NotificationRepository;
+  pushWatcher: PushWatcher;
 };
 
 export function createAppContainer(): AppContainer {
@@ -86,6 +94,10 @@ export function createAppContainer(): AppContainer {
   const favoriteRepository = createFavoriteRepository(http, authorizedCall);
   const cartRepository = createCartRepository(http, authorizedCall);
   const profileRepository = createProfileRepository(http, authorizedCall);
+  const notificationRepository = createNotificationRepository(
+    http,
+    authorizedCall,
+  );
   return {
     sessionRepository,
     authRepository: createAuthRepository(authApi, sessionRepository),
@@ -110,6 +122,13 @@ export function createAppContainer(): AppContainer {
       cartRepository,
     ),
     themeRepository: createThemeRepository(storage, profileRepository),
+    notificationRepository,
+    pushWatcher: createPushWatcher(
+      notificationRepository,
+      sessionRepository,
+      storage,
+      localNotifier,
+    ),
   };
 }
 
