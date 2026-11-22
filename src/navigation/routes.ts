@@ -19,6 +19,7 @@ export type RootStackParamList = {
   EditProfile: undefined;
   Settings: undefined;
   Theme: undefined;
+  NotificationSettings: undefined;
 };
 
 export const routeTitles: Record<keyof RootStackParamList, string> = {
@@ -42,4 +43,5 @@ export const routeTitles: Record<keyof RootStackParamList, string> = {
   EditProfile: 'Editar perfil',
   Settings: 'Configurações',
   Theme: 'Tema',
+  NotificationSettings: 'Notificações',
 };
