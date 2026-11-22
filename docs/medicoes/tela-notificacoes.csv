@@ -1,0 +1,20 @@
+data,commit,issue,tela,metrica,valor,unidade,origem,observacao
+2026-11-22 12:47:26,e586b41,25,Notificações,build_debug_limpo,547.35,s,medido,tempo-build.sh
+2026-11-22 12:47:26,e586b41,25,Notificações,build_debug_incremental_sem_mudanca,16.34,s,medido,tempo-build.sh
+2026-11-22 12:47:26,e586b41,25,Notificações,build_debug_incremental_um_arquivo,43.64,s,medido,tempo-build.sh com src/features/notifications/NotificationsScreen.tsx alterado
+2026-11-22 12:57:23,e586b41,25,Notificações,build_release,597,s,medido,tempo de relógio do tamanho-apk.sh (:app:assembleRelease após o clean do tempo-build)
+2026-11-22 12:57:23,e586b41,25,Notificações,tamanho_apk_release,74329605,bytes,medido,tamanho-apk.sh; APK com as quatro ABIs do template
+2026-11-22 12:58:41,e586b41,25,Notificações,inicializacao_frio_release_mediana,493.5,ms,medido,inicializacao-frio.sh; 10 execuções no emulador Rango_Pixel_8_RN
+2026-11-22,e586b41,25,Notificações,install_debug,123.70,s,medido,gradlew installDebug após o módulo nativo de notificação (recompila o código Android)
+2026-11-22,e586b41,25,Notificações,inicializacao_debug_primeira_abertura,4552,ms,medido,am start -W; 1 execução logo após o installDebug acima
+2026-11-22,e586b41,25,Notificações,install_debug_sem_mudanca,53.78,s,medido,gradlew installDebug após as medições de release (sem mudança de código)
+2026-11-22,e586b41,25,Notificações,inicializacao_debug_primeira_abertura,2726,ms,medido,am start -W; 1 execução logo após o installDebug sem mudança
+2026-11-22,e586b41,25,Notificações,npm_test,41.73,s,medido,jest com cache limpo (tempo de relógio); 29 suítes e 109 testes
+2026-11-22 13:00:57,e586b41,25,Notificações,loc_gerado,0,linhas,medido,loc-por-origem.sh --issue 25
+2026-11-22 13:00:57,e586b41,25,Notificações,loc_assistido,869,linhas,medido,loc-por-origem.sh --issue 25
+2026-11-22 13:00:57,e586b41,25,Notificações,loc_manual,95,linhas,medido,loc-por-origem.sh --issue 25
+2026-11-22,e586b41,25,Notificações,tempo_total,124,min,ajustado,intervalo informado 08:00-10:06
+2026-11-22,e586b41,25,Notificações,tempo_codigo,95,min,ajustado,segmentos da issue
+2026-11-22,e586b41,25,Notificações,tempo_configuracao_build,11,min,ajustado,segmentos da issue
+2026-11-22,e586b41,25,Notificações,tempo_depuracao,5,min,ajustado,segmentos da issue
+2026-11-22,e586b41,25,Notificações,tempo_espera_ferramenta,13,min,ajustado,segmentos da issue
