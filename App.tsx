@@ -1,7 +1,9 @@
 import {
+  createNavigationContainerRef,
   DarkTheme,
   DefaultTheme,
   NavigationContainer,
+  type LinkingOptions,
   type Theme,
 } from '@react-navigation/native';
 import { useEffect, useSyncExternalStore } from 'react';
@@ -12,10 +14,24 @@ import {
   AppContainerProvider,
   createAppContainer,
 } from './src/di/AppContainer';
+import { PushHost } from './src/navigation/PushHost';
 import { RootNavigator } from './src/navigation/RootNavigator';
+import type { RootStackParamList } from './src/navigation/routes';
 import { ThemeProvider, useTheme } from './src/theme';
 
 const container = createAppContainer();
+const navigationRef = createNavigationContainerRef<RootStackParamList>();
+
+const linking: LinkingOptions<RootStackParamList> = {
+  prefixes: ['rango://'],
+  config: { screens: { Notifications: 'notifications' } },
+};
+
+function openNotifications() {
+  if (navigationRef.isReady()) {
+    navigationRef.navigate('Notifications');
+  }
+}
 
 function App() {
   return (
@@ -63,9 +79,14 @@ function ThemedNavigation() {
   };
 
   return (
-    <NavigationContainer theme={navigationTheme}>
+    <NavigationContainer
+      ref={navigationRef}
+      linking={linking}
+      theme={navigationTheme}
+    >
       <StatusBar barStyle={colors.isDark ? 'light-content' : 'dark-content'} />
       <RootNavigator />
+      <PushHost onOpen={openNotifications} />
     </NavigationContainer>
   );
 }
