@@ -1,4 +1,5 @@
 import { createContext, useContext, type ReactNode } from 'react';
+import { photoPicker, type PhotoPicker } from '../core/image/photoPicker';
 import { createHttpClient } from '../core/network/httpClient';
 import { createAuthApi } from '../data/auth/authApi';
 import {
@@ -61,6 +62,7 @@ export type AppContainer = {
   paymentSelection: PaymentSelection;
   orderRepository: OrderRepository;
   profileRepository: ProfileRepository;
+  photoPicker: PhotoPicker;
 };
 
 export function createAppContainer(): AppContainer {
@@ -86,6 +88,7 @@ export function createAppContainer(): AppContainer {
     paymentSelection: createPaymentSelection(),
     orderRepository: createOrderRepository(http, authorizedCall),
     profileRepository: createProfileRepository(http, authorizedCall),
+    photoPicker,
   };
 }
 

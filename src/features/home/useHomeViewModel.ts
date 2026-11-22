@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import type { ProductCardModel, ToastKind } from '../../components';
 import { initialsOf } from '../../core/format/formatters';
 import { ApiError, NetworkError } from '../../core/network/apiError';
+import { apiBaseUrl } from '../../core/network/config';
 import { SessionExpiredError } from '../../data/auth/authorizedCaller';
 import type { CartRepository } from '../../data/cart/cartRepository';
 import type { Category, Home } from '../../data/catalog/catalogApi';
@@ -19,6 +20,7 @@ export type HomeState = {
   errorMessage: string | null;
   firstName: string;
   initials: string;
+  avatarUrl: string | null;
   addressShort: string | null;
   cartCount: number;
   hasUnreadNotifications: boolean;
@@ -39,6 +41,7 @@ const initialState: HomeState = {
   errorMessage: null,
   firstName: '',
   initials: '',
+  avatarUrl: null,
   addressShort: null,
   cartCount: 0,
   hasUnreadNotifications: false,
@@ -201,6 +204,7 @@ function withHome(state: HomeState, home: Home): HomeState {
     ...state,
     firstName: home.user.firstName,
     initials: initialsOf(home.user.name),
+    avatarUrl: home.user.avatarUrl ? apiBaseUrl + home.user.avatarUrl : null,
     addressShort: home.selectedAddress?.line.split(' · ')[0] ?? null,
     cartCount: home.cartItemCount,
     hasUnreadNotifications: home.unreadNotifications > 0,

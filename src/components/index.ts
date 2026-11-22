@@ -1,5 +1,6 @@
 export * from './BackButton';
 export * from './Avatar';
+export * from './ActionSheet';
 export * from './BadgeIconButton';
 export * from './BottomBar';
 export * from './BrandMark';
@@ -13,6 +14,7 @@ export * from './CheckboxLabel';
 export * from './CheckRow';
 export * from './CourierCard';
 export * from './DashedButton';
+export * from './EditableAvatar';
 export * from './Icon';
 export * from './IconInfoRow';
 export * from './IconTile';
