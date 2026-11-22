@@ -8,6 +8,7 @@ import {
   type AddressRepository,
 } from '../data/address/addressRepository';
 import { createAuthorizedCaller } from '../data/auth/authorizedCaller';
+import { createLocalCache } from '../data/cache/localCache';
 import {
   createAuthRepository,
   type AuthRepository,
@@ -89,7 +90,12 @@ export function createAppContainer(): AppContainer {
   const http = createHttpClient();
   const storage = createKeychainStorage();
   const authApi = createAuthApi(http);
-  const sessionRepository = createSessionRepository(authApi, storage);
+  const localCache = createLocalCache(storage);
+  const sessionRepository = createSessionRepository(
+    authApi,
+    storage,
+    localCache.clear,
+  );
   const authorizedCall = createAuthorizedCaller(sessionRepository);
   const favoriteRepository = createFavoriteRepository(http, authorizedCall);
   const cartRepository = createCartRepository(http, authorizedCall);
@@ -105,6 +111,7 @@ export function createAppContainer(): AppContainer {
       createCatalogApi(http),
       authorizedCall,
       favoriteRepository,
+      localCache,
     ),
     favoriteRepository,
     cartRepository,
@@ -112,7 +119,7 @@ export function createAppContainer(): AppContainer {
     addressRepository: createAddressRepository(http, authorizedCall),
     paymentRepository: createPaymentRepository(http, authorizedCall),
     paymentSelection: createPaymentSelection(),
-    orderRepository: createOrderRepository(http, authorizedCall),
+    orderRepository: createOrderRepository(http, authorizedCall, localCache),
     profileRepository,
     photoPicker,
     connectionRepository: createConnectionRepository(http),

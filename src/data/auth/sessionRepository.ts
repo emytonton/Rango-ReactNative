@@ -22,6 +22,7 @@ const KEY_USER_NAME = 'user_name';
 export function createSessionRepository(
   api: AuthApi,
   storage: SecureStorage,
+  onClear: () => Promise<void> = async () => undefined,
 ): SessionRepository {
   let accessToken: string | null = null;
   let pendingRefresh: Promise<AuthSession | null> | null = null;
@@ -36,6 +37,7 @@ export function createSessionRepository(
     await storage.remove(KEY_REFRESH);
     await storage.remove(KEY_USER_NAME);
     accessToken = null;
+    await onClear();
   }
 
   async function refreshOnce(): Promise<AuthSession | null> {

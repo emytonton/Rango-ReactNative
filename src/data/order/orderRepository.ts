@@ -1,5 +1,7 @@
+import { NetworkError } from '../../core/network/apiError';
 import type { HttpClient } from '../../core/network/httpClient';
 import type { AuthorizedCaller } from '../auth/authorizedCaller';
+import type { LocalCache } from '../cache/localCache';
 import type { Cart } from '../cart/cartRepository';
 import type { PaymentType } from '../payment/paymentRepository';
 
@@ -81,6 +83,9 @@ export type OrderGroup = 'live' | 'past';
 
 export const ORDER_PAGE_SIZE = 50;
 
+const listKey = (group: OrderGroup) => `orders_${group}`;
+const detailKey = (code: string) => `order_${code}`;
+
 export type OrderSummary = {
   id: number;
   code: string;
@@ -107,13 +112,18 @@ export type OrderRepository = {
   create(order: NewOrder): Promise<CreatedOrder>;
   detail(code: string): Promise<OrderDetail>;
   list(group: OrderGroup): Promise<OrderSummary[]>;
+  cachedList(group: OrderGroup): Promise<OrderSummary[] | null>;
   reorder(code: string): Promise<ReorderResult>;
 };
 
 export function createOrderRepository(
   http: HttpClient,
   call: AuthorizedCaller,
+  cache: LocalCache,
 ): OrderRepository {
+  const save = (key: string, value: unknown) =>
+    cache.put(key, value).catch(() => undefined);
+
   return {
     create: order =>
       call(accessToken =>
@@ -123,19 +133,38 @@ export function createOrderRepository(
           accessToken,
         }),
       ),
-    detail: code =>
-      call(accessToken =>
-        http.request<OrderDetail>(`/orders/${encodeURIComponent(code)}`, {
-          accessToken,
-        }),
-      ),
-    list: group =>
-      call(accessToken =>
+    detail: async code => {
+      try {
+        const detail = await call(accessToken =>
+          http.request<OrderDetail>(`/orders/${encodeURIComponent(code)}`, {
+            accessToken,
+          }),
+        );
+        save(detailKey(code), detail);
+        return detail;
+      } catch (error) {
+        const cached =
+          error instanceof NetworkError
+            ? await cache.get<OrderDetail>(detailKey(code))
+            : null;
+        if (!cached) {
+          throw error;
+        }
+        return cached.value;
+      }
+    },
+    list: async group => {
+      const page = await call(accessToken =>
         http.request<{ data: OrderSummary[] }>(
           `/orders?group=${group}&pageSize=${ORDER_PAGE_SIZE}`,
           { accessToken },
         ),
-      ).then(page => page.data),
+      );
+      save(listKey(group), page.data);
+      return page.data;
+    },
+    cachedList: async group =>
+      (await cache.get<OrderSummary[]>(listKey(group)))?.value ?? null,
     reorder: code =>
       call(accessToken =>
         http.request<ReorderResult>(
