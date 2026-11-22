@@ -31,7 +31,7 @@ test('avisa só as notificações novas, por banner ou notificação local', asy
     } as unknown as NotificationRepository,
     { getAccessToken: () => 'token' } as unknown as SessionRepository,
     memoryStorage(),
-    notifier as LocalNotifier,
+    notifier as unknown as LocalNotifier,
   );
 
   await watcher.poll();
