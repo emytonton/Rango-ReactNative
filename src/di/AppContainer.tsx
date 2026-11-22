@@ -97,7 +97,18 @@ export function createAppContainer(): AppContainer {
     localCache.clear,
   );
   const authorizedCall = createAuthorizedCaller(sessionRepository);
-  const favoriteRepository = createFavoriteRepository(http, authorizedCall);
+  const favoriteRepository = createFavoriteRepository(
+    http,
+    authorizedCall,
+    localCache,
+    productId => catalogRepository.cachedProduct(productId),
+  );
+  const catalogRepository = createCatalogRepository(
+    createCatalogApi(http),
+    authorizedCall,
+    favoriteRepository,
+    localCache,
+  );
   const cartRepository = createCartRepository(http, authorizedCall);
   const profileRepository = createProfileRepository(http, authorizedCall);
   const notificationRepository = createNotificationRepository(
@@ -107,12 +118,7 @@ export function createAppContainer(): AppContainer {
   return {
     sessionRepository,
     authRepository: createAuthRepository(authApi, sessionRepository),
-    catalogRepository: createCatalogRepository(
-      createCatalogApi(http),
-      authorizedCall,
-      favoriteRepository,
-      localCache,
-    ),
+    catalogRepository,
     favoriteRepository,
     cartRepository,
     searchRepository: createSearchRepository(http, authorizedCall),
