@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect, useSyncExternalStore } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -19,6 +19,7 @@ import {
 } from '../../components';
 import type { CartRepository } from '../../data/cart/cartRepository';
 import type { CatalogRepository } from '../../data/catalog/catalogRepository';
+import type { PushWatcher } from '../../data/push/pushWatcher';
 import { fonts, useTheme } from '../../theme';
 import { HomeSkeleton, ProductRowSkeleton } from './components/HomeSkeleton';
 import { PromoBanner } from './components/PromoBanner';
@@ -43,6 +44,7 @@ export type HomeNavigation = {
 type HomeScreenProps = HomeNavigation & {
   catalogRepository: CatalogRepository;
   cartRepository: CartRepository;
+  pushWatcher: PushWatcher;
 };
 
 type ProductActions = {
@@ -60,6 +62,7 @@ const sectionIcons: Record<string, IconName> = {
 export function HomeScreen({
   catalogRepository,
   cartRepository,
+  pushWatcher,
   ...navigation
 }: HomeScreenProps) {
   const { colors } = useTheme();
@@ -69,6 +72,15 @@ export function HomeScreen({
     onSessionExpired: navigation.onSessionExpired,
   });
   const { state, refresh } = viewModel;
+  const { arrivals } = useSyncExternalStore(
+    pushWatcher.subscribe,
+    pushWatcher.state,
+  );
+  useEffect(() => {
+    if (arrivals > 0) {
+      refresh();
+    }
+  }, [arrivals, refresh]);
   useFocusEffect(
     useCallback(() => {
       refresh();
