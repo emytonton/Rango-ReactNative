@@ -48,3 +48,22 @@ test('avisa só as notificações novas, por banner ou notificação local', asy
   expect(notifier.show).toHaveBeenCalledWith(3, 'Chegou', 'Bom apetite');
   expect(watcher.state().arrivals).toBe(2);
 });
+
+test('mostra uma mensagem avulsa no banner ou na bandeja sem contar chegada', () => {
+  const notifier = { show: jest.fn() };
+  const watcher = createPushWatcher(
+    { unread: jest.fn() } as unknown as NotificationRepository,
+    { getAccessToken: () => 'token' } as unknown as SessionRepository,
+    memoryStorage(),
+    notifier as unknown as LocalNotifier,
+  );
+  const message = { id: 900001, title: 'Teste', body: 'Tudo certo' };
+
+  watcher.show(message);
+  expect(watcher.state().banner).toEqual(message);
+
+  watcher.setForeground(false);
+  watcher.show(message);
+  expect(notifier.show).toHaveBeenCalledWith(900001, 'Teste', 'Tudo certo');
+  expect(watcher.state().arrivals).toBe(0);
+});
