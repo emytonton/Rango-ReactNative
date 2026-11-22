@@ -16,6 +16,7 @@ import {
 import { initialsOf } from '../../core/format/formatters';
 import type { AddressRepository } from '../../data/address/addressRepository';
 import type { SessionRepository } from '../../data/auth/sessionRepository';
+import type { ThemeRepository } from '../../data/theme/themeRepository';
 import type { PaymentRepository } from '../../data/payment/paymentRepository';
 import type { ProfileRepository } from '../../data/profile/profileRepository';
 import { fonts, useTheme } from '../../theme';
@@ -38,6 +39,7 @@ type ProfileScreenProps = {
   addressRepository: AddressRepository;
   paymentRepository: PaymentRepository;
   sessionRepository: SessionRepository;
+  themeRepository: ThemeRepository;
   navigation: ProfileNavigation;
 };
 
@@ -46,6 +48,7 @@ export function ProfileScreen({
   addressRepository,
   paymentRepository,
   sessionRepository,
+  themeRepository,
   navigation,
 }: ProfileScreenProps) {
   const { colors } = useTheme();
@@ -57,6 +60,7 @@ export function ProfileScreen({
       addresses: addressRepository,
       payments: paymentRepository,
       session: sessionRepository,
+      theme: themeRepository,
     },
     {
       onMessage: toast.show,

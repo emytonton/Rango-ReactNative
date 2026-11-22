@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { fonts, useTheme } from '../theme';
 import { Icon, type IconName } from './Icon';
+import { RadioIndicator } from './RadioCard';
 import { Switch } from './Switch';
 
 type SettingsGroupProps = {
@@ -38,6 +39,7 @@ type SettingsRowProps = {
   hint?: string;
   value?: string;
   switchChecked?: boolean;
+  radioSelected?: boolean;
   showChevron?: boolean;
   divider?: boolean;
   danger?: boolean;
@@ -51,6 +53,7 @@ export function SettingsRow({
   hint,
   value,
   switchChecked,
+  radioSelected,
   showChevron = true,
   divider = false,
   danger = false,
@@ -92,6 +95,9 @@ export function SettingsRow({
         <Text style={[styles.value, { color: colors.primary }]}>{value}</Text>
       ) : null}
       {switchChecked !== undefined && <Switch checked={switchChecked} />}
+      {radioSelected !== undefined && (
+        <RadioIndicator selected={radioSelected} />
+      )}
       {showChevron && (
         <Icon name="chevronRight" size={20} color={colors.text2} />
       )}

@@ -4,12 +4,24 @@ import type { AddressRepository } from '../../../src/data/address/addressReposit
 import type { SessionRepository } from '../../../src/data/auth/sessionRepository';
 import type { PaymentRepository } from '../../../src/data/payment/paymentRepository';
 import type { ProfileRepository } from '../../../src/data/profile/profileRepository';
+import type { ThemeRepository } from '../../../src/data/theme/themeRepository';
 import {
   profileHints,
   useProfileViewModel,
 } from '../../../src/features/profile/useProfileViewModel';
 
 type ViewModel = ReturnType<typeof useProfileViewModel>;
+
+function themeRepository(): ThemeRepository {
+  let mode: 'light' | 'dark' | 'system' = 'system';
+  return {
+    current: () => mode,
+    onRemote: jest.fn(async (remote: typeof mode) => {
+      mode = remote;
+    }),
+    pushPending: jest.fn(() => Promise.resolve(true)),
+  } as unknown as ThemeRepository;
+}
 
 async function renderViewModel(profile: Partial<ProfileRepository> = {}) {
   const repositories = {
@@ -42,6 +54,7 @@ async function renderViewModel(profile: Partial<ProfileRepository> = {}) {
     session: {
       logout: jest.fn(() => Promise.resolve()),
     } as unknown as SessionRepository,
+    theme: themeRepository(),
   };
   const callbacks = {
     onMessage: jest.fn(),

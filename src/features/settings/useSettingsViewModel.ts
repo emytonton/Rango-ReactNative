@@ -14,6 +14,7 @@ import type { FavoriteRepository } from '../../data/favorite/favoriteRepository'
 import type { PaymentSelection } from '../../data/payment/paymentSelection';
 import type { ProfileRepository } from '../../data/profile/profileRepository';
 import type { DataSync } from '../../data/sync/dataSync';
+import type { ThemeRepository } from '../../data/theme/themeRepository';
 import type { ThemeMode } from '../../theme';
 
 const CLOCK_TICK_MS = 30_000;
@@ -32,6 +33,7 @@ type SettingsDependencies = {
   session: SessionRepository;
   favorites: FavoriteRepository;
   paymentSelection: PaymentSelection;
+  theme: ThemeRepository;
 };
 
 type SettingsCallbacks = {
@@ -82,6 +84,7 @@ export function useSettingsViewModel(
     session,
     favorites,
     paymentSelection,
+    theme,
   } = dependencies;
   const [state, setState] = useState<SettingsState>({
     theme: 'system',
@@ -125,13 +128,14 @@ export function useSettingsViewModel(
     checkConnection();
     try {
       const settings = await profile.settings();
-      setState(current => ({ ...current, theme: settings.theme }));
+      await theme.onRemote(settings.theme);
+      setState(current => ({ ...current, theme: theme.current() }));
     } catch (error) {
       if (error instanceof SessionExpiredError) {
         callbacksRef.current.onSessionExpired();
       }
     }
-  }, [profile, checkConnection]);
+  }, [profile, theme, checkConnection]);
 
   const checkNow = useCallback(async () => {
     const wasOffline = stateRef.current.online === false;
@@ -153,12 +157,14 @@ export function useSettingsViewModel(
     busy.current.syncing = true;
     setState(current => ({ ...current, syncing: true }));
     try {
+      await theme.pushPending();
       const settings = await dataSync.syncNow();
+      await theme.onRemote(settings.theme);
       setNow(new Date());
       setState(current => ({
         ...current,
         online: true,
-        theme: settings.theme,
+        theme: theme.current(),
       }));
       toast('Dados sincronizados.', 'success');
     } catch (error) {

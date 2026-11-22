@@ -21,6 +21,7 @@ import { ProductScreen } from '../features/product/ProductScreen';
 import { ProfileScreen } from '../features/profile/ProfileScreen';
 import { SearchScreen } from '../features/search/SearchScreen';
 import { SettingsScreen } from '../features/settings/SettingsScreen';
+import { ThemeScreen } from '../features/theme/ThemeScreen';
 import { SignupScreen } from '../features/signup/SignupScreen';
 import { TrackingScreen } from '../features/tracking/TrackingScreen';
 import { WelcomeScreen } from '../features/welcome/WelcomeScreen';
@@ -60,7 +61,7 @@ export function RootNavigator() {
         <Stack.Screen name="OrderDetail" component={OrderDetailRoute} />
         <Stack.Screen name="EditProfile" component={EditProfileRoute} />
         <Stack.Screen name="Settings" component={SettingsRoute} />
-        <Stack.Screen name="Theme" component={PendingScreen} />
+        <Stack.Screen name="Theme" component={ThemeRoute} />
         <Stack.Screen name="NotificationSettings" component={PendingScreen} />
       </Stack.Navigator>
     </TabBadgesContext.Provider>
@@ -228,6 +229,7 @@ function ProfileRoute({
       addressRepository={container.addressRepository}
       paymentRepository={container.paymentRepository}
       sessionRepository={container.sessionRepository}
+      themeRepository={container.themeRepository}
       navigation={{
         onNotifications: () => navigation.navigate('Notifications'),
         onEditProfile: () => navigation.navigate('EditProfile'),
@@ -269,6 +271,7 @@ function SettingsRoute({
       sessionRepository={container.sessionRepository}
       favoriteRepository={container.favoriteRepository}
       paymentSelection={container.paymentSelection}
+      themeRepository={container.themeRepository}
       navigation={{
         onBack: navigation.goBack,
         onTheme: () => navigation.navigate('Theme'),
@@ -279,6 +282,19 @@ function SettingsRoute({
         onLocalDataCleared: () => navigateToWelcome(navigation),
         onSessionExpired: () => navigateToWelcome(navigation),
       }}
+    />
+  );
+}
+
+function ThemeRoute({
+  navigation,
+}: NativeStackScreenProps<RootStackParamList, 'Theme'>) {
+  const { themeRepository } = useAppContainer();
+  return (
+    <ThemeScreen
+      themeRepository={themeRepository}
+      onBack={navigation.goBack}
+      onSessionExpired={() => navigateToWelcome(navigation)}
     />
   );
 }

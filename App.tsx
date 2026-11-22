@@ -4,6 +4,7 @@ import {
   NavigationContainer,
   type Theme,
 } from '@react-navigation/native';
+import { useEffect, useSyncExternalStore } from 'react';
 import { StatusBar } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { ToastProvider } from './src/components';
@@ -20,13 +21,29 @@ function App() {
   return (
     <SafeAreaProvider>
       <AppContainerProvider container={container}>
-        <ThemeProvider>
-          <ToastProvider>
-            <ThemedNavigation />
-          </ToastProvider>
-        </ThemeProvider>
+        <ThemedApp />
       </AppContainerProvider>
     </SafeAreaProvider>
+  );
+}
+
+function ThemedApp() {
+  const { themeRepository } = container;
+  const mode = useSyncExternalStore(
+    themeRepository.subscribe,
+    themeRepository.current,
+  );
+
+  useEffect(() => {
+    themeRepository.load();
+  }, [themeRepository]);
+
+  return (
+    <ThemeProvider mode={mode}>
+      <ToastProvider>
+        <ThemedNavigation />
+      </ToastProvider>
+    </ThemeProvider>
   );
 }
 
