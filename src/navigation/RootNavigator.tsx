@@ -185,10 +185,11 @@ function SearchRoute({
 function OrdersRoute({
   navigation,
 }: NativeStackScreenProps<RootStackParamList, 'Orders'>) {
-  const { orderRepository } = useAppContainer();
+  const { orderRepository, connectivityMonitor } = useAppContainer();
   return (
     <OrdersScreen
       orderRepository={orderRepository}
+      connectivityMonitor={connectivityMonitor}
       onOpenOrder={code => navigation.navigate('OrderDetail', { code })}
       onTrack={code => navigation.navigate('Tracking', { code })}
       onCart={() => navigation.navigate('Cart')}
