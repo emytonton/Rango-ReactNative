@@ -24,6 +24,7 @@ export * from './InfoBanner';
 export * from './OrderItemRow';
 export * from './MapPreview';
 export * from './MenuRow';
+export * from './NotificationCard';
 export * from './PasswordToggle';
 export * from './PlainField';
 export * from './ProductCards';
