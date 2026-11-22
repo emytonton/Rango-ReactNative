@@ -30,6 +30,7 @@ export * from './PlainField';
 export * from './ProductCards';
 export * from './ProductImage';
 export * from './PulseCircle';
+export * from './PushBanner';
 export * from './QuantityStepper';
 export * from './RadioCard';
 export * from './SectionCard';
