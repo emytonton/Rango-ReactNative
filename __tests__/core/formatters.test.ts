@@ -3,6 +3,7 @@ import {
   formatOrderDate,
   formatPrice,
   formatRating,
+  formatRelativeTime,
 } from '../../src/core/format/formatters';
 
 test('formata preço em reais com vírgula', () => {
@@ -27,4 +28,17 @@ test('formata a data do pedido como hoje, ontem ou dia e mês no horário local'
   expect(formatOrderDate(at(19), now)).toBe('Hoje · 19:42');
   expect(formatOrderDate(at(18), now)).toBe('Ontem · 19:42');
   expect(formatOrderDate(at(5, 7), now)).toBe('05 ago · 19:42');
+});
+
+test('formata o tempo relativo da notificação', () => {
+  const now = new Date(2026, 10, 22, 9, 50);
+  expect(
+    formatRelativeTime(new Date(2026, 10, 22, 9, 46).toISOString(), now),
+  ).toBe('há 4 min');
+  expect(
+    formatRelativeTime(new Date(2026, 10, 22, 7, 10).toISOString(), now),
+  ).toBe('há 2 h');
+  expect(
+    formatRelativeTime(new Date(2026, 10, 21, 20, 0).toISOString(), now),
+  ).toBe('ontem');
 });

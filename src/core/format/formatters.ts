@@ -31,6 +31,30 @@ export function formatOrderDate(iso: string, now: Date = new Date()): string {
   return `${day} · ${formatClock(iso)}`;
 }
 
+export function formatRelativeTime(
+  iso: string,
+  now: Date = new Date(),
+): string {
+  const date = new Date(iso);
+  const minutes = Math.floor((now.getTime() - date.getTime()) / 60000);
+  if (minutes < 1) {
+    return 'agora';
+  }
+  if (minutes < 60) {
+    return `há ${minutes} min`;
+  }
+  const yesterday = new Date(now);
+  yesterday.setDate(now.getDate() - 1);
+  if (date.toDateString() === now.toDateString()) {
+    return `há ${Math.floor(minutes / 60)} h`;
+  }
+  if (date.toDateString() === yesterday.toDateString()) {
+    return 'ontem';
+  }
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${day} ${MONTHS[date.getMonth()]}`;
+}
+
 export function initialsOf(name: string): string {
   return name
     .split(' ')
