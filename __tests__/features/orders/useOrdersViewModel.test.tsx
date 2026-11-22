@@ -52,6 +52,7 @@ async function renderViewModel(
     create: jest.fn(),
     detail: jest.fn(),
     list: jest.fn(list),
+    cachedList: jest.fn(() => Promise.resolve(null)),
     reorder: jest.fn(reorder),
   };
   const callbacks = {

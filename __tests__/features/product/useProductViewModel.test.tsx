@@ -36,6 +36,8 @@ async function renderViewModel(
   const onAdded = jest.fn();
   const catalogRepository: CatalogRepository = {
     home: jest.fn(),
+    cachedHome: jest.fn(() => Promise.resolve(null)),
+    cachedProduct: jest.fn(() => Promise.resolve(null)),
     productsByCategory: jest.fn(),
     product: jest.fn(() => Promise.resolve(burger)),
     setFavorite: jest.fn(() => Promise.resolve(true)),

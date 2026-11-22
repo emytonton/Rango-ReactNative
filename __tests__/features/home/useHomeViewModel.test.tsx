@@ -44,6 +44,8 @@ async function renderViewModel(
   const onSessionExpired = jest.fn();
   const catalogRepository: CatalogRepository = {
     home: jest.fn(() => Promise.resolve(home)),
+    cachedHome: jest.fn(() => Promise.resolve(null)),
+    cachedProduct: jest.fn(() => Promise.resolve(null)),
     productsByCategory: jest.fn(() => Promise.resolve([])),
     product: jest.fn(),
     setFavorite: jest.fn(() => Promise.resolve(true)),
