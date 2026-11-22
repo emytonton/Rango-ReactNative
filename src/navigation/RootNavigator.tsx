@@ -204,11 +204,12 @@ function OrderDetailRoute({
   navigation,
   route,
 }: NativeStackScreenProps<RootStackParamList, 'OrderDetail'>) {
-  const { orderRepository } = useAppContainer();
+  const { orderRepository, connectivityMonitor } = useAppContainer();
   return (
     <OrderDetailScreen
       orderCode={route.params.code}
       orderRepository={orderRepository}
+      connectivityMonitor={connectivityMonitor}
       onBack={navigation.goBack}
       onCart={() => navigation.navigate('Cart')}
       onSessionExpired={() => navigateToWelcome(navigation)}
@@ -219,11 +220,13 @@ function OrderDetailRoute({
 function FavoritesRoute({
   navigation,
 }: NativeStackScreenProps<RootStackParamList, 'Favorites'>) {
-  const { favoriteRepository, cartRepository } = useAppContainer();
+  const { favoriteRepository, cartRepository, connectivityMonitor } =
+    useAppContainer();
   return (
     <FavoritesScreen
       favoriteRepository={favoriteRepository}
       cartRepository={cartRepository}
+      connectivityMonitor={connectivityMonitor}
       onOpenProduct={productId => navigation.navigate('Product', { productId })}
       onExplore={() => navigation.popTo('Home')}
       onTab={tab => navigateToTab(navigation, tab)}

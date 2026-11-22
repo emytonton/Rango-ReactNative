@@ -13,6 +13,8 @@ import {
   useToast,
   type SummaryLine,
 } from '../../components';
+import { useConnectionChange } from '../../core/connectivity/useConnectivity';
+import type { ConnectivityMonitor } from '../../core/native/connectivityMonitor';
 import type { OrderRepository } from '../../data/order/orderRepository';
 import { useTheme } from '../../theme';
 import {
@@ -23,6 +25,7 @@ import {
 type OrderDetailScreenProps = {
   orderCode: string;
   orderRepository: OrderRepository;
+  connectivityMonitor: ConnectivityMonitor;
   onBack: () => void;
   onCart: () => void;
   onSessionExpired: () => void;
@@ -31,6 +34,7 @@ type OrderDetailScreenProps = {
 export function OrderDetailScreen({
   orderCode,
   orderRepository,
+  connectivityMonitor,
   onBack,
   onCart,
   onSessionExpired,
@@ -50,6 +54,7 @@ export function OrderDetailScreen({
       onSessionExpired,
     },
   );
+  useConnectionChange(connectivityMonitor, online => online && retry());
   const { order } = state;
 
   return (
