@@ -106,6 +106,24 @@ test('mostra erro quando o catálogo não carrega', async () => {
   );
 });
 
+test('sem conexão mostra a home salva e a última sincronização', async () => {
+  const { viewModel } = await renderViewModel({
+    home: () => Promise.reject(new NetworkError()),
+    cachedHome: () =>
+      Promise.resolve({
+        value: home,
+        savedAt: new Date(Date.now() - 8 * 60_000),
+      }),
+  });
+  const { state } = viewModel();
+
+  expect(state.errorMessage).toBeNull();
+  expect(state.sections[0].products[0].name).toBe('Burger duplo cheddar');
+  expect(state.offlineNote).toBe(
+    'Não foi possível atualizar o catálogo.\nÚltima sincronização há 8 min.',
+  );
+});
+
 test('sessão expirada volta para o início', async () => {
   const { onSessionExpired } = await renderViewModel({
     home: () => Promise.reject(new SessionExpiredError()),
