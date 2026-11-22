@@ -1,0 +1,20 @@
+data,commit,issue,tela,metrica,valor,unidade,origem,observacao
+2026-11-22 14:58:37,7005ddf,26,Preferências de notificação,build_debug_limpo,442.87,s,medido,tempo-build.sh
+2026-11-22 14:58:37,7005ddf,26,Preferências de notificação,build_debug_incremental_sem_mudanca,12.11,s,medido,tempo-build.sh
+2026-11-22 14:58:37,7005ddf,26,Preferências de notificação,build_debug_incremental_um_arquivo,33.20,s,medido,tempo-build.sh com src/features/notificationsettings/NotificationSettingsScreen.tsx alterado
+2026-11-22 15:06:34,7005ddf,26,Preferências de notificação,build_release,471,s,medido,tempo de relógio do tamanho-apk.sh (:app:assembleRelease após o clean do tempo-build)
+2026-11-22 15:06:34,7005ddf,26,Preferências de notificação,tamanho_apk_release,74339953,bytes,medido,tamanho-apk.sh; APK com as quatro ABIs do template
+2026-11-22 15:07:53,7005ddf,26,Preferências de notificação,inicializacao_frio_release_mediana,722.5,ms,medido,inicializacao-frio.sh; 10 execuções no emulador Rango_Pixel_8_RN
+2026-11-22,f8018a1,26,Preferências de notificação,install_debug,65.91,s,medido,gradlew installDebug após ligar a tela à navegação (recompila o módulo nativo de notificação)
+2026-11-22,f8018a1,26,Preferências de notificação,inicializacao_debug_primeira_abertura,3261,ms,medido,am start -W; 1 execução logo após o installDebug acima
+2026-11-22,7005ddf,26,Preferências de notificação,install_debug_sem_mudanca,45.49,s,medido,gradlew installDebug após as medições de release (sem mudança de código)
+2026-11-22,7005ddf,26,Preferências de notificação,inicializacao_debug_primeira_abertura,3108,ms,medido,am start -W; 1 execução logo após o installDebug sem mudança
+2026-11-22,7005ddf,26,Preferências de notificação,npm_test,33.48,s,medido,jest com cache limpo (tempo de relógio); 30 suítes e 114 testes
+2026-11-22 14:49:55,7005ddf,26,Preferências de notificação,loc_gerado,20,linhas,medido,loc-por-origem.sh --issue 26
+2026-11-22 14:49:55,7005ddf,26,Preferências de notificação,loc_assistido,468,linhas,medido,loc-por-origem.sh --issue 26
+2026-11-22 14:49:55,7005ddf,26,Preferências de notificação,loc_manual,43,linhas,medido,loc-por-origem.sh --issue 26
+2026-11-22,7005ddf,26,Preferências de notificação,tempo_total,64,min,ajustado,intervalo informado 10:30-11:36
+2026-11-22,7005ddf,26,Preferências de notificação,tempo_codigo,51,min,ajustado,segmentos da issue
+2026-11-22,7005ddf,26,Preferências de notificação,tempo_configuracao_build,0,min,ajustado,segmentos da issue
+2026-11-22,7005ddf,26,Preferências de notificação,tempo_depuracao,3,min,ajustado,segmentos da issue
+2026-11-22,7005ddf,26,Preferências de notificação,tempo_espera_ferramenta,10,min,ajustado,segmentos da issue
