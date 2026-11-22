@@ -21,6 +21,7 @@ export type PushWatcher = {
   setForeground(foreground: boolean): void;
   poll(): Promise<void>;
   dismissBanner(): void;
+  show(message: PushMessage): void;
 };
 
 export function createPushWatcher(
@@ -39,6 +40,14 @@ export function createPushWatcher(
   const update = (patch: Partial<PushState>) => {
     state = { ...state, ...patch };
     listeners.forEach(listener => listener());
+  };
+
+  const show = (message: PushMessage) => {
+    if (foreground) {
+      update({ banner: message });
+    } else {
+      notifier.show(message.id, message.title, message.body);
+    }
   };
 
   const poll = async () => {
@@ -62,13 +71,8 @@ export function createPushWatcher(
         .filter(item => !seen.has(item.id))
         .sort((a, b) => a.id - b.id);
       fresh.forEach(item => {
-        const message = { id: item.id, title: item.title, body: item.body };
-        if (foreground) {
-          update({ banner: message, arrivals: state.arrivals + 1 });
-        } else {
-          update({ arrivals: state.arrivals + 1 });
-          notifier.show(message.id, message.title, message.body);
-        }
+        update({ arrivals: state.arrivals + 1 });
+        show({ id: item.id, title: item.title, body: item.body });
       });
     } catch {
       return;
@@ -102,5 +106,6 @@ export function createPushWatcher(
     },
     poll,
     dismissBanner: () => update({ banner: null }),
+    show,
   };
 }

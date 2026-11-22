@@ -6,9 +6,15 @@ type DashedButtonProps = {
   text: string;
   icon: IconName;
   onPress: () => void;
+  accent?: boolean;
 };
 
-export function DashedButton({ text, icon, onPress }: DashedButtonProps) {
+export function DashedButton({
+  text,
+  icon,
+  onPress,
+  accent = false,
+}: DashedButtonProps) {
   const { colors } = useTheme();
   return (
     <Pressable
@@ -16,11 +22,18 @@ export function DashedButton({ text, icon, onPress }: DashedButtonProps) {
       onPress={onPress}
       style={({ pressed }) => [
         styles.button,
-        { borderColor: colors.border, opacity: pressed ? 0.7 : 1 },
+        {
+          borderColor: accent ? colors.primary : colors.border,
+          opacity: pressed ? 0.7 : 1,
+        },
       ]}
     >
       <Icon name={icon} size={20} color={colors.primary} />
-      <Text style={[styles.text, { color: colors.text }]}>{text}</Text>
+      <Text
+        style={[styles.text, { color: accent ? colors.primary : colors.text }]}
+      >
+        {text}
+      </Text>
     </Pressable>
   );
 }

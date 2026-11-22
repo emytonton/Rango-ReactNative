@@ -44,6 +44,7 @@ type SettingsRowProps = {
   divider?: boolean;
   danger?: boolean;
   disabled?: boolean;
+  largeHint?: boolean;
 };
 
 export function SettingsRow({
@@ -58,6 +59,7 @@ export function SettingsRow({
   divider = false,
   danger = false,
   disabled = false,
+  largeHint = false,
 }: SettingsRowProps) {
   const { colors } = useTheme();
   const tint = danger ? colors.error : colors.primary;
@@ -88,7 +90,15 @@ export function SettingsRow({
           {label}
         </Text>
         {hint ? (
-          <Text style={[styles.hint, { color: colors.text2 }]}>{hint}</Text>
+          <Text
+            style={[
+              styles.hint,
+              largeHint && styles.largeHint,
+              { color: colors.text2 },
+            ]}
+          >
+            {hint}
+          </Text>
         ) : null}
       </View>
       {value ? (
@@ -132,5 +142,6 @@ const styles = StyleSheet.create({
   texts: { flex: 1, gap: 1 },
   label: { fontFamily: fonts.bold, fontSize: 14 },
   hint: { fontFamily: fonts.medium, fontSize: 11 },
+  largeHint: { fontSize: 11.5 },
   value: { fontFamily: fonts.bold, fontSize: 12.5 },
 });
