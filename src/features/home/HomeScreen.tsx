@@ -7,6 +7,7 @@ import {
   BadgeIconButton,
   BottomBar,
   CategoryChip,
+  DashedNote,
   ErrorState,
   Icon,
   ProductRow,
@@ -17,6 +18,8 @@ import {
   type BottomTab,
   type IconName,
 } from '../../components';
+import { useConnectionChange } from '../../core/connectivity/useConnectivity';
+import type { ConnectivityMonitor } from '../../core/native/connectivityMonitor';
 import type { CartRepository } from '../../data/cart/cartRepository';
 import type { CatalogRepository } from '../../data/catalog/catalogRepository';
 import type { PushWatcher } from '../../data/push/pushWatcher';
@@ -45,6 +48,7 @@ type HomeScreenProps = HomeNavigation & {
   catalogRepository: CatalogRepository;
   cartRepository: CartRepository;
   pushWatcher: PushWatcher;
+  connectivityMonitor: ConnectivityMonitor;
 };
 
 type ProductActions = {
@@ -63,6 +67,7 @@ export function HomeScreen({
   catalogRepository,
   cartRepository,
   pushWatcher,
+  connectivityMonitor,
   ...navigation
 }: HomeScreenProps) {
   const { colors } = useTheme();
@@ -86,6 +91,7 @@ export function HomeScreen({
       refresh();
     }, [refresh]),
   );
+  useConnectionChange(connectivityMonitor, refresh);
   const productActions: ProductActions = {
     onOpen: navigation.onOpenProduct,
     onToggleFavorite: viewModel.toggleFavorite,
@@ -112,6 +118,15 @@ export function HomeScreen({
           </View>
         ) : (
           <>
+            {state.offlineNote && (
+              <View style={styles.padded}>
+                <DashedNote
+                  icon="syncProblem"
+                  text={state.offlineNote}
+                  iconColor={colors.text2}
+                />
+              </View>
+            )}
             <View style={styles.padded}>
               <PromoBanner />
             </View>

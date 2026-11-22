@@ -134,8 +134,13 @@ const tabRoutes: Record<
 function HomeRoute({
   navigation,
 }: NativeStackScreenProps<RootStackParamList, 'Home'>) {
-  const { catalogRepository, cartRepository, favoriteRepository, pushWatcher } =
-    useAppContainer();
+  const {
+    catalogRepository,
+    cartRepository,
+    favoriteRepository,
+    pushWatcher,
+    connectivityMonitor,
+  } = useAppContainer();
   useEffect(() => {
     favoriteRepository.list().catch(() => undefined);
   }, [favoriteRepository]);
@@ -144,6 +149,7 @@ function HomeRoute({
       catalogRepository={catalogRepository}
       cartRepository={cartRepository}
       pushWatcher={pushWatcher}
+      connectivityMonitor={connectivityMonitor}
       onOpenProduct={productId => navigation.navigate('Product', { productId })}
       onSeeAll={homeSection => navigation.navigate('Search', { homeSection })}
       onProfile={() => navigation.navigate('Profile')}

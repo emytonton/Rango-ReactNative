@@ -29,6 +29,7 @@ export type HomeState = {
   sections: HomeSectionModel[];
   categoryProducts: ProductCardModel[];
   categoryLoading: boolean;
+  offlineNote: string | null;
 };
 
 type HomeCallbacks = {
@@ -50,21 +51,27 @@ const initialState: HomeState = {
   sections: [],
   categoryProducts: [],
   categoryLoading: false,
+  offlineNote: null,
 };
+
+const systemNow = () => new Date();
 
 export function useHomeViewModel(
   catalogRepository: CatalogRepository,
   cartRepository: CartRepository,
   callbacks: HomeCallbacks,
+  now: () => Date = systemNow,
 ) {
   const [state, setState] = useState<HomeState>(initialState);
   const stateRef = useRef(state);
   const callbacksRef = useRef(callbacks);
+  const nowRef = useRef(now);
   const categoryRequest = useRef(0);
 
   useEffect(() => {
     stateRef.current = state;
     callbacksRef.current = callbacks;
+    nowRef.current = now;
   });
 
   const handleFailure = useCallback((error: unknown, fallback: string) => {
@@ -83,10 +90,26 @@ export function useHomeViewModel(
     setState(current => ({ ...current, loading: true, errorMessage: null }));
     try {
       const home = await catalogRepository.home();
-      setState(current => ({ ...withHome(current, home), loading: false }));
+      setState(current => ({
+        ...withHome(current, home),
+        loading: false,
+        offlineNote: null,
+      }));
     } catch (error) {
       if (error instanceof SessionExpiredError) {
         callbacksRef.current.onSessionExpired();
+        return;
+      }
+      const cached =
+        error instanceof NetworkError
+          ? await catalogRepository.cachedHome()
+          : null;
+      if (cached) {
+        setState(current => ({
+          ...withHome(current, cached.value),
+          loading: false,
+          offlineNote: offlineNote(cached.savedAt, nowRef.current()),
+        }));
         return;
       }
       setState(current => ({
@@ -188,15 +211,47 @@ export function useHomeViewModel(
     }
     try {
       const home = await catalogRepository.home();
-      setState(current => ({ ...withHome(current, home), errorMessage: null }));
+      setState(current => ({
+        ...withHome(current, home),
+        errorMessage: null,
+        offlineNote: null,
+      }));
     } catch (error) {
       if (error instanceof SessionExpiredError) {
         callbacksRef.current.onSessionExpired();
+        return;
+      }
+      const savedAt =
+        error instanceof NetworkError
+          ? (await catalogRepository.cachedHome())?.savedAt
+          : undefined;
+      if (savedAt && stateRef.current.errorMessage === null) {
+        setState(current => ({
+          ...current,
+          offlineNote: offlineNote(savedAt, nowRef.current()),
+        }));
       }
     }
   }, [catalogRepository]);
 
   return { state, load, refresh, selectCategory, toggleFavorite, addToCart };
+}
+
+function offlineNote(savedAt: Date, now: Date): string {
+  const minutes = Math.floor((now.getTime() - savedAt.getTime()) / 60_000);
+  const hours = Math.floor(minutes / 60);
+  const days = Math.floor(hours / 24);
+  const age =
+    minutes < 1
+      ? 'agora'
+      : hours < 1
+      ? `há ${minutes} min`
+      : days < 1
+      ? `há ${hours} h`
+      : days === 1
+      ? 'há 1 dia'
+      : `há ${days} dias`;
+  return `Não foi possível atualizar o catálogo.\nÚltima sincronização ${age}.`;
 }
 
 function withHome(state: HomeState, home: Home): HomeState {
