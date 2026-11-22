@@ -1,0 +1,19 @@
+data,commit,issue,tela,metrica,valor,unidade,origem,observacao
+2026-11-22 20:49:34,ddcea3a,28,Cache offline,build_debug_limpo,407.55,s,medido,tempo-build.sh
+2026-11-22 20:49:34,ddcea3a,28,Cache offline,build_debug_incremental_sem_mudanca,10.90,s,medido,tempo-build.sh
+2026-11-22 20:49:34,ddcea3a,28,Cache offline,build_debug_incremental_um_arquivo,29.27,s,medido,tempo-build.sh com src/navigation/OfflineHost.tsx alterado
+2026-11-22 20:57:23,ddcea3a,28,Cache offline,build_release,461,s,medido,tempo de relógio do tamanho-apk.sh (:app:assembleRelease após o clean do tempo-build)
+2026-11-22 20:57:23,ddcea3a,28,Cache offline,tamanho_apk_release,74363557,bytes,medido,tamanho-apk.sh; APK com as quatro ABIs do template
+2026-11-22 20:58:43,ddcea3a,28,Cache offline,inicializacao_frio_release_mediana,1983,ms,medido,inicializacao-frio.sh; 10 execuções; emulador com 232 MB livres e 782 MB de swap em uso
+2026-11-22 21:00:31,ddcea3a,28,Cache offline,inicializacao_frio_release_mediana,2346.5,ms,medido,inicializacao-frio.sh repetido após gradlew --stop; mesma condição de memória do emulador
+2026-11-22,ddcea3a,28,Cache offline,install_debug_sem_mudanca,72.31,s,medido,gradlew installDebug após as medições de release (sem mudança de código)
+2026-11-22,ddcea3a,28,Cache offline,inicializacao_debug_primeira_abertura,5505,ms,medido,am start -W; 1 execução logo após o installDebug sem mudança
+2026-11-22,ddcea3a,28,Cache offline,npm_test,21.94,s,medido,jest com cache limpo (tempo de relógio); 31 suítes e 120 testes; uma rodada anterior com o emulador instalando teve 2 suítes com falha e foi descartada
+2026-11-22 20:41:30,ddcea3a,28,Cache offline,loc_gerado,45,linhas,medido,loc-por-origem.sh --issue 28
+2026-11-22 20:41:30,ddcea3a,28,Cache offline,loc_assistido,701,linhas,medido,loc-por-origem.sh --issue 28
+2026-11-22 20:41:30,ddcea3a,28,Cache offline,loc_manual,24,linhas,medido,loc-por-origem.sh --issue 28
+2026-11-22,ddcea3a,28,Cache offline,tempo_total,91,min,ajustado,intervalo informado 13:30-15:03
+2026-11-22,ddcea3a,28,Cache offline,tempo_codigo,78,min,ajustado,segmentos da issue
+2026-11-22,ddcea3a,28,Cache offline,tempo_configuracao_build,0,min,ajustado,segmentos da issue
+2026-11-22,ddcea3a,28,Cache offline,tempo_depuracao,3,min,ajustado,segmentos da issue
+2026-11-22,ddcea3a,28,Cache offline,tempo_espera_ferramenta,10,min,ajustado,segmentos da issue
