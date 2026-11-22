@@ -13,6 +13,8 @@ type NotificationCardProps = {
   onPress: () => void;
 };
 
+const PROMO_TILE = 'rgba(34, 164, 71, 0.14)';
+
 const toneIcons: Record<NotificationTone, IconName> = {
   order: 'deliveryDining',
   promo: 'localOffer',
@@ -47,7 +49,7 @@ export function NotificationCard({
       <View
         style={[
           styles.iconWrap,
-          { backgroundColor: promo ? 'rgba(34, 164, 71, 0.14)' : colors.soft },
+          { backgroundColor: promo ? PROMO_TILE : colors.soft },
         ]}
       >
         <Icon
