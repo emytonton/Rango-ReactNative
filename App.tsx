@@ -14,6 +14,7 @@ import {
   AppContainerProvider,
   createAppContainer,
 } from './src/di/AppContainer';
+import { OfflineHost } from './src/navigation/OfflineHost';
 import { PushHost } from './src/navigation/PushHost';
 import { RootNavigator } from './src/navigation/RootNavigator';
 import type { RootStackParamList } from './src/navigation/routes';
@@ -85,7 +86,9 @@ function ThemedNavigation() {
       theme={navigationTheme}
     >
       <StatusBar barStyle={colors.isDark ? 'light-content' : 'dark-content'} />
-      <RootNavigator />
+      <OfflineHost>
+        <RootNavigator />
+      </OfflineHost>
       <PushHost onOpen={openNotifications} />
     </NavigationContainer>
   );

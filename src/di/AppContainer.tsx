@@ -1,5 +1,9 @@
 import { createContext, useContext, type ReactNode } from 'react';
 import { photoPicker, type PhotoPicker } from '../core/image/photoPicker';
+import {
+  createConnectivityMonitor,
+  type ConnectivityMonitor,
+} from '../core/native/connectivityMonitor';
 import { localNotifier } from '../core/native/localNotifier';
 import { createHttpClient } from '../core/network/httpClient';
 import { createAuthApi } from '../data/auth/authApi';
@@ -84,6 +88,7 @@ export type AppContainer = {
   themeRepository: ThemeRepository;
   notificationRepository: NotificationRepository;
   pushWatcher: PushWatcher;
+  connectivityMonitor: ConnectivityMonitor;
 };
 
 export function createAppContainer(): AppContainer {
@@ -142,6 +147,7 @@ export function createAppContainer(): AppContainer {
       storage,
       localNotifier,
     ),
+    connectivityMonitor: createConnectivityMonitor(),
   };
 }
 
