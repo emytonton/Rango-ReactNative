@@ -14,6 +14,7 @@ import { EditProfileScreen } from '../features/editprofile/EditProfileScreen';
 import { FavoritesScreen } from '../features/favorites/FavoritesScreen';
 import { HomeScreen } from '../features/home/HomeScreen';
 import { LoginScreen } from '../features/login/LoginScreen';
+import { NotificationsScreen } from '../features/notifications/NotificationsScreen';
 import { OrderDetailScreen } from '../features/orderdetail/OrderDetailScreen';
 import { OrdersScreen } from '../features/orders/OrdersScreen';
 import { PaymentScreen } from '../features/payment/PaymentScreen';
@@ -51,7 +52,7 @@ export function RootNavigator() {
         <Stack.Screen name="Favorites" component={FavoritesRoute} />
         <Stack.Screen name="Profile" component={ProfileRoute} />
         <Stack.Screen name="Cart" component={CartRoute} />
-        <Stack.Screen name="Notifications" component={PendingScreen} />
+        <Stack.Screen name="Notifications" component={NotificationsRoute} />
         <Stack.Screen name="Address" component={AddressRoute} />
         <Stack.Screen name="Product" component={ProductRoute} />
         <Stack.Screen name="Checkout" component={CheckoutRoute} />
@@ -294,6 +295,21 @@ function ThemeRoute({
     <ThemeScreen
       themeRepository={themeRepository}
       onBack={navigation.goBack}
+      onSessionExpired={() => navigateToWelcome(navigation)}
+    />
+  );
+}
+
+function NotificationsRoute({
+  navigation,
+}: NativeStackScreenProps<RootStackParamList, 'Notifications'>) {
+  const { notificationRepository, pushWatcher } = useAppContainer();
+  return (
+    <NotificationsScreen
+      notificationRepository={notificationRepository}
+      pushWatcher={pushWatcher}
+      onBack={navigation.goBack}
+      onOpenOrder={code => navigation.navigate('Tracking', { code })}
       onSessionExpired={() => navigateToWelcome(navigation)}
     />
   );
