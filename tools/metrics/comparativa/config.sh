@@ -1,0 +1,8 @@
+FRAMEWORK="react-native"
+PACOTE="com.rango.delivery"
+ATIVIDADE=".MainActivity"
+DIR_GRADLE="android"
+TAREFA_BUILD=":app:assembleDebug"
+TAREFA_RELEASE=":app:assembleRelease"
+APK_RELEASE="android/app/build/outputs/apk/release/app-release.apk"
+ARQUIVO_ALTERADO="src/features/home/HomeScreen.tsx"
