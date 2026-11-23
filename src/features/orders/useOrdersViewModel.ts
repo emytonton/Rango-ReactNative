@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { StatusTone, ToastKind } from '../../components';
 import { formatOrderDate, formatPrice } from '../../core/format/formatters';
-import { ApiError } from '../../core/network/apiError';
+import { ApiError, NetworkError } from '../../core/network/apiError';
 import { apiBaseUrl } from '../../core/network/config';
 import { SessionExpiredError } from '../../data/auth/authorizedCaller';
 import type {
@@ -29,6 +29,7 @@ export type OrdersTabState = {
   loaded: boolean;
   errorMessage: string | null;
   orders: OrderListItem[];
+  offline: boolean;
 };
 
 export type OrdersState = {
@@ -48,6 +49,7 @@ const emptyTab: OrdersTabState = {
   loaded: false,
   errorMessage: null,
   orders: [],
+  offline: false,
 };
 
 const initialState: OrdersState = {
@@ -109,6 +111,7 @@ export function useOrdersViewModel(
           loaded: true,
           errorMessage: null,
           orders,
+          offline: false,
         }));
       } catch (error) {
         if (requests.current[tab] !== id) {
@@ -116,6 +119,24 @@ export function useOrdersViewModel(
         }
         if (error instanceof SessionExpiredError) {
           callbacksRef.current.onSessionExpired();
+          return;
+        }
+        const cached =
+          error instanceof NetworkError
+            ? await orderRepository.cachedList(tab)
+            : null;
+        if (requests.current[tab] !== id) {
+          return;
+        }
+        if (cached) {
+          const reference = nowRef.current();
+          updateTab(tab, () => ({
+            loading: false,
+            loaded: true,
+            errorMessage: null,
+            orders: cached.map(order => toItem(order, reference)),
+            offline: true,
+          }));
           return;
         }
         const message =

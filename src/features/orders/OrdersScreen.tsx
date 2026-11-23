@@ -4,6 +4,7 @@ import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
   BottomBar,
+  DashedNote,
   EmptyState,
   ErrorState,
   Skeleton,
@@ -11,6 +12,8 @@ import {
   useToast,
   type BottomTab,
 } from '../../components';
+import { useConnectionChange } from '../../core/connectivity/useConnectivity';
+import type { ConnectivityMonitor } from '../../core/native/connectivityMonitor';
 import type { OrderRepository } from '../../data/order/orderRepository';
 import { fonts, useTheme } from '../../theme';
 import { OrderCard } from './components/OrderCard';
@@ -27,6 +30,7 @@ const tabs: { key: OrdersTab; label: string }[] = [
 
 type OrdersScreenProps = {
   orderRepository: OrderRepository;
+  connectivityMonitor: ConnectivityMonitor;
   onOpenOrder: (code: string) => void;
   onTrack: (code: string) => void;
   onCart: () => void;
@@ -37,6 +41,7 @@ type OrdersScreenProps = {
 
 export function OrdersScreen({
   orderRepository,
+  connectivityMonitor,
   onOpenOrder,
   onTrack,
   onCart,
@@ -63,6 +68,7 @@ export function OrdersScreen({
       refresh();
     }, [refresh]),
   );
+  useConnectionChange(connectivityMonitor, refresh);
 
   return (
     <View style={[styles.screen, { backgroundColor: colors.background }]}>
@@ -87,6 +93,13 @@ export function OrdersScreen({
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.content}
       >
+        {tab.offline && (
+          <DashedNote
+            icon="save"
+            text="Histórico carregado do armazenamento local."
+            iconColor={colors.success}
+          />
+        )}
         {tab.orders.length > 0 ? (
           tab.orders.map(order => (
             <OrderCard

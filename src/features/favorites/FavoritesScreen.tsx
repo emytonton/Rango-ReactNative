@@ -10,6 +10,8 @@ import {
   useToast,
   type BottomTab,
 } from '../../components';
+import { useConnectionChange } from '../../core/connectivity/useConnectivity';
+import type { ConnectivityMonitor } from '../../core/native/connectivityMonitor';
 import type { CartRepository } from '../../data/cart/cartRepository';
 import type { FavoriteRepository } from '../../data/favorite/favoriteRepository';
 import { fonts, useTheme } from '../../theme';
@@ -23,6 +25,7 @@ import {
 type FavoritesScreenProps = {
   favoriteRepository: FavoriteRepository;
   cartRepository: CartRepository;
+  connectivityMonitor: ConnectivityMonitor;
   onOpenProduct: (productId: string) => void;
   onExplore: () => void;
   onTab: (tab: BottomTab) => void;
@@ -32,6 +35,7 @@ type FavoritesScreenProps = {
 export function FavoritesScreen({
   favoriteRepository,
   cartRepository,
+  connectivityMonitor,
   onOpenProduct,
   onExplore,
   onTab,
@@ -51,6 +55,7 @@ export function FavoritesScreen({
       refresh();
     }, [refresh]),
   );
+  useConnectionChange(connectivityMonitor, online => online && refresh());
 
   return (
     <View style={[styles.screen, { backgroundColor: colors.background }]}>

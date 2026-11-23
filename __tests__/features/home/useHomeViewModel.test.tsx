@@ -44,6 +44,8 @@ async function renderViewModel(
   const onSessionExpired = jest.fn();
   const catalogRepository: CatalogRepository = {
     home: jest.fn(() => Promise.resolve(home)),
+    cachedHome: jest.fn(() => Promise.resolve(null)),
+    cachedProduct: jest.fn(() => Promise.resolve(null)),
     productsByCategory: jest.fn(() => Promise.resolve([])),
     product: jest.fn(),
     setFavorite: jest.fn(() => Promise.resolve(true)),
@@ -101,6 +103,24 @@ test('mostra erro quando o catálogo não carrega', async () => {
 
   expect(viewModel().state.errorMessage).toBe(
     'Não foi possível carregar o catálogo.',
+  );
+});
+
+test('sem conexão mostra a home salva e a última sincronização', async () => {
+  const { viewModel } = await renderViewModel({
+    home: () => Promise.reject(new NetworkError()),
+    cachedHome: () =>
+      Promise.resolve({
+        value: home,
+        savedAt: new Date(Date.now() - 8 * 60_000),
+      }),
+  });
+  const { state } = viewModel();
+
+  expect(state.errorMessage).toBeNull();
+  expect(state.sections[0].products[0].name).toBe('Burger duplo cheddar');
+  expect(state.offlineNote).toBe(
+    'Não foi possível atualizar o catálogo.\nÚltima sincronização há 8 min.',
   );
 });
 

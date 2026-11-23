@@ -1,5 +1,9 @@
 import { createContext, useContext, type ReactNode } from 'react';
 import { photoPicker, type PhotoPicker } from '../core/image/photoPicker';
+import {
+  createConnectivityMonitor,
+  type ConnectivityMonitor,
+} from '../core/native/connectivityMonitor';
 import { localNotifier } from '../core/native/localNotifier';
 import { createHttpClient } from '../core/network/httpClient';
 import { createAuthApi } from '../data/auth/authApi';
@@ -8,6 +12,7 @@ import {
   type AddressRepository,
 } from '../data/address/addressRepository';
 import { createAuthorizedCaller } from '../data/auth/authorizedCaller';
+import { createLocalCache } from '../data/cache/localCache';
 import {
   createAuthRepository,
   type AuthRepository,
@@ -83,15 +88,32 @@ export type AppContainer = {
   themeRepository: ThemeRepository;
   notificationRepository: NotificationRepository;
   pushWatcher: PushWatcher;
+  connectivityMonitor: ConnectivityMonitor;
 };
 
 export function createAppContainer(): AppContainer {
   const http = createHttpClient();
   const storage = createKeychainStorage();
   const authApi = createAuthApi(http);
-  const sessionRepository = createSessionRepository(authApi, storage);
+  const localCache = createLocalCache(storage);
+  const sessionRepository = createSessionRepository(
+    authApi,
+    storage,
+    localCache.clear,
+  );
   const authorizedCall = createAuthorizedCaller(sessionRepository);
-  const favoriteRepository = createFavoriteRepository(http, authorizedCall);
+  const favoriteRepository = createFavoriteRepository(
+    http,
+    authorizedCall,
+    localCache,
+    productId => catalogRepository.cachedProduct(productId),
+  );
+  const catalogRepository = createCatalogRepository(
+    createCatalogApi(http),
+    authorizedCall,
+    favoriteRepository,
+    localCache,
+  );
   const cartRepository = createCartRepository(http, authorizedCall);
   const profileRepository = createProfileRepository(http, authorizedCall);
   const notificationRepository = createNotificationRepository(
@@ -101,18 +123,14 @@ export function createAppContainer(): AppContainer {
   return {
     sessionRepository,
     authRepository: createAuthRepository(authApi, sessionRepository),
-    catalogRepository: createCatalogRepository(
-      createCatalogApi(http),
-      authorizedCall,
-      favoriteRepository,
-    ),
+    catalogRepository,
     favoriteRepository,
     cartRepository,
     searchRepository: createSearchRepository(http, authorizedCall),
     addressRepository: createAddressRepository(http, authorizedCall),
     paymentRepository: createPaymentRepository(http, authorizedCall),
     paymentSelection: createPaymentSelection(),
-    orderRepository: createOrderRepository(http, authorizedCall),
+    orderRepository: createOrderRepository(http, authorizedCall, localCache),
     profileRepository,
     photoPicker,
     connectionRepository: createConnectionRepository(http),
@@ -129,6 +147,7 @@ export function createAppContainer(): AppContainer {
       storage,
       localNotifier,
     ),
+    connectivityMonitor: createConnectivityMonitor(),
   };
 }
 

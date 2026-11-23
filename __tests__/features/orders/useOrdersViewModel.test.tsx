@@ -1,5 +1,5 @@
 import ReactTestRenderer from 'react-test-renderer';
-import { ApiError } from '../../../src/core/network/apiError';
+import { ApiError, NetworkError } from '../../../src/core/network/apiError';
 import type { Cart } from '../../../src/data/cart/cartRepository';
 import type {
   OrderGroup,
@@ -47,11 +47,13 @@ function reorderResult(items: number, skipped: string[] = []): ReorderResult {
 async function renderViewModel(
   list: (group: OrderGroup) => Promise<OrderSummary[]>,
   reorder: OrderRepository['reorder'] = () => Promise.resolve(reorderResult(1)),
+  cached: OrderSummary[] | null = null,
 ) {
   const orderRepository: OrderRepository = {
     create: jest.fn(),
     detail: jest.fn(),
     list: jest.fn(list),
+    cachedList: jest.fn(() => Promise.resolve(cached)),
     reorder: jest.fn(reorder),
   };
   const callbacks = {
@@ -184,4 +186,17 @@ test('pedir novamente abre o carrinho ou avisa quando os itens acabaram', async 
     'error',
   );
   expect(viewModel().state.reorderingCode).toBeNull();
+});
+
+test('sem conexão mostra o histórico salvo com a nota', async () => {
+  const { viewModel } = await renderViewModel(
+    () => Promise.reject(new NetworkError()),
+    undefined,
+    [summary(10497, 'done', 'Entregue')],
+  );
+
+  const tab = viewModel().state.tabs.live;
+  expect(tab.offline).toBe(true);
+  expect(tab.errorMessage).toBeNull();
+  expect(tab.orders[0].code).toBe('RG-10497');
 });

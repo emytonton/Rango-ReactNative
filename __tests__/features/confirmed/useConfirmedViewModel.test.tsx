@@ -48,6 +48,7 @@ async function renderViewModel(detail: OrderRepository['detail']) {
     create: jest.fn(),
     detail: jest.fn(detail),
     list: jest.fn(),
+    cachedList: jest.fn(() => Promise.resolve(null)),
     reorder: jest.fn(),
   };
   const current: { value?: ViewModel } = {};

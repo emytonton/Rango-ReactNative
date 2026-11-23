@@ -134,8 +134,13 @@ const tabRoutes: Record<
 function HomeRoute({
   navigation,
 }: NativeStackScreenProps<RootStackParamList, 'Home'>) {
-  const { catalogRepository, cartRepository, favoriteRepository, pushWatcher } =
-    useAppContainer();
+  const {
+    catalogRepository,
+    cartRepository,
+    favoriteRepository,
+    pushWatcher,
+    connectivityMonitor,
+  } = useAppContainer();
   useEffect(() => {
     favoriteRepository.list().catch(() => undefined);
   }, [favoriteRepository]);
@@ -144,6 +149,7 @@ function HomeRoute({
       catalogRepository={catalogRepository}
       cartRepository={cartRepository}
       pushWatcher={pushWatcher}
+      connectivityMonitor={connectivityMonitor}
       onOpenProduct={productId => navigation.navigate('Product', { productId })}
       onSeeAll={homeSection => navigation.navigate('Search', { homeSection })}
       onProfile={() => navigation.navigate('Profile')}
@@ -179,10 +185,11 @@ function SearchRoute({
 function OrdersRoute({
   navigation,
 }: NativeStackScreenProps<RootStackParamList, 'Orders'>) {
-  const { orderRepository } = useAppContainer();
+  const { orderRepository, connectivityMonitor } = useAppContainer();
   return (
     <OrdersScreen
       orderRepository={orderRepository}
+      connectivityMonitor={connectivityMonitor}
       onOpenOrder={code => navigation.navigate('OrderDetail', { code })}
       onTrack={code => navigation.navigate('Tracking', { code })}
       onCart={() => navigation.navigate('Cart')}
@@ -197,11 +204,12 @@ function OrderDetailRoute({
   navigation,
   route,
 }: NativeStackScreenProps<RootStackParamList, 'OrderDetail'>) {
-  const { orderRepository } = useAppContainer();
+  const { orderRepository, connectivityMonitor } = useAppContainer();
   return (
     <OrderDetailScreen
       orderCode={route.params.code}
       orderRepository={orderRepository}
+      connectivityMonitor={connectivityMonitor}
       onBack={navigation.goBack}
       onCart={() => navigation.navigate('Cart')}
       onSessionExpired={() => navigateToWelcome(navigation)}
@@ -212,11 +220,13 @@ function OrderDetailRoute({
 function FavoritesRoute({
   navigation,
 }: NativeStackScreenProps<RootStackParamList, 'Favorites'>) {
-  const { favoriteRepository, cartRepository } = useAppContainer();
+  const { favoriteRepository, cartRepository, connectivityMonitor } =
+    useAppContainer();
   return (
     <FavoritesScreen
       favoriteRepository={favoriteRepository}
       cartRepository={cartRepository}
+      connectivityMonitor={connectivityMonitor}
       onOpenProduct={productId => navigation.navigate('Product', { productId })}
       onExplore={() => navigation.popTo('Home')}
       onTab={tab => navigateToTab(navigation, tab)}
