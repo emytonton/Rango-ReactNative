@@ -1,0 +1,2 @@
+data,commit,componente,execucoes,mediana_pss_kb,mediana_cpu_ms,mediana_cpu_pct,pss_kb,cpu_ms,cpu_pct
+2026-11-22 22:34:23,adecd22,com.rango.delivery/.MainActivity,10,218234,32135,7.1,219574;217885;218582;219711;217311;215992;218981;216308;218947;216803,35070;30170;28370;34100;28220;28500;28440;38710;34370;36740,7.4;7.4;10.7;3.7;3.7;3.7;7.4;11.1;6.8;3.5
