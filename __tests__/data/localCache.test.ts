@@ -1,3 +1,4 @@
+import { NetworkError } from '../../src/core/network/apiError';
 import { createLocalCache } from '../../src/data/cache/localCache';
 import type { SecureStorage } from '../../src/data/storage/secureStorage';
 
@@ -52,4 +53,26 @@ test('descarta um valor corrompido', async () => {
 
   expect(await cache.get('home')).toBeNull();
   expect(values).toEqual({ cache_index: '' });
+});
+
+test('busca salva a resposta e usa a cópia sem conexão', async () => {
+  const cache = createLocalCache(memoryStorage(), () => savedAt);
+
+  const online = await cache.fetchOrCached('cart', () =>
+    Promise.resolve(['p1']),
+  );
+  const offline = await cache.fetchOrCached('cart', () =>
+    Promise.reject(new NetworkError()),
+  );
+
+  expect(online).toEqual(['p1']);
+  expect(offline).toEqual(['p1']);
+});
+
+test('sem conexão e sem cópia salva repassa o erro', async () => {
+  const cache = createLocalCache(memoryStorage(), () => savedAt);
+
+  await expect(
+    cache.fetchOrCached('cart', () => Promise.reject(new NetworkError())),
+  ).rejects.toBeInstanceOf(NetworkError);
 });

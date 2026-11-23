@@ -1,6 +1,7 @@
 import type { NotificationTone } from '../../components';
 import type { HttpClient } from '../../core/network/httpClient';
 import type { AuthorizedCaller } from '../auth/authorizedCaller';
+import type { LocalCache } from '../cache/localCache';
 
 export type AppNotification = {
   id: number;
@@ -30,13 +31,17 @@ export type NotificationRepository = {
 export function createNotificationRepository(
   http: HttpClient,
   call: AuthorizedCaller,
+  cache: LocalCache,
 ): NotificationRepository {
   return {
     list: () =>
-      call(accessToken =>
-        http.request<NotificationPage>(`/notifications?pageSize=${PAGE_SIZE}`, {
-          accessToken,
-        }),
+      cache.fetchOrCached('notifications', () =>
+        call(accessToken =>
+          http.request<NotificationPage>(
+            `/notifications?pageSize=${PAGE_SIZE}`,
+            { accessToken },
+          ),
+        ),
       ),
     unread: () =>
       call(accessToken =>
