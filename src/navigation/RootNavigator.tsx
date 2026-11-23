@@ -33,13 +33,19 @@ import type { RootStackParamList } from './routes';
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export function RootNavigator() {
-  const { favoriteRepository } = useAppContainer();
+  const { favoriteRepository, orderRepository } = useAppContainer();
   const favoriteIds = useSyncExternalStore(
     favoriteRepository.subscribe,
     favoriteRepository.favoriteIds,
   );
+  const liveOrders = useSyncExternalStore(
+    orderRepository.subscribe,
+    orderRepository.liveCount,
+  );
   return (
-    <TabBadgesContext.Provider value={{ favorites: favoriteIds.size }}>
+    <TabBadgesContext.Provider
+      value={{ orders: liveOrders, favorites: favoriteIds.size }}
+    >
       <Stack.Navigator
         initialRouteName="Welcome"
         screenOptions={{ headerShown: false }}

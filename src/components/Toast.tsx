@@ -37,7 +37,15 @@ const icons: Record<ToastKind, IconName> = {
 
 const ToastContext = createContext<ToastContextValue>({ show: () => {} });
 
-export function ToastProvider({ children }: { children: ReactNode }) {
+type ToastProviderProps = {
+  children: ReactNode;
+  aboveTabBar?: boolean;
+};
+
+export function ToastProvider({
+  children,
+  aboveTabBar = false,
+}: ToastProviderProps) {
   const [message, setMessage] = useState<ToastMessage | null>(null);
   const nextId = useRef(0);
 
@@ -53,7 +61,12 @@ export function ToastProvider({ children }: { children: ReactNode }) {
     <ToastContext.Provider value={value}>
       {children}
       {message && (
-        <ToastHost key={message.id} message={message} onHidden={hide} />
+        <ToastHost
+          key={message.id}
+          message={message}
+          bottom={aboveTabBar ? 104 : 30}
+          onHidden={hide}
+        />
       )}
     </ToastContext.Provider>
   );
@@ -65,10 +78,11 @@ export function useToast(): ToastContextValue {
 
 type ToastHostProps = {
   message: ToastMessage;
+  bottom: number;
   onHidden: () => void;
 };
 
-function ToastHost({ message, onHidden }: ToastHostProps) {
+function ToastHost({ message, bottom, onHidden }: ToastHostProps) {
   const insets = useSafeAreaInsets();
   const progress = useRef(new Animated.Value(0)).current;
 
@@ -100,7 +114,7 @@ function ToastHost({ message, onHidden }: ToastHostProps) {
       pointerEvents="none"
       style={[
         styles.host,
-        { bottom: insets.bottom + 30, opacity: progress },
+        { bottom: insets.bottom + bottom, opacity: progress },
         { transform: [{ translateY }] },
       ]}
     >

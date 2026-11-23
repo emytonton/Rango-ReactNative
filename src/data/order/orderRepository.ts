@@ -114,6 +114,9 @@ export type OrderRepository = {
   list(group: OrderGroup): Promise<OrderSummary[]>;
   cachedList(group: OrderGroup): Promise<OrderSummary[] | null>;
   reorder(code: string): Promise<ReorderResult>;
+  liveCount(): number;
+  subscribe(listener: () => void): () => void;
+  refreshLiveCount(): Promise<void>;
 };
 
 export function createOrderRepository(
@@ -123,16 +126,53 @@ export function createOrderRepository(
 ): OrderRepository {
   const save = (key: string, value: unknown) =>
     cache.put(key, value).catch(() => undefined);
+  let live = 0;
+  const listeners = new Set<() => void>();
+  const setLive = (count: number) => {
+    if (count !== live) {
+      live = count;
+      listeners.forEach(listener => listener());
+    }
+  };
+
+  const list = async (group: OrderGroup) => {
+    const page = await call(accessToken =>
+      http.request<{ data: OrderSummary[] }>(
+        `/orders?group=${group}&pageSize=${ORDER_PAGE_SIZE}`,
+        { accessToken },
+      ),
+    );
+    save(listKey(group), page.data);
+    if (group === 'live') {
+      setLive(page.data.length);
+    }
+    return page.data;
+  };
 
   return {
-    create: order =>
-      call(accessToken =>
+    liveCount: () => live,
+    subscribe: listener => {
+      listeners.add(listener);
+      return () => {
+        listeners.delete(listener);
+      };
+    },
+    refreshLiveCount: async () => {
+      await list('live').catch(() => undefined);
+    },
+    create: async order => {
+      const created = await call(accessToken =>
         http.request<CreatedOrder>('/orders', {
           method: 'POST',
           body: order,
           accessToken,
         }),
-      ),
+      );
+      if (created.status === 'live') {
+        setLive(live + 1);
+      }
+      return created;
+    },
     detail: async code => {
       try {
         const detail = await call(accessToken =>
@@ -153,16 +193,7 @@ export function createOrderRepository(
         return cached.value;
       }
     },
-    list: async group => {
-      const page = await call(accessToken =>
-        http.request<{ data: OrderSummary[] }>(
-          `/orders?group=${group}&pageSize=${ORDER_PAGE_SIZE}`,
-          { accessToken },
-        ),
-      );
-      save(listKey(group), page.data);
-      return page.data;
-    },
+    list,
     cachedList: async group =>
       (await cache.get<OrderSummary[]>(listKey(group)))?.value ?? null,
     reorder: code =>
