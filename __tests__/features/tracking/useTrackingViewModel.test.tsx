@@ -77,6 +77,9 @@ async function renderViewModel(detail: OrderRepository['detail']) {
     detail: jest.fn(detail),
     list: jest.fn(),
     cachedList: jest.fn(() => Promise.resolve(null)),
+    liveCount: () => 0,
+    subscribe: () => () => undefined,
+    refreshLiveCount: jest.fn(() => Promise.resolve()),
     reorder: jest.fn(),
   };
   const onSessionExpired = jest.fn();

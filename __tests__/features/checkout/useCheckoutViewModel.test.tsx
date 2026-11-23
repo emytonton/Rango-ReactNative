@@ -62,6 +62,9 @@ async function renderViewModel(
     detail: jest.fn(),
     list: jest.fn(),
     cachedList: jest.fn(() => Promise.resolve(null)),
+    liveCount: () => 0,
+    subscribe: () => () => undefined,
+    refreshLiveCount: jest.fn(() => Promise.resolve()),
     reorder: jest.fn(),
     ...overrides.order,
   };
