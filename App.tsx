@@ -91,10 +91,15 @@ function ThemedNavigation({
       border: colors.border,
     },
   };
-  const updateRoute = () =>
-    onTabChange(
-      tabRoutes.includes(navigationRef.getCurrentRoute()?.name ?? ''),
+  const updateRoute = () => {
+    const onTab = tabRoutes.includes(
+      navigationRef.getCurrentRoute()?.name ?? '',
     );
+    onTabChange(onTab);
+    if (onTab) {
+      container.orderRepository.refreshLiveCount();
+    }
+  };
 
   return (
     <NavigationContainer
