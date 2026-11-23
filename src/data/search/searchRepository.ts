@@ -1,5 +1,6 @@
 import type { HttpClient } from '../../core/network/httpClient';
 import type { AuthorizedCaller } from '../auth/authorizedCaller';
+import type { LocalCache } from '../cache/localCache';
 import type { Category, ProductSummary } from '../catalog/catalogApi';
 
 export type ProductSort = 'relevance' | 'price_asc' | 'price_desc' | 'rating';
@@ -15,6 +16,10 @@ export type ProductQuery = {
   pageSize?: number;
 };
 
+const RECENT_KEY = 'recent_searches';
+const CATEGORIES_KEY = 'categories';
+const SUGGESTIONS_KEY = 'suggestions';
+
 export type SearchRepository = {
   recent(): Promise<string[]>;
   saveRecent(term: string): Promise<string[]>;
@@ -29,6 +34,7 @@ type DataList<T> = { data: T[] };
 export function createSearchRepository(
   http: HttpClient,
   call: AuthorizedCaller,
+  cache: LocalCache,
 ): SearchRepository {
   const products = (query: ProductQuery) =>
     call(accessToken =>
@@ -39,9 +45,11 @@ export function createSearchRepository(
 
   return {
     recent: () =>
-      call(accessToken =>
-        http.request<DataList<string>>('/search/recent', { accessToken }),
-      ).then(list => list.data),
+      cache.fetchOrCached(RECENT_KEY, () =>
+        call(accessToken =>
+          http.request<DataList<string>>('/search/recent', { accessToken }),
+        ).then(list => list.data),
+      ),
 
     saveRecent: term =>
       call(accessToken =>
@@ -50,23 +58,32 @@ export function createSearchRepository(
           body: { term },
           accessToken,
         }),
-      ).then(list => list.data),
+      ).then(list => {
+        cache.put(RECENT_KEY, list.data).catch(() => undefined);
+        return list.data;
+      }),
 
-    clearRecent: () =>
-      call(accessToken =>
+    clearRecent: async () => {
+      await call(accessToken =>
         http.request<void>('/search/recent', {
           method: 'DELETE',
           accessToken,
         }),
-      ),
+      );
+      cache.put(RECENT_KEY, []).catch(() => undefined);
+    },
 
     categories: () =>
-      call(accessToken =>
-        http.request<DataList<Category>>('/categories', { accessToken }),
-      ).then(list => list.data),
+      cache.fetchOrCached(CATEGORIES_KEY, () =>
+        call(accessToken =>
+          http.request<DataList<Category>>('/categories', { accessToken }),
+        ).then(list => list.data),
+      ),
 
     suggestions: () =>
-      products({ section: 'popular', sort: 'rating', pageSize: 4 }),
+      cache.fetchOrCached(SUGGESTIONS_KEY, () =>
+        products({ section: 'popular', sort: 'rating', pageSize: 4 }),
+      ),
 
     search: products,
   };

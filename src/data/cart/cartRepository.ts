@@ -1,5 +1,6 @@
 import type { HttpClient } from '../../core/network/httpClient';
 import type { AuthorizedCaller } from '../auth/authorizedCaller';
+import type { LocalCache } from '../cache/localCache';
 import type { ProductAddon } from '../catalog/catalogApi';
 
 type AddCartItemRequest = {
@@ -48,6 +49,8 @@ export type Cart = {
   summary: CartSummary;
 };
 
+const CART_KEY = 'cart';
+
 export type CartRepository = {
   addItem(
     productId: string,
@@ -65,7 +68,13 @@ export type CartRepository = {
 export function createCartRepository(
   http: HttpClient,
   call: AuthorizedCaller,
+  cache: LocalCache,
 ): CartRepository {
+  const saved = (cart: Cart) => {
+    cache.put(CART_KEY, cart).catch(() => undefined);
+    return cart;
+  };
+
   return {
     addItem: (productId, quantity = 1, addonIds = [], notes = '') => {
       const body: AddCartItemRequest = {
@@ -80,11 +89,13 @@ export function createCartRepository(
           body,
           accessToken,
         }),
-      ).then(cart => cart.summary.itemCount);
+      ).then(cart => saved(cart).summary.itemCount);
     },
 
     cart: () =>
-      call(accessToken => http.request<Cart>('/cart', { accessToken })),
+      cache.fetchOrCached(CART_KEY, () =>
+        call(accessToken => http.request<Cart>('/cart', { accessToken })),
+      ),
 
     updateQuantity: (itemId, quantity) =>
       call(accessToken =>
@@ -93,7 +104,7 @@ export function createCartRepository(
           body: { quantity },
           accessToken,
         }),
-      ),
+      ).then(saved),
 
     removeItem: itemId =>
       call(accessToken =>
@@ -101,12 +112,12 @@ export function createCartRepository(
           method: 'DELETE',
           accessToken,
         }),
-      ),
+      ).then(saved),
 
     clear: () =>
       call(accessToken =>
         http.request<Cart>('/cart', { method: 'DELETE', accessToken }),
-      ),
+      ).then(saved),
 
     applyCoupon: code =>
       call(accessToken =>
@@ -115,6 +126,6 @@ export function createCartRepository(
           body: { code },
           accessToken,
         }),
-      ),
+      ).then(saved),
   };
 }

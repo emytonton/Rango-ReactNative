@@ -114,11 +114,16 @@ export function createAppContainer(): AppContainer {
     favoriteRepository,
     localCache,
   );
-  const cartRepository = createCartRepository(http, authorizedCall);
-  const profileRepository = createProfileRepository(http, authorizedCall);
+  const cartRepository = createCartRepository(http, authorizedCall, localCache);
+  const profileRepository = createProfileRepository(
+    http,
+    authorizedCall,
+    localCache,
+  );
   const notificationRepository = createNotificationRepository(
     http,
     authorizedCall,
+    localCache,
   );
   return {
     sessionRepository,
@@ -126,9 +131,17 @@ export function createAppContainer(): AppContainer {
     catalogRepository,
     favoriteRepository,
     cartRepository,
-    searchRepository: createSearchRepository(http, authorizedCall),
-    addressRepository: createAddressRepository(http, authorizedCall),
-    paymentRepository: createPaymentRepository(http, authorizedCall),
+    searchRepository: createSearchRepository(http, authorizedCall, localCache),
+    addressRepository: createAddressRepository(
+      http,
+      authorizedCall,
+      localCache,
+    ),
+    paymentRepository: createPaymentRepository(
+      http,
+      authorizedCall,
+      localCache,
+    ),
     paymentSelection: createPaymentSelection(),
     orderRepository: createOrderRepository(http, authorizedCall, localCache),
     profileRepository,

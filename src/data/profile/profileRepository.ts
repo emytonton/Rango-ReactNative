@@ -2,6 +2,7 @@ import type { HttpClient } from '../../core/network/httpClient';
 import type { ThemeMode } from '../../theme';
 import type { User } from '../auth/authApi';
 import type { AuthorizedCaller } from '../auth/authorizedCaller';
+import type { LocalCache } from '../cache/localCache';
 
 export type NotificationPrefs = {
   orders: boolean;
@@ -20,6 +21,10 @@ export type ProfileUpdate = {
   phone: string;
 };
 
+const USER_KEY = 'profile';
+const SETTINGS_KEY = 'settings';
+const UNREAD_KEY = 'unread_notifications';
+
 export type ProfileRepository = {
   me(): Promise<User>;
   update(data: ProfileUpdate): Promise<User>;
@@ -34,13 +39,26 @@ export type ProfileRepository = {
 export function createProfileRepository(
   http: HttpClient,
   call: AuthorizedCaller,
+  cache: LocalCache,
 ): ProfileRepository {
+  const savedUser = (user: User) => {
+    cache.put(USER_KEY, user).catch(() => undefined);
+    return user;
+  };
+  const savedSettings = (settings: UserSettings) => {
+    cache.put(SETTINGS_KEY, settings).catch(() => undefined);
+    return settings;
+  };
+
   return {
-    me: () => call(accessToken => http.request<User>('/me', { accessToken })),
+    me: () =>
+      cache.fetchOrCached(USER_KEY, () =>
+        call(accessToken => http.request<User>('/me', { accessToken })),
+      ),
     update: data =>
       call(accessToken =>
         http.request<User>('/me', { method: 'PATCH', body: data, accessToken }),
-      ),
+      ).then(savedUser),
     uploadAvatar: uri =>
       call(accessToken => {
         const form = new FormData();
@@ -54,14 +72,16 @@ export function createProfileRepository(
           body: form,
           accessToken,
         });
-      }),
+      }).then(savedUser),
     removeAvatar: () =>
       call(accessToken =>
         http.request<User>('/me/avatar', { method: 'DELETE', accessToken }),
-      ),
+      ).then(savedUser),
     settings: () =>
-      call(accessToken =>
-        http.request<UserSettings>('/me/settings', { accessToken }),
+      cache.fetchOrCached(SETTINGS_KEY, () =>
+        call(accessToken =>
+          http.request<UserSettings>('/me/settings', { accessToken }),
+        ),
       ),
     updateTheme: theme =>
       call(accessToken =>
@@ -70,7 +90,7 @@ export function createProfileRepository(
           body: { theme },
           accessToken,
         }),
-      ),
+      ).then(savedSettings),
     updateNotifications: notifications =>
       call(accessToken =>
         http.request<UserSettings>('/me/settings', {
@@ -78,12 +98,14 @@ export function createProfileRepository(
           body: { notifications },
           accessToken,
         }),
-      ),
+      ).then(savedSettings),
     unreadNotifications: () =>
-      call(accessToken =>
-        http.request<{ unreadCount: number }>('/notifications?pageSize=1', {
-          accessToken,
-        }),
-      ).then(response => response.unreadCount),
+      cache.fetchOrCached(UNREAD_KEY, () =>
+        call(accessToken =>
+          http.request<{ unreadCount: number }>('/notifications?pageSize=1', {
+            accessToken,
+          }),
+        ).then(response => response.unreadCount),
+      ),
   };
 }

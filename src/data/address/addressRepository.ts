@@ -1,5 +1,6 @@
 import type { HttpClient } from '../../core/network/httpClient';
 import type { AuthorizedCaller } from '../auth/authorizedCaller';
+import type { LocalCache } from '../cache/localCache';
 
 export type SavedAddress = {
   id: number;
@@ -34,12 +35,15 @@ export type AddressRepository = {
 export function createAddressRepository(
   http: HttpClient,
   call: AuthorizedCaller,
+  cache: LocalCache,
 ): AddressRepository {
   return {
     list: () =>
-      call(accessToken =>
-        http.request<{ data: SavedAddress[] }>('/addresses', { accessToken }),
-      ).then(response => response.data),
+      cache.fetchOrCached('addresses', () =>
+        call(accessToken =>
+          http.request<{ data: SavedAddress[] }>('/addresses', { accessToken }),
+        ).then(response => response.data),
+      ),
     create: address =>
       call(accessToken =>
         http.request<SavedAddress>('/addresses', {

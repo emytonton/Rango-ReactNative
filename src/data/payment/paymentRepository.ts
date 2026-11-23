@@ -1,5 +1,6 @@
 import type { HttpClient } from '../../core/network/httpClient';
 import type { AuthorizedCaller } from '../auth/authorizedCaller';
+import type { LocalCache } from '../cache/localCache';
 
 export type PaymentType = 'pix' | 'credit' | 'debit' | 'cash';
 
@@ -26,14 +27,17 @@ export type PaymentRepository = {
 export function createPaymentRepository(
   http: HttpClient,
   call: AuthorizedCaller,
+  cache: LocalCache,
 ): PaymentRepository {
   return {
     list: () =>
-      call(accessToken =>
-        http.request<{ data: PaymentMethod[] }>('/payment-methods', {
-          accessToken,
-        }),
-      ).then(response => response.data),
+      cache.fetchOrCached('payment_methods', () =>
+        call(accessToken =>
+          http.request<{ data: PaymentMethod[] }>('/payment-methods', {
+            accessToken,
+          }),
+        ).then(response => response.data),
+      ),
     createCard: card =>
       call(accessToken =>
         http.request<PaymentMethod>('/payment-methods', {
