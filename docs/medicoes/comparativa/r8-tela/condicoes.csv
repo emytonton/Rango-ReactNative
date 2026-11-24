@@ -1,0 +1,4 @@
+data,etapa,bloco,framework,avd,ram_livre_host_mb,ram_livre_emulador_mb
+2026-11-24 11:13:12,tela,1,react-native,Rango_Pixel_8,5136,747
+2026-11-24 11:17:36,tela,2,react-native,Rango_Pixel_8,5065,770
+2026-11-24 11:30:50,tela,3,react-native,Rango_Pixel_8,5299,790
