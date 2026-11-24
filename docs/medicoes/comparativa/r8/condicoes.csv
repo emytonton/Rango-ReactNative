@@ -1,0 +1,7 @@
+data,etapa,bloco,framework,avd,ram_livre_host_mb,ram_livre_emulador_mb
+2026-11-23 21:32:51,inicializacao,1,react-native,Rango_Pixel_8,5513,793
+2026-11-23 21:36:22,inicializacao,2,react-native,Rango_Pixel_8,5552,766
+2026-11-23 21:47:00,inicializacao,3,react-native,Rango_Pixel_8,5785,732
+2026-11-23 21:56:21,memoria,1,react-native,Rango_Pixel_8,5794,753
+2026-11-23 22:02:22,memoria,2,react-native,Rango_Pixel_8,5718,751
+2026-11-23 22:20:06,memoria,3,react-native,Rango_Pixel_8,5566,762

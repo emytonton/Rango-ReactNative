@@ -1,0 +1,16 @@
+data,framework,commit,build,bloco,execucao,roteiro,duracao_roteiro_ms,pss_kb,cpu_ms,cpu_pct_parado
+2026-11-23 21:57:05,react-native,fa989f7,release,1,1,ok,34574,151971,7290,3.5
+2026-11-23 21:57:49,react-native,fa989f7,release,1,2,ok,33216,148884,6720,3.8
+2026-11-23 21:58:32,react-native,fa989f7,release,1,3,ok,32995,152667,6570,0.0
+2026-11-23 21:59:16,react-native,fa989f7,release,1,4,ok,33278,153127,6690,0.0
+2026-11-23 21:59:59,react-native,fa989f7,release,1,5,ok,33635,155683,6800,0.0
+2026-11-23 22:03:07,react-native,fa989f7,release,2,1,ok,34463,150671,7220,3.7
+2026-11-23 22:03:50,react-native,fa989f7,release,2,2,ok,33008,150937,6650,3.7
+2026-11-23 22:04:33,react-native,fa989f7,release,2,3,ok,32797,150250,6660,3.7
+2026-11-23 22:05:17,react-native,fa989f7,release,2,4,ok,33102,151157,6460,3.7
+2026-11-23 22:06:01,react-native,fa989f7,release,2,5,ok,33828,151055,6830,0.0
+2026-11-23 22:20:51,react-native,fa989f7,release,3,1,ok,34508,150726,7130,3.5
+2026-11-23 22:21:34,react-native,fa989f7,release,3,2,ok,33280,153935,6730,3.7
+2026-11-23 22:22:18,react-native,fa989f7,release,3,3,ok,33644,152009,6720,0.0
+2026-11-23 22:23:01,react-native,fa989f7,release,3,4,ok,33615,152020,6640,3.7
+2026-11-23 22:23:45,react-native,fa989f7,release,3,5,ok,33319,152380,6730,0.0
