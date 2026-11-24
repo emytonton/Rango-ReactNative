@@ -211,6 +211,8 @@ Análise (`analise.py`, sem dependências): n, mediana, quartis e IQR por app, t
 
 A rodada `r8` é a principal para a comparação. A da raiz fica como registro do efeito da minificação e do uso do PC. Nas rodadas `r8` e `r8-tela`, a coluna `commit` dos CSVs mostra o último commit da `main` daquele momento (`269e8af` no KMP e `fa989f7` no React Native), porque a mudança do R8 só foi commitada depois da medição.
 
+Depois das medições, os módulos nativos de conexão e de notificação ganharam a versão iOS (`ios/RangoDelivery/Native/`), e os wrappers em `src/core/native/` passaram a usá-los também no iOS. A mudança não exige medir de novo: o APK release gerado depois dela tem o mesmo tamanho em bytes (69.257.570) e as mesmas 1.094 entradas do APK medido, todas com o mesmo CRC, menos `assets/index.android.bundle`, que mudou de conteúdo com o mesmo tamanho (1.908.836 bytes). O código Android, as bibliotecas nativas e os recursos são idênticos, e o build do Gradle não compila a pasta `ios/`.
+
 A variável `RODADA` escolhe a subpasta de saída de todos os scripts e da análise. Cada rodada é feita com um comando, que recusa uma pasta que já tenha CSVs:
 
 ```
