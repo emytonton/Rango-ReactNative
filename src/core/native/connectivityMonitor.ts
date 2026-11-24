@@ -14,7 +14,9 @@ export type ConnectivityMonitor = {
 const EVENT = 'connectivityChanged';
 
 const native: ConnectivityModule | undefined =
-  Platform.OS === 'android' ? NativeModules.Connectivity : undefined;
+  Platform.OS === 'android' || Platform.OS === 'ios'
+    ? NativeModules.Connectivity
+    : undefined;
 
 export function createConnectivityMonitor(
   module: ConnectivityModule | undefined = native,

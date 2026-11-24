@@ -11,6 +11,8 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		761780ED2CA45674006654EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EC2CA45674006654EE /* AppDelegate.swift */; };
 		761780EF2CA45674006654EF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EE2CA45674006654EF /* SceneDelegate.swift */; };
+		A7C1E0012F0B4D6E00A1B201 /* ConnectivityModule.m in Sources */ = {isa = PBXBuildFile; fileRef = A7C1E0002F0B4D6E00A1B201 /* ConnectivityModule.m */; };
+		A7C1E0032F0B4D6E00A1B201 /* LocalNotificationModule.m in Sources */ = {isa = PBXBuildFile; fileRef = A7C1E0022F0B4D6E00A1B201 /* LocalNotificationModule.m */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		F0A1B2C3D4E5F60718293B10 /* PlusJakartaSans-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0A1B2C3D4E5F60718293A10 /* PlusJakartaSans-Medium.ttf */; };
 		F0A1B2C3D4E5F60718293B11 /* PlusJakartaSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0A1B2C3D4E5F60718293A11 /* PlusJakartaSans-SemiBold.ttf */; };
@@ -28,6 +30,8 @@
 		5DCACB8F33CDC322A6C60F78 /* libPods-RangoDelivery.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RangoDelivery.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		761780EC2CA45674006654EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = RangoDelivery/AppDelegate.swift; sourceTree = "<group>"; };
 		761780EE2CA45674006654EF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SceneDelegate.swift; path = RangoDelivery/SceneDelegate.swift; sourceTree = "<group>"; };
+		A7C1E0002F0B4D6E00A1B201 /* ConnectivityModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ConnectivityModule.m; path = RangoDelivery/Native/ConnectivityModule.m; sourceTree = "<group>"; };
+		A7C1E0022F0B4D6E00A1B201 /* LocalNotificationModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = LocalNotificationModule.m; path = RangoDelivery/Native/LocalNotificationModule.m; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = RangoDelivery/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		F0A1B2C3D4E5F60718293A10 /* PlusJakartaSans-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = PlusJakartaSans-Medium.ttf; path = ../src/assets/fonts/PlusJakartaSans-Medium.ttf; sourceTree = "<group>"; };
@@ -54,6 +58,8 @@
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				761780EC2CA45674006654EE /* AppDelegate.swift */,
 				761780EE2CA45674006654EF /* SceneDelegate.swift */,
+				A7C1E0002F0B4D6E00A1B201 /* ConnectivityModule.m */,
+				A7C1E0022F0B4D6E00A1B201 /* LocalNotificationModule.m */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */,
@@ -265,6 +271,8 @@
 			files = (
 				761780ED2CA45674006654EE /* AppDelegate.swift in Sources */,
 				761780EF2CA45674006654EF /* SceneDelegate.swift in Sources */,
+				A7C1E0012F0B4D6E00A1B201 /* ConnectivityModule.m in Sources */,
+				A7C1E0032F0B4D6E00A1B201 /* LocalNotificationModule.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
